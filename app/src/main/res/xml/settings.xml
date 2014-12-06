@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:title="Check it?"
+        android:summary="Checkbox"
+        android:checked="false"
+        />
+    <SwitchPreference
+        android:title="Switch it?"
+        android:summary="Switcher"
+        />
+</PreferenceScreen>

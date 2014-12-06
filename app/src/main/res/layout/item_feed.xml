@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        app:cardUseCompatPadding="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/title"
+                    android:text="Новость дня"
+                    android:textColor="@color/primary_dark_material_dark"
+                    android:textSize="18sp"
+                    android:paddingBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/body"
+                    android:text="Новости России и мира на сайте МК.RU обновляются каждую минуту. Лента новостей дня — это самые последние, самые срочные сообщения из авторитетных источников. Мы выбираем главные события за сегодня для сайта МК, проводя тщательный онлайн-мониторинг сообщений от ведущих информационных агентств, органов государственной власти, общественных организаций и ньюсмейкеров.
+Московский комсомолец: главное — оперативно."
+                    android:layout_below="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/rating"
+                android:paddingTop="8dp"
+                android:paddingLeft="16dp"
+                android:text="Rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/comments"
+                    android:text="Comments"
+                    android:padding="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/share"
+                    android:layout_toLeftOf="@+id/like"
+                    android:text="Share"
+                    android:padding="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/like"
+                    android:layout_alignParentRight="true"
+                    android:text="Like"
+                    android:padding="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
