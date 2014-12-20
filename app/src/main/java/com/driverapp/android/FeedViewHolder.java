@@ -21,7 +21,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setTitle(String title) {
-        titleView.setText(title);
+        //titleView.setText(title);
     }
     public void setBody(String body){
         bodyView.setText(body);
@@ -36,6 +36,6 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setRating(double rating) {
-        ratingView.setText("Rating: " + rating);
+        //ratingView.setText("Rating: " + rating);
     }
 }

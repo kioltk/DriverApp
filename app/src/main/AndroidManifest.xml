@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.driverapp.android.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,20 +36,29 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.driverapp.android.CreateActivity"
+            android:name=".CreateActivity"
             android:label="@string/title_activity_create" >
         </activity>
         <activity
-            android:name="com.driverapp.android.FeedActivity"
+            android:name=".FeedActivity"
             android:label="FeedActivity" >
         </activity>
         <activity
-            android:name="com.driverapp.android.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.driverapp.android.TestActivity"
+            android:name=".TestActivity"
             android:label="@string/title_activity_test" >
+        </activity>
+        <activity
+            android:name=".StartActivity"
+            android:label="@string/title_activity_start" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
