@@ -1,4 +1,4 @@
-package com.driverapp.android;
+package com.driverapp.android.feed;
 
 import com.google.android.gms.maps.model.LatLng;
 

@@ -1,16 +1,22 @@
 package com.driverapp.android;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.driverapp.android.create.CreateActivity;
+import com.driverapp.android.feed.FeedAdapter;
+import com.driverapp.android.feed.FeedComment;
+import com.driverapp.android.feed.FeedItem;
+import com.driverapp.android.feed.FeedItemType;
+import com.driverapp.android.feed.FeedListTask;
 
 import java.util.ArrayList;
 
@@ -53,6 +59,20 @@ public class MainActivity extends ActionBarActivity {
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
+        new FeedListTask(){
+
+
+            @Override
+            protected void onSuccess(ArrayList<FeedItem> result) {
+                Toast.makeText(getBaseContext(), result.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected void onError(Exception exp) {
+                Toast.makeText(getBaseContext(), exp.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        }.execute();
         recycler.setAdapter(new FeedAdapter(items, this));
 
         View addButton = findViewById(R.id.add);

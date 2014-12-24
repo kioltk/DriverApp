@@ -1,4 +1,4 @@
-package com.driverapp.android;
+package com.driverapp.android.create;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.driverapp.android.R;
 
 
 public class CreateActivity extends ActionBarActivity {
@@ -14,6 +17,17 @@ public class CreateActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
+
+        View pickCategoryButton = findViewById(R.id.pick_category);
+
+        pickCategoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), CategoryActivity.class));
+            }
+        });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -33,6 +47,10 @@ public class CreateActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == android.R.id.home) {
+            finish();
             return true;
         }
 

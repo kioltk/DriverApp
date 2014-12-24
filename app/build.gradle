@@ -9,7 +9,7 @@ android {
         applicationId "com.driverapp.android"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 2
+        versionCode 3
         versionName "1.0"
     }
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/image"
+        android:background="#FB7649"
+        android:layout_margin="8dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp" />
+    <TextView
+        android:id="@+id/text"
+        android:text="Название категории"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+</RelativeLayout>

@@ -1,9 +1,10 @@
-package com.driverapp.android;
+package com.driverapp.android.feed;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import com.driverapp.android.R;
 
 /**
  * Created by Jesus Christ. Amen.
@@ -11,13 +12,13 @@ import android.widget.TextView;
 public class FeedViewHolder extends RecyclerView.ViewHolder {
     private final TextView bodyView;
     private final TextView titleView;
-    private final TextView ratingView;
+//    private final TextView ratingView;
 
     public FeedViewHolder(View itemView) {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.title);
         bodyView = (TextView) itemView.findViewById(R.id.body);
-        ratingView = (TextView) itemView.findViewById(R.id.rating);
+        //ratingView = (TextView) itemView.findViewById(R.id.rating);
     }
 
     public void setTitle(String title) {

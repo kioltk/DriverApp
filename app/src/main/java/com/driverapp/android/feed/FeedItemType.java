@@ -1,4 +1,4 @@
-package com.driverapp.android;
+package com.driverapp.android.feed;
 
 /**
  * Created by Jesus Christ. Amen.

@@ -36,11 +36,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".CreateActivity"
+            android:name=".create.CreateActivity"
             android:label="@string/title_activity_create" >
         </activity>
         <activity
-            android:name=".FeedActivity"
+            android:name=".feed.FeedActivity"
             android:label="FeedActivity" >
         </activity>
         <activity
@@ -59,6 +59,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".CommentsActivity"
+            android:label="@string/title_activity_comments" >
+        </activity>
+        <activity
+            android:name=".create.CategoryActivity"
+            android:label="@string/title_activity_category" >
         </activity>
     </application>
 

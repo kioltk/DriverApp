@@ -1,12 +1,17 @@
-package com.driverapp.android;
+package com.driverapp.android.feed;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.driverapp.android.CommentsActivity;
+import com.driverapp.android.R;
 
 /**
  * Created by Jesus Christ. Amen.
@@ -27,13 +32,31 @@ public class FeedActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        Bundle extras = getIntent().getExtras();
         ImageView image = (ImageView) findViewById(R.id.image);
-
         TextView bodyView = (TextView) findViewById(R.id.body);
-        String body = extras.getString(EXTRA_BODY,"");
-        bodyView.setText(body);
+        ImageButton comments = (ImageButton) findViewById(R.id.comment);
 
+        Bundle extras = getIntent().getExtras();
+        String body = extras.getString(EXTRA_BODY,"");
+
+        comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(),CommentsActivity.class));
+            }
+        });
+        bodyView.setText(body);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static Intent getActivityIntent(Context context, FeedItem item) {
