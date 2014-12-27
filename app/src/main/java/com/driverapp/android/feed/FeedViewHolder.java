@@ -12,12 +12,18 @@ import com.driverapp.android.R;
 public class FeedViewHolder extends RecyclerView.ViewHolder {
     private final TextView bodyView;
     private final TextView titleView;
+    private final TextView addressView;
+    private final TextView categoryView;
+    private TextView userNameView;
 //    private final TextView ratingView;
 
     public FeedViewHolder(View itemView) {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.title);
         bodyView = (TextView) itemView.findViewById(R.id.body);
+        addressView = (TextView) itemView.findViewById(R.id.address);
+        userNameView = (TextView) itemView.findViewById(R.id.name);
+        categoryView = (TextView) itemView.findViewById(R.id.category);
         //ratingView = (TextView) itemView.findViewById(R.id.rating);
     }
 
@@ -38,5 +44,21 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
 
     public void setRating(double rating) {
         //ratingView.setText("Rating: " + rating);
+    }
+
+    public void setAddress(String address) {
+        addressView.setText(address);
+    }
+
+    public void setUserName(String userName) {
+        userNameView.setText(userName);
+    }
+
+    public void setUserPhoto(String userPhoto) {
+
+    }
+
+    public void setCategoryName(String categoryName) {
+        categoryView.setText(categoryName);
     }
 }

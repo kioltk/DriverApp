@@ -16,70 +16,54 @@ import com.driverapp.android.feed.FeedAdapter;
 import com.driverapp.android.feed.FeedComment;
 import com.driverapp.android.feed.FeedItem;
 import com.driverapp.android.feed.FeedItemType;
+import com.driverapp.android.feed.FeedListFragment;
 import com.driverapp.android.feed.FeedListTask;
+import com.driverapp.android.feed.FeedMapFragment;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    private ArrayList<FeedItem> items = new ArrayList<FeedItem>(){{
-        add(new FeedItem(){{
-            body = "ДПС";
-            id = 1;
-            rating = 5.0;
-            category = FeedItemType.POLICE;
-            feedComments.add(new FeedComment(){{ body = "Hello world."; }});
-        }});
-        add(new FeedItem(){{
-            body = "Авария";
-            id = 2;
-            rating = 5.0;
-            category = FeedItemType.DISASTER;
-            feedComments.add(new FeedComment(){{ body = "Hello world."; }});
-        }});
-        add(new FeedItem(){{
-            body = "ДПС";
-            id = 3;
-            rating = 5.0;
-            category = FeedItemType.POLICE;
-            feedComments.add(new FeedComment(){{ body = "Hello world."; }});
-        }});
-    }};
+
+    private static final int VIEW_LIST = 0;
+    private static final int VIEW_MAP = 1;
+
+    private int currentView = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActionBar actionBar = getSupportActionBar();
 
-
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
-
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-
-        new FeedListTask(){
-
-
-            @Override
-            protected void onSuccess(ArrayList<FeedItem> result) {
-                Toast.makeText(getBaseContext(), result.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            protected void onError(Exception exp) {
-                Toast.makeText(getBaseContext(), exp.toString(), Toast.LENGTH_SHORT).show();
-
-            }
-        }.execute();
-        recycler.setAdapter(new FeedAdapter(items, this));
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new FeedListFragment())
+                .commit();
 
         View addButton = findViewById(R.id.add);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(CreateActivity.getActivityIntent(getBaseContext()));
+            }
+        });
+
+        View mapButton = findViewById(R.id.map);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentView == VIEW_MAP) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, new FeedListFragment())
+                            .commit();
+                    currentView = VIEW_LIST;
+                } else {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, new FeedMapFragment())
+                            .commit();
+                    currentView = VIEW_MAP;
+                }
             }
         });
 

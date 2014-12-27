@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 
-def outputPathName = "/Users/kioltk/Documents/Dropbox/DriverApp/Builds/FILE_NAME"
+def outputPathName = "/Users/d_great/Documents/Dropbox/DriverApp/Builds/FILE_NAME"
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.driverapp.android"
@@ -27,7 +27,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def path = output.outputFile.name
-            output.outputFile = file(outputPathName.replace("FILE_NAME", path.replace("release","stable").replace("debug","debug-v"+defaultConfig.versionCode)))
+            output.outputFile = file(outputPathName.replace("FILE_NAME", path.replace("release", "stable").replace("debug", "debug-v" + defaultConfig.versionCode)))
         }
     }
 }
@@ -35,8 +35,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.0.2'
-    compile 'com.android.support:cardview-v7:21.0.2'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'com.android.support:cardview-v7:21.0.3'
     compile 'com.github.machinarius:preferencefragment:0.1.1'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.melnykov:floatingactionbutton:1.0.6'

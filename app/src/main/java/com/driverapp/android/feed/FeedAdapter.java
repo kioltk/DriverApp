@@ -35,8 +35,13 @@ public class FeedAdapter extends RecyclerView.Adapter {
         if(viewHolder instanceof FeedViewHolder) {
             FeedViewHolder feedViewHolder = (FeedViewHolder) viewHolder;
             feedViewHolder.setTitle("id: " + item.id);
-            feedViewHolder.setBody(item.body);
-            feedViewHolder.setRating(item.rating);
+            feedViewHolder.setBody(item.desc);
+            feedViewHolder.setAddress(item.address);
+            feedViewHolder.setBody(item.desc);
+            feedViewHolder.setUserName(item.getUserName());
+            feedViewHolder.setUserPhoto(item.user_avatar_path);
+            feedViewHolder.setCategoryName(item.category_name);
+            // feedViewHolder.setRating(item.rating);
             feedViewHolder.setOnItemClick(item);
         } else {
 

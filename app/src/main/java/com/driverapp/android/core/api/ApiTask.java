@@ -22,7 +22,7 @@ import java.util.List;
  * Created by Jesus Christ. Amen.
  */
 public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> {
-    private static final String LOG_TAG = "Application Tag";
+    private static final String LOG_TAG = "Api task";
     private static final String serverUrl = "http://driverapp.ru/api/";
     private final String methodName;
     private final boolean post;
@@ -49,6 +49,8 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
                 url += "?" + args;
                 request = new HttpGet(url);
             }
+
+            Log.i(LOG_TAG,"Executing request to url: " + url);
             HttpResponse httpResponse = httpClient.execute(request);
             HttpEntity httpEntity = httpResponse.getEntity();
             String responseString = EntityUtils.toString(httpEntity);
