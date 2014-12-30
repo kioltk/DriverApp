@@ -41,7 +41,7 @@ public class FeedAdapter extends RecyclerView.Adapter {
             feedViewHolder.setUserName(item.getUserName());
             feedViewHolder.setUserPhoto(item.user_avatar_path);
             feedViewHolder.setCategoryName(item.category_name);
-            // feedViewHolder.setRating(item.rating);
+            feedViewHolder.setPhoto(item.photo_path);
             feedViewHolder.setOnItemClick(item);
         } else {
 

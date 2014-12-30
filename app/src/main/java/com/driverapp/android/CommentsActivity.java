@@ -18,8 +18,12 @@ public class CommentsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
         ListView list = (ListView) findViewById(R.id.list);
-        list.setAdapter(new CommentsAdapter(this, new ArrayList<Comment>(){{ add(new Comment()); add(new Comment());}}));
+        list.setAdapter(new CommentsAdapter(this, new ArrayList<Comment>(){{
+            add(new Comment());
+            add(new Comment());
+        }}));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override
