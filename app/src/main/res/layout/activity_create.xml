@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    tools:context="com.driverapp.android.create.CreateActivity">
+    >
 
     <EditText
         android:id="@+id/text"
@@ -36,15 +35,28 @@
         android:background="@drawable/fake_divider"
         android:layout_width="match_parent"
         android:layout_height="48dp" />
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:id="@+id/pick_category"
         android:layout_below="@+id/pick_map"
-        android:text="Pick category"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="20dp"
-        android:background="@drawable/fake_divider"
         android:layout_width="match_parent"
-        android:layout_height="48dp"  />
+        android:background="@drawable/fake_divider"
+        android:layout_height="48dp">
+        <ImageView
+            android:padding="8dp"
+            android:id="@+id/pick_category_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+        <TextView
+            android:id="@+id/pick_category_text"
+            android:text="Pick category"
+            android:textColor="#343434"
+            android:textSize="16sp"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"  />
+        </LinearLayout>
     <LinearLayout
         android:background="@drawable/fake_divider"
         android:padding="8dp"
@@ -59,8 +71,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/facebook_image"
+                android:layout_margin="8dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
             <TextView
-                android:padding="10dp"
+                android:layout_toRightOf="@+id/facebook_image"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:text="Facebook"
                 android:textSize="16sp"
                 android:textColor="#343434"

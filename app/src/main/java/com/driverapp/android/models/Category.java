@@ -6,5 +6,5 @@ package com.driverapp.android.models;
 public class Category {
     public long id;
     public String name;
-    public int imgResource;
+    public int imgResId;
 }
