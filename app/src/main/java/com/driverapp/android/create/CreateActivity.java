@@ -1,38 +1,55 @@
 package com.driverapp.android.create;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.Core;
-import com.driverapp.android.models.Category;
+import com.driverapp.android.models.EventCategory;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.File;
 
 
 public class CreateActivity extends ActionBarActivity {
 
     private static final int PICK_IMAGE = 100;
     private static final int PICK_CATEGORY = 101;
+    private static final int PICK_MAP = 102;
     private ImageView imageView;
-    private Category selectedCategory;
+    private EventCategory selectedCategory;
     private View pickCategoryView;
     private TextView pickCategoryTextView;
     private ImageView pickCategoryImageView;
+    private View pickLocationView;
+    private TextView pickLocationTextView;
+    private double selectedLongitude;
+    private double
+            selectedLatitude;
+    private File selectedPhoto;
+    private String selectedStreet;
+    private String selectedCity;
+    private EditText bodyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
+
+        bodyView = (EditText) findViewById(R.id.text);
 
         pickCategoryView =  findViewById(R.id.pick_category);
         pickCategoryTextView = (TextView) findViewById(R.id.pick_category_text);
@@ -42,6 +59,16 @@ public class CreateActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(getBaseContext(), CategoryActivity.class), PICK_CATEGORY);
+            }
+        });
+
+        pickLocationView = findViewById(R.id.pick_map);
+        pickLocationTextView = (TextView) findViewById(R.id.pick_map_text);
+
+        pickLocationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getBaseContext(),LocationPickerActivity.class), PICK_MAP);
             }
         });
 
@@ -61,26 +88,27 @@ public class CreateActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case PICK_IMAGE:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     Uri imageUri = data.getData();
 
                     //User had pick an image.
-                    Cursor cursor = getContentResolver().query(imageUri, new String[]{android.provider.MediaStore.Images.ImageColumns.DATA}, null, null, null);
+                    Cursor cursor = getContentResolver().query(imageUri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
                     cursor.moveToFirst();
 
                     //Link to the image
                     final String imageFilePath = cursor.getString(0);
+                    selectedPhoto = new File(imageFilePath);
                     ImageLoader.getInstance().displayImage(imageUri.toString(), imageView);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     // todo cropper?
                     cursor.close();
                 }
                 break;
-            case PICK_CATEGORY:
-                if(resultCode== RESULT_OK) {
+            case PICK_CATEGORY: {
+                if (resultCode == RESULT_OK) {
                     int categoryId = data.getExtras().getInt(CategoryActivity.EXTRA_ID);
-                    for (Category category : Core.getCategories()) {
-                        if(category.id==categoryId){
+                    for (EventCategory category : Core.getCategories()) {
+                        if (category.id == categoryId) {
                             selectedCategory = category;
                             pickCategoryTextView.setText(selectedCategory.name);
                             pickCategoryImageView.setImageResource(selectedCategory.imgResId);
@@ -88,7 +116,19 @@ public class CreateActivity extends ActionBarActivity {
                         }
                     }
                 }
-                break;
+            }
+            break;
+            case PICK_MAP: {
+                if (resultCode == RESULT_OK) {
+                    Bundle bundle = data.getExtras();
+                    selectedStreet = bundle.getString(LocationPickerActivity.EXTRA_STREET);
+                    selectedCity = bundle.getString(LocationPickerActivity.EXTRA_CITY);
+                    selectedLongitude = bundle.getDouble(LocationPickerActivity.EXTRA_LONGITUDE);
+                    selectedLatitude = bundle.getDouble(LocationPickerActivity.EXTRA_LAT);
+                    pickLocationTextView.setText(selectedStreet);
+                }
+            }
+            break;
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -109,14 +149,41 @@ public class CreateActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
 
+        switch (id) {
+            case android.R.id.home: {
+                finish();
+                return true;
+            }
+            case R.id.create:
+                final AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle("Отправка")
+                        .setMessage("Терпение")
+                        .setCancelable(false)
+                        .show();
+                String body = bodyView.getText().toString();
+                CreateEventTask createEventTask = new CreateEventTask(
+                        body, selectedCategory.id,
+                        selectedLongitude,selectedLatitude,
+                        selectedCity, selectedStreet,
+                        selectedPhoto
+                        ) {
+
+                    @Override
+                    protected void onSuccess(CreateEventResult result) {
+                        dialog.dismiss();
+                        finish();
+                    }
+
+                    @Override
+                    protected void onError(Exception exp) {
+                        dialog.dismiss();
+                        Toast.makeText(getBaseContext(), "Ошибка создания", Toast.LENGTH_SHORT).show();
+                    }
+                };
+                createEventTask.execute();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

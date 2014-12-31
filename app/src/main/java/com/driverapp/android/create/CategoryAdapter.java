@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.driverapp.android.R;
-import com.driverapp.android.models.Category;
+import com.driverapp.android.models.EventCategory;
 
 import java.util.ArrayList;
 
@@ -17,10 +17,10 @@ import java.util.ArrayList;
  * Created by Jesus Christ. Amen.
  */
 public class CategoryAdapter extends BaseAdapter {
-    private final ArrayList<Category> categories;
+    private final ArrayList<EventCategory> categories;
     private Context context;
 
-    public CategoryAdapter(Context context, ArrayList<Category> categories){
+    public CategoryAdapter(Context context, ArrayList<EventCategory> categories){
         this.context = context;
         this.categories = categories;
     }
@@ -31,7 +31,7 @@ public class CategoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public Category getItem(int position) {
+    public EventCategory getItem(int position) {
         return categories.get(position);
     }
 
@@ -44,7 +44,7 @@ public class CategoryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.item_category, null);
 
-        Category category = getItem(position);
+        EventCategory category = getItem(position);
 
         TextView nameView = (TextView) itemView.findViewById(R.id.text);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.image);

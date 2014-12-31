@@ -16,5 +16,6 @@
     <string name="title_activity_comments">Комментарии</string>
     <string name="title_activity_category">CategoryActivity</string>
     <string name="title_activity_test2">Map</string>
+    <string name="title_activity_location_picker">Map</string>
 
 </resources>

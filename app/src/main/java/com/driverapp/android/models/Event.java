@@ -1,5 +1,6 @@
-package com.driverapp.android.feed;
+package com.driverapp.android.models;
 
+import com.driverapp.android.models.EventComment;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by Jesus Christ. Amen.
  */
-public class FeedItem {
+public class Event {
     public int id;
     public String desc;
     public String photo_path;
@@ -18,6 +19,8 @@ public class FeedItem {
     public String city;
     public String address;
     private LatLng geodata;
+    public String date_create;
+
     public LatLng getGeodata(){
         if(geodata==null)
             geodata = new LatLng(lat,lon);
@@ -35,7 +38,7 @@ public class FeedItem {
     public String category_name;
     public String category_color;
 
-    public ArrayList<FeedComment> feedComments = new ArrayList<>();
+    public ArrayList<EventComment> eventComments = new ArrayList<>();
 
     public String getUserName() {
         return user_name + " " + user_surname;

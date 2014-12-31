@@ -6,12 +6,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.driverapp.android.R;
+import com.driverapp.android.models.Event;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by Jesus Christ. Amen.
  */
-public class FeedViewHolder extends RecyclerView.ViewHolder {
+public class EventViewHolder extends RecyclerView.ViewHolder {
     private final TextView bodyView;
     private final TextView titleView;
     private final TextView addressView;
@@ -20,7 +21,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
     private TextView userNameView;
 //    private final TextView ratingView;
 
-    public FeedViewHolder(View itemView) {
+    public EventViewHolder(View itemView) {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.title);
         bodyView = (TextView) itemView.findViewById(R.id.body);
@@ -37,11 +38,11 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
     public void setBody(String body){
         bodyView.setText(body);
     }
-    public void setOnItemClick(final FeedItem item){
+    public void setOnItemClick(final Event item){
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getContext().startActivity(FeedActivity.getActivityIntent(v.getContext(), item));
+                v.getContext().startActivity(EventActivity.getActivityIntent(v.getContext(), item));
             }
         });
     }

@@ -9,7 +9,7 @@ android {
         applicationId "com.driverapp.android"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 3
+        versionCode 4
         versionName "1.0"
     }
 
@@ -18,6 +18,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
+    packagingOptions{
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
+    }
     buildTypes {
         release {
             minifyEnabled false

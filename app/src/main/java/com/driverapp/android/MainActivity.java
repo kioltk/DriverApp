@@ -1,24 +1,15 @@
 package com.driverapp.android;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.driverapp.android.create.CreateActivity;
-import com.driverapp.android.feed.FeedAdapter;
-import com.driverapp.android.feed.FeedComment;
-import com.driverapp.android.feed.FeedItem;
-import com.driverapp.android.feed.FeedItemType;
-import com.driverapp.android.feed.FeedListFragment;
-import com.driverapp.android.feed.FeedListTask;
-import com.driverapp.android.feed.FeedMapFragment;
-
-import java.util.ArrayList;
+import com.driverapp.android.feed.EventListFragment;
+import com.driverapp.android.feed.EventMapFragment;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -36,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
 
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new FeedListFragment())
+                .replace(R.id.container, new EventListFragment())
                 .commit();
 
         View addButton = findViewById(R.id.add);
@@ -53,12 +44,12 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if(currentView == VIEW_MAP) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, new FeedListFragment())
+                            .replace(R.id.container, new EventListFragment())
                             .commit();
                     currentView = VIEW_LIST;
                 } else {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, new FeedMapFragment())
+                            .replace(R.id.container, new EventMapFragment())
                             .commit();
                     currentView = VIEW_MAP;
                 }

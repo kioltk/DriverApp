@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.driverapp.android.R;
+import com.driverapp.android.models.Event;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by d_great on 24.12.14.
  */
-public class FeedMapFragment extends Fragment {
+public class EventMapFragment extends Fragment {
 
     private View rootView;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -53,11 +53,11 @@ public class FeedMapFragment extends Fragment {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        new FeedListTask() {
+        new EventListTask() {
             @Override
-            protected void onSuccess(ArrayList<FeedItem> result) {
-                for (FeedItem feedItem : result) {
-                    mMap.addMarker(new MarkerOptions().position(feedItem.getGeodata()).title(feedItem.desc));
+            protected void onSuccess(ArrayList<Event> result) {
+                for (Event event : result) {
+                    mMap.addMarker(new MarkerOptions().position(event.getGeodata()).title(event.desc));
                 }
             }
 

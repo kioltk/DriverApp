@@ -13,9 +13,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -26,11 +31,18 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
     private static final String serverUrl = "http://driverapp.ru/api/";
     private final String methodName;
     private final boolean post;
+    private NameValuePair file = null;
     List<NameValuePair> arguments;
     public ApiTask(String methodName, List<NameValuePair> arguments, boolean post){
         this.arguments = arguments;
         this.methodName = methodName;
         this.post = post;
+    }
+    public ApiTask(String methodName, List<NameValuePair> arguments, NameValuePair fileArgument){
+        this.methodName = methodName;
+        this.arguments = arguments;
+        this.post = true;
+        this.file = fileArgument;
     }
 
     @Override
@@ -42,8 +54,18 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpRequestBase request;
             if(post) {
+                HttpEntity entity;
+                if(file==null) {
+                    entity = new UrlEncodedFormEntity(arguments);
+                }else{
+                    entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                    ((MultipartEntity)entity).addPart(file.getValue(), new FileBody(new File(file.getValue())));
+                    for (NameValuePair argument : arguments) {
+                        ((MultipartEntity) entity).addPart(argument.getName(), new StringBody(argument.getValue()));
+                    }
+                }
                 request = new HttpPost(url);
-                ((HttpPost)request).setEntity(new UrlEncodedFormEntity(arguments));
+                ((HttpPost) request).setEntity(entity);
             }else{
                 String args = URLEncodedUtils.format(arguments, "utf-8");
                 url += "?" + args;
@@ -84,4 +106,8 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
     protected abstract void onSuccess(ResultType result);
 
     protected abstract void onError(Exception exp);
+
+    public void start() {
+        execute();
+    }
 }

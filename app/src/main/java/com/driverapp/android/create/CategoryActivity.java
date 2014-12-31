@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.Core;
-import com.driverapp.android.models.Category;
+import com.driverapp.android.models.EventCategory;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class CategoryActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         ListView list = (ListView) findViewById(R.id.list);
-        ArrayList<Category> categories = Core.getCategories();
+        ArrayList<EventCategory> categories = Core.getCategories();
         list.setAdapter(new CategoryAdapter(this, categories));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

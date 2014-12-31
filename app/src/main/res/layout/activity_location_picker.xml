@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/container"
+    tools:context="com.droidkit.pickers.map.MapPickerActivity">
+    <RelativeLayout
+        android:id="@+id/mapholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_marginBottom="75dp"
+            tools:layout="@layout/picker_map_fake_fragment" />
+        <LinearLayout
+            android:id="@+id/current_pick"
+            android:padding="15dp"
+            android:background="#fff"
+            android:layout_marginTop="25dp"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="75dp">
+            <TextView
+                android:id="@+id/current_pick_title"
+                android:text="Степан упрт"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/current_pick_subtitle"
+                android:textColor="#888"
+                android:textSize="12sp"
+                android:text="Увозите тело"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/select"
+            android:scaleType="center"
+            android:src="@drawable/ic_ok"
+            android:layout_marginBottom="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/picker_map_controllers_height"
+            android:layout_height="@dimen/picker_map_controllers_height" />
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/my_location"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/picker_map_location"
+            app:fab_colorNormal="#fff"
+            android:layout_above="@+id/select"
+            android:scaleType="center"
+            android:layout_marginRight="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+    </RelativeLayout>
+</RelativeLayout>

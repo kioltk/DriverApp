@@ -13,7 +13,7 @@
         android:layout_marginBottom="8dp"
         android:layout_toLeftOf="@+id/image"
         android:gravity="top"
-        android:hint="Type here"
+        android:hint="Опишите событие"
         android:background="#00000000"
         android:layout_width="match_parent"
         android:layout_height="85dp" />
@@ -26,15 +26,27 @@
         android:layout_alignParentRight="true"
         android:layout_width="85dp"
         android:layout_height="85dp" />
-    <Button
+    <LinearLayout
         android:layout_below="@+id/text"
         android:id="@+id/pick_map"
-        android:text="Attach location"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="20dp"
         android:background="@drawable/fake_divider"
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="48dp">
+        <ImageView
+            android:padding="8dp"
+            android:id="@+id/pick_map_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+        <TextView
+            android:id="@+id/pick_map_text"
+            android:text="Укажите место"
+            android:textColor="#343434"
+            android:textSize="16sp"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"  />
+    </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:id="@+id/pick_category"
@@ -50,7 +62,7 @@
 
         <TextView
             android:id="@+id/pick_category_text"
-            android:text="Pick category"
+            android:text="Выберите категорию"
             android:textColor="#343434"
             android:textSize="16sp"
             android:gravity="left|center_vertical"
