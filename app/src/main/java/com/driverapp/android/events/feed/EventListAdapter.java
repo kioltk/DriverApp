@@ -1,4 +1,4 @@
-package com.driverapp.android.feed;
+package com.driverapp.android.events.feed;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package com.driverapp.android.feed;
+package com.driverapp.android.events.feed;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 /**
- * Created by d_great on 24.12.14.
+ * Created by Jesus Christ. Amen.
  */
 public class EventMapFragment extends Fragment {
 

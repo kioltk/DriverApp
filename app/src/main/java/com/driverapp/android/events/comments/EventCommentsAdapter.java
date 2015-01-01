@@ -1,4 +1,4 @@
-package com.driverapp.android;
+package com.driverapp.android.events.comments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.driverapp.android.models.Event;
+import com.driverapp.android.R;
 import com.driverapp.android.models.EventComment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -17,12 +17,12 @@ import java.util.ArrayList;
 /**
  * Created by Jesus Christ. Amen.
  */
-public class CommentsAdapter extends BaseAdapter {
+public class EventCommentsAdapter extends BaseAdapter {
 
     private final ArrayList<EventComment> comments;
     private final Context context;
 
-    public CommentsAdapter(Context context, ArrayList<EventComment> comments){
+    public EventCommentsAdapter(Context context, ArrayList<EventComment> comments){
         this.context = context;
         this.comments = comments;
     }

@@ -1,4 +1,4 @@
-package com.driverapp.android.create;
+package com.driverapp.android.events.create;
 
 import android.content.Context;
 import android.location.Address;

@@ -1,4 +1,4 @@
-package com.driverapp.android.feed;
+package com.driverapp.android.events.comments;
 
 import com.driverapp.android.core.api.ApiTask;
 import com.driverapp.android.models.EventComment;
@@ -7,7 +7,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jesus Christ. Amen.

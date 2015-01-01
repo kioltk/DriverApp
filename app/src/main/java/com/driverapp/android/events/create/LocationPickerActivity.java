@@ -1,11 +1,10 @@
-package com.driverapp.android.create;
+package com.driverapp.android.events.create;
 
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 

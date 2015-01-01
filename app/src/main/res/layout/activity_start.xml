@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEEEE"
-    tools:context="com.driverapp.android.StartActivity"
+    tools:context="com.driverapp.android.start.StartActivity"
     >
     <ImageView
         android:id="@+id/background"

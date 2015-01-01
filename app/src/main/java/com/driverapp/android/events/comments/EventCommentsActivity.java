@@ -1,4 +1,4 @@
-package com.driverapp.android.feed;
+package com.driverapp.android.events.comments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.driverapp.android.CommentsAdapter;
 import com.driverapp.android.R;
+import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.EventComment;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class EventCommentsActivity extends ActionBarActivity {
         EventCommentsTask listTask = new EventCommentsTask(eventId) {
             @Override
             protected void onSuccess(ArrayList<EventComment> result) {
-                list.setAdapter(new CommentsAdapter(getBaseContext(), result));
+                list.setAdapter(new EventCommentsAdapter(getBaseContext(), result));
                 if(result.isEmpty()){
                     statusView.setText("Пока никто не комментировал");
                 }

@@ -7,9 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.driverapp.android.create.CreateActivity;
-import com.driverapp.android.feed.EventListFragment;
-import com.driverapp.android.feed.EventMapFragment;
+import com.driverapp.android.events.create.CreateActivity;
+import com.driverapp.android.events.feed.EventListFragment;
+import com.driverapp.android.events.feed.EventMapFragment;
+import com.driverapp.android.settings.SettingsActivity;
 
 
 public class MainActivity extends ActionBarActivity {

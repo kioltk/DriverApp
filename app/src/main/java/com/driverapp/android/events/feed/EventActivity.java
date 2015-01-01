@@ -1,4 +1,4 @@
-package com.driverapp.android.feed;
+package com.driverapp.android.events.feed;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.driverapp.android.R;
+import com.driverapp.android.events.comments.EventCommentsActivity;
 import com.driverapp.android.models.Event;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

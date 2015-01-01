@@ -1,4 +1,4 @@
-package com.driverapp.android.feed;
+package com.driverapp.android.events.feed;
 
 
 import android.app.Activity;
@@ -53,6 +53,7 @@ public class EventListFragment extends Fragment {
 
             @Override
             protected void onError(Exception exp) {
+                progressView.setVisibility(View.GONE);
                 statusView.setVisibility(View.VISIBLE);
                 statusView.setText(exp.getMessage());
             }

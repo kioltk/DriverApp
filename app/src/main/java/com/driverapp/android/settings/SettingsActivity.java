@@ -1,4 +1,4 @@
-package com.driverapp.android;
+package com.driverapp.android.settings;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.driverapp.android.R;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
 

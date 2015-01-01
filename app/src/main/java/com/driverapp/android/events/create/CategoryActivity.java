@@ -1,4 +1,4 @@
-package com.driverapp.android.create;
+package com.driverapp.android.events.create;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;

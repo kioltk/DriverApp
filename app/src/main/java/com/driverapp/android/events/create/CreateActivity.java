@@ -1,4 +1,4 @@
-package com.driverapp.android.create;
+package com.driverapp.android.events.create;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.driverapp.android.feed;
+package com.driverapp.android.events.feed;
 
 import com.driverapp.android.core.api.ApiTask;
 import com.driverapp.android.models.Event;

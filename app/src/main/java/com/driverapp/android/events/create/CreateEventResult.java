@@ -1,4 +1,4 @@
-package com.driverapp.android.create;
+package com.driverapp.android.events.create;
 
 /**
  * Created by Jesus Christ. Amen.

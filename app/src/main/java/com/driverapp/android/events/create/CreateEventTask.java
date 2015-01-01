@@ -1,15 +1,13 @@
-package com.driverapp.android.create;
+package com.driverapp.android.events.create;
 
 import com.driverapp.android.core.api.ApiTask;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jesus Christ. Amen.
