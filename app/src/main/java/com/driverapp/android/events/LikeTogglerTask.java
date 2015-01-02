@@ -1,4 +1,4 @@
-package com.driverapp.android.events.feed;
+package com.driverapp.android.events;
 
 import com.driverapp.android.core.api.ApiTask;
 
@@ -12,6 +12,6 @@ import java.util.ArrayList;
  */
 public abstract class LikeTogglerTask extends ApiTask<LikeToggleResult> {
     public LikeTogglerTask(final int eventId) {
-        super("toggle_like",new ArrayList<NameValuePair>(){{ add(new BasicNameValuePair("event_id", String.valueOf(eventId))); }},true);
+        super("toggle_like",new ArrayList<NameValuePair>(){{ add(new BasicNameValuePair("event_id", String.valueOf(eventId))); }}, true);
     }
 }

@@ -1,9 +1,8 @@
-package com.driverapp.android.events.feed;
+package com.driverapp.android.events;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.driverapp.android.R;
+import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.events.comments.EventCommentsActivity;
 import com.driverapp.android.models.Event;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,7 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * Created by Jesus Christ. Amen.
  */
-public class EventActivity extends ActionBarActivity {
+public class EventActivity extends BaseActivity {
 
 
     private static final String EXTRA_ID = "extra_id";
@@ -34,7 +34,7 @@ public class EventActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed);
+        setContentView(R.layout.activity_event);
 
         imageView = (ImageView) findViewById(R.id.image);
         bodyView = (TextView) findViewById(R.id.body);

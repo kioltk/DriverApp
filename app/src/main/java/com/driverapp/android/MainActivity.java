@@ -7,13 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.events.feed.EventListFragment;
 import com.driverapp.android.events.feed.EventMapFragment;
 import com.driverapp.android.settings.SettingsActivity;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
 
 
     private static final int VIEW_LIST = 0;
@@ -25,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
         getSupportFragmentManager().beginTransaction()

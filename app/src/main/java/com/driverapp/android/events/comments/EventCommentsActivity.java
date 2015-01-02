@@ -11,13 +11,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.driverapp.android.R;
+import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.EventComment;
 
 import java.util.ArrayList;
 
 
-public class EventCommentsActivity extends ActionBarActivity {
+public class EventCommentsActivity extends BaseActivity {
 
     private static final java.lang.String EXTRA_EVENTID = "extra_event_id";
 

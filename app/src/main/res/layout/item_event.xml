@@ -67,24 +67,28 @@
             <TextView
                 android:id="@+id/address"
                 android:text="9 круг МКАДА"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:textSize="12sp"
-                android:drawableLeft="@drawable/ic_add_black"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_location_compat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/body"
                 android:padding="10dp"
+                android:maxLines="2"
                 android:textSize="16sp"
                 android:text="Новости России и мира на сайте МК.RU обновляются каждую минуту. #бред"
                 android:layout_below="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/likes"
                     android:paddingLeft="12dp"
                     android:paddingBottom="10dp"
@@ -93,6 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/comments"
                     android:textSize="12sp"
                     android:text="%d comments"
@@ -101,8 +106,17 @@
                     android:paddingBottom="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <View
+                    android:id="@+id/divider"
+                    android:background="#f0f0f0"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"/>
                 <LinearLayout
-                    android:layout_below="@+id/likes"
+                    android:layout_below="@+id/divider"
                     android:layout_width="match_parent"
                     android:layout_height="48dp">
                     <ImageView

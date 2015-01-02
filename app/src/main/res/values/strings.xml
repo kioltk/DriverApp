@@ -12,10 +12,13 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_start">@string/app_name</string>
     <string name="title_activity_comments">Комментарии</string>
     <string name="title_activity_category">CategoryActivity</string>
     <string name="title_activity_test2">Map</string>
     <string name="title_activity_location_picker">Map</string>
+    <string name="create_pick_image_gallery">Выбрать из галереи</string>
+    <string name="create_pick_image_photo">Сделать фото</string>
+    <string name="create_pick_image_title">Фография события</string>
 
 </resources>

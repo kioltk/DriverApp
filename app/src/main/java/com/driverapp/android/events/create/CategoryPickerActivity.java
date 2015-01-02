@@ -9,13 +9,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.driverapp.android.R;
+import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.core.Core;
 import com.driverapp.android.models.EventCategory;
 
 import java.util.ArrayList;
 
 
-public class CategoryActivity extends ActionBarActivity {
+public class CategoryPickerActivity extends BaseActivity {
 
     public static final java.lang.String EXTRA_ID = "extra_id";
 

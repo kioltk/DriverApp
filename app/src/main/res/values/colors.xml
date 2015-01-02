@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="actionbar_background">#fafafa</color>
+    <color name="actionbar_background">#f'''fafa</color>
     <color name="actionbar_button">#767676</color>
     <color name="actionbar_button_pressed">#aaa</color>
     <color name="actionbar_title">#757575</color>
     <color name="edittext_stroke_default">#d1d1d1</color>
     <color name="edittext_stroke_focused">#9a9a9a</color>
-    <color name="window_background">#fff</color>
+    <color name="window_background">#f6f6f6</color>
 </resources>

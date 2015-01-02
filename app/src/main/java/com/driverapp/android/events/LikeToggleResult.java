@@ -1,4 +1,4 @@
-package com.driverapp.android.events.feed;
+package com.driverapp.android.events;
 
 
 /**
