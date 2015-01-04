@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/name"
+        android:hint="name"
+        android:text="David"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/surname"
+        android:hint="surname"
+        android:text="Davidov"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/source"
+        android:hint="source"
+        android:text="source1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/profile"
+        android:hint="profile"
+        android:text="http://vk.com/kioltk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/mail"
+        android:hint="mail"
+        android:text="kioltk@gmail.com"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/auth_type"
+        android:hint="auth_type"
+        android:text="vk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/auth_token"
+        android:hint="auth_token"
+        android:text="no_token"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

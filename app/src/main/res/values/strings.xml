@@ -20,5 +20,10 @@
     <string name="create_pick_image_gallery">Выбрать из галереи</string>
     <string name="create_pick_image_photo">Сделать фото</string>
     <string name="create_pick_image_title">Фография события</string>
+    <string name="login_fb">Войти через Facebook</string>
+    <string name="login_vk">Войти через ВКонтакте</string>
+    <string name="login_twitter">Войти через twitter</string>
+    <string name="login_skip">Войти без авторизации</string>
+    <string name="login_subtitle">Мы обещаем не размещать информацию без вашего согласия</string>
 
 </resources>

@@ -6,40 +6,45 @@
     android:background="#EEEEEE"
     tools:context="com.driverapp.android.start.StartActivity"
     >
-    <ImageView
-        android:id="@+id/background"
-        android:layout_centerInParent="true"
-        android:src="@drawable/splash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/title"
-        android:text="Driver"
-        android:textColor="#6E6E6E"
-        android:textSize="68sp"
-        android:layout_alignTop="@+id/background"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusableInTouchMode="false" />
-    <TextView
-        android:text="Simple road events"
-        android:textSize="19sp"
-        android:textColor="#999999"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
     <LinearLayout
+        android:id="@+id/logins_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:gravity="bottom|center_horizontal"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/background"
+            android:layout_centerInParent="true"
+            android:src="@drawable/app_logo"
+            android:layout_marginBottom="-12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/title"
+            android:text="Driver"
+            android:textColor="#6E6E6E"
+            android:textSize="68sp"
+            android:fontFamily="roboto-light"
+            android:layout_marginBottom="-5dp"
+            android:layout_alignTop="@+id/background"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false" />
+        <TextView
+            android:id="@+id/subtitle"
+            android:text="Simple road events"
+            android:textSize="19sp"
+            android:textColor="#999999"
+            android:fontFamily="roboto-light"
+            android:layout_marginBottom="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/login_fb"
-            android:text="Login via Facebook"
+            android:text="@string/login_fb"
             android:textColor="#fff"
             android:textSize="14sp"
             android:background="@drawable/login_facebook"
@@ -51,20 +56,20 @@
             android:layout_width="280dp"
             android:layout_height="50dp" />
         <Button
-            android:text="Login via VK"
             android:id="@+id/login_vk"
+            android:text="@string/login_vk"
             android:textSize="14sp"
             android:textColor="#fff"
+            android:textAllCaps="false"
             android:paddingLeft="15dp"
             android:paddingRight="35dp"
             android:background="@drawable/login_vk"
             android:drawableLeft="@drawable/ic_vk"
-            android:textAllCaps="false"
             android:layout_margin="8dp"
             android:layout_width="280dp"
             android:layout_height="50dp" />
         <Button
-            android:text="Login via Twitter"
+            android:text="@string/login_twitter"
             android:id="@+id/login_tw"
             android:textSize="14sp"
             android:textColor="#fff"
@@ -79,20 +84,24 @@
 
         <Button
             android:id="@+id/skip"
-            android:text="Skip authorization"
+            android:text="@string/login_skip"
             android:textColor="#343434"
             android:textSize="14sp"
             android:textAllCaps="false"
-            android:background="#00000000"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"
+            android:background="@drawable/login_skip"
             android:layout_width="wrap_content"
-            android:layout_height="40dp" />
+            android:layout_height="30dp" />
         <TextView
+            android:id="@+id/login_force"
             android:gravity="center"
             android:textSize="10sp"
-            android:textColor="#343434"
+            android:textColor="#767676"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="8dp"
-            android:text="Мы обещаем не размещать инфомацию без вашего согласия"
-            android:layout_width="280dp"
+            android:text="@string/login_subtitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
