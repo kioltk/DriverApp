@@ -259,6 +259,10 @@ public class CreateActivity extends BaseActivity {
                         .setCancelable(false)
                         .show();
                 String body = bodyView.getText().toString();
+                if(selectedCategory==null){
+                    Toast.makeText(this, "Сначала выберите категорию", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 CreateEventTask createEventTask = new CreateEventTask(
                         body, selectedCategory.id,
                         selectedLongitude,selectedLatitude,
