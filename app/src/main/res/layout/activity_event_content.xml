@@ -4,17 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#fff"
+    android:visibility="gone"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
     <ImageView
         android:id="@+id/image"
-        android:src="#f0f0f0"
         android:adjustViewBounds="true"
         android:layout_weight="1"
+        android:minHeight="150dp"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="wrap_content" />
     <RelativeLayout
         android:padding="12dp"
         android:layout_width="match_parent"

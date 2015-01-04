@@ -37,6 +37,7 @@ public class EventActivity extends BaseActivity {
     private TextView dateView;
     private ListView commentsList;
     private View contentView;
+    private View progress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,9 @@ public class EventActivity extends BaseActivity {
         commentsList.addHeaderView(contentView, null, false);
         commentsList.setAdapter(new EventCommentsAdapter(this, new ArrayList<EventComment>()));
         //commentsList.addFooterView(null);
+
+
+        progress = findViewById(R.id.progress);
 
         imageView = (ImageView) contentView.findViewById(R.id.image);
         bodyView = (TextView) contentView.findViewById(R.id.body);
@@ -67,6 +71,8 @@ public class EventActivity extends BaseActivity {
         new EventTask(id) {
             @Override
             protected void onSuccess(Event result) {
+                progress.setVisibility(View.GONE);
+                contentView.setVisibility(View.VISIBLE);
                 bodyView.setText(result.desc);
                 dateView.setText(result.date_create);
                 categoryView.setText(result.category_name);
