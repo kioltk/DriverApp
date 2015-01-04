@@ -24,7 +24,7 @@
         android:layout_height="wrap_content" />
     <TextView
         android:paddingLeft="8dp"
-        android:id="@+id/time"
+        android:id="@+id/date"
         android:text="2x"
         android:layout_below="@+id/body"
         android:layout_toRightOf="@+id/user_photo"

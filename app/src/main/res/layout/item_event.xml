@@ -16,56 +16,78 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <RelativeLayout
-                android:padding="8dp"
+                android:padding="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:id="@+id/photo"
+                    android:id="@+id/user_photo"
                     android:background="@drawable/photo_placeholder"
                     android:layout_marginRight="8dp"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp" />
-                <TextView
-                    android:id="@+id/name"
-                    android:text="Username"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="2dp"
-                    android:textColor="#444444"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_toRightOf="@+id/photo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_photo"
                     android:layout_toLeftOf="@+id/category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <TextView
-                    android:id="@+id/date"
-                    android:text="2hrs"
-                    android:textSize="13sp"
-                    android:textColor="#343434"
-                    android:layout_marginTop="-4dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_below="@+id/name"
-                    android:layout_toRightOf="@+id/photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:text="Username"
+                        android:textColor="#222625"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:ellipsize="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                    <TextView
+                        android:id="@+id/date"
+                        android:text="2hrs"
+                        android:textSize="13sp"
+                        android:textColor="#8F9595"
+                        android:layout_below="@+id/user_name"
+                        android:layout_toRightOf="@+id/user_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    </LinearLayout>
                 <TextView
                     android:id="@+id/category"
                     android:text="Брошенное авто"
                     android:layout_alignParentRight="true"
+                    android:textColor="#222625"
                     android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
-            <ImageView
-                android:id="@+id/image"
-                android:src="#f0f0f0"
-                android:minHeight="150dp"
-                android:adjustViewBounds="true"
+            <RelativeLayout
+                android:id="@+id/image_holder"
+                android:background="#f0f0f0"
+                android:minHeight="50dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/image"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/like_big"
+                    android:layout_alignRight="@+id/image"
+                    android:layout_alignLeft="@+id/image"
+                    android:layout_alignTop="@+id/image"
+                    android:layout_alignBottom="@+id/image"
+                    android:src="@drawable/app_logo"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                </RelativeLayout>
             <TextView
                 android:id="@+id/address"
+                android:ellipsize="end"
                 android:text="9 круг МКАДА"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -76,10 +98,14 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/body"
-                android:padding="10dp"
+
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="18dp"
                 android:maxLines="2"
+                android:ellipsize="end"
                 android:textSize="16sp"
-                android:text="Новости России и мира на сайте МК.RU обновляются каждую минуту. #бред"
+                android:text="Новости 3123 123 213 12России и мира на сайте МК.RU обновляются каждую минуту. #бред"
                 android:layout_below="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -87,66 +113,107 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/likes"
-                    android:paddingLeft="12dp"
-                    android:paddingBottom="10dp"
-                    android:textSize="12sp"
-                    android:text="%d likes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/comments"
-                    android:textSize="12sp"
-                    android:text="%d comments"
-                    android:layout_toRightOf="@+id/likes"
-                    android:paddingLeft="12dp"
-                    android:paddingBottom="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:id="@+id/divider"
-                    android:background="#f0f0f0"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1px"/>
-                <LinearLayout
-                    android:layout_below="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp">
-                    <ImageView
-                        android:id="@+id/like"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_like"
-                        android:layout_centerInParent="true"
-                        android:text="Like"
-                        android:scaleType="centerInside"
+                    android:background="#EEEEEE"
+                    android:layout_height="44dp">
+                    <LinearLayout
+                        android:paddingRight="8dp"
+                        android:paddingLeft="8dp"
+                        android:id="@+id/like_holder"
+                        android:gravity="center"
+                        android:background="@drawable/item_button_background"
+                        android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    <ImageView
-                        android:layout_weight="1"
-                        android:id="@+id/comment"
-                        android:src="@drawable/ic_comments"
-                        android:layout_toRightOf="@+id/likes"
-                        android:text="Share"
-                        android:scaleType="centerInside"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    <ImageView
-                        android:layout_weight="1"
-                        android:id="@+id/share"
-                        android:src="@drawable/ic_share"
-                        android:layout_toRightOf="@+id/likes"
-                        android:text="Share"
-                        android:scaleType="centerInside"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/like"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_like"
+                            android:text="Like"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:scaleType="centerInside"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/likes_counter"
+                            android:textColor="#767676"
+                            android:textSize="13sp"
+                            android:text="0"
+                            android:layout_margin="8dp"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/share_holder"
+                        android:paddingRight="4dp"
+                        android:paddingLeft="4dp"
+                        android:background="@drawable/item_button_background"
+                        android:gravity="center"
+                        android:layout_toLeftOf="@+id/like_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_weight="1"
+                            android:id="@+id/share"
+                            android:src="@drawable/ic_share"
+                            android:layout_toLeftOf="@+id/share_counter"
+                            android:text="Share"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:scaleType="centerInside"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/share_counter"
+                            android:text="0"
+                            android:textSize="13sp"
+                            android:textColor="#767676"
+
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/like_holder"
+                            android:layout_margin="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/comment_holder"
+                        android:paddingRight="4dp"
+                        android:paddingLeft="6dp"
+                        android:background="@drawable/item_button_background"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_weight="1"
+                            android:id="@+id/comment"
+                            android:src="@drawable/ic_comments"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:text="Share"
+                            android:scaleType="centerInside"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/comments_counter"
+                            android:text="0"
+                            android:textSize="13sp"
+                            android:textColor="#767676"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/comment"
+                            android:layout_margin="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

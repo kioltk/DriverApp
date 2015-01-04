@@ -1,142 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    >
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:background="#fff"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <RelativeLayout
-            android:padding="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/user_photo"
-                android:background="@drawable/photo_placeholder"
-                android:layout_marginRight="8dp"
-                android:layout_width="36dp"
-                android:layout_height="36dp" />
-            <TextView
-                android:id="@+id/user_name"
-                android:text="Username"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="2dp"
-                android:textColor="#444444"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:layout_toRightOf="@+id/user_photo"
-                android:layout_toLeftOf="@+id/category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:id="@+id/date"
-                android:text="2hrs"
-                android:textSize="13sp"
-                android:textColor="#343434"
-                android:layout_marginTop="-4dp"
-                android:layout_marginLeft="6dp"
-                android:layout_below="@+id/user_name"
-                android:layout_toRightOf="@+id/user_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/category"
-                android:text="Брошенное авто"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <ImageView
-            android:id="@+id/image"
-            android:src="#f0f0f0"
-            android:adjustViewBounds="true"
-            android:minHeight="150dp"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/address"
-            android:text="9 круг ада"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="10dp"
-            android:textSize="12sp"
-            android:drawableLeft="@drawable/ic_ok"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/body"
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:text="Новости России и мира на сайте МК.RU обновляются каждую минуту. #бред"
-            android:layout_below="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/likes"
-                android:paddingLeft="12dp"
-                android:paddingBottom="10dp"
-                android:textSize="12sp"
-                android:text="%d likes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/comments"
-                android:textSize="12sp"
-                android:text="%d comments"
-                android:layout_toRightOf="@+id/likes"
-                android:paddingLeft="12dp"
-                android:paddingBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:layout_below="@+id/likes"
-                android:layout_width="match_parent"
-                android:layout_height="48dp">
-                <ImageView
-                    android:id="@+id/like"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_like"
-                    android:layout_centerInParent="true"
-                    android:text="Like"
-                    android:scaleType="centerInside"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-                <ImageButton
-                    android:layout_weight="1"
-                    android:id="@+id/comment"
-                    android:src="@drawable/ic_comments"
-                    android:layout_toRightOf="@+id/likes"
-                    android:text="Share"
-                    android:background="#00000000"
-                    android:scaleType="centerInside"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-                <ImageView
-                    android:layout_weight="1"
-                    android:id="@+id/share"
-                    android:src="@drawable/ic_share"
-                    android:layout_toRightOf="@+id/likes"
-                    android:text="Share"
-                    android:scaleType="centerInside"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
-</ScrollView>
+        android:layout_height="match_parent"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="#40000000"
+        app:theme="@style/actionbar_style.transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

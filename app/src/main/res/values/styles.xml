@@ -20,5 +20,9 @@
         <item name="elevation">1px</item>
 
     </style>
-
+    <style name="actionbar_style.transparent" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionMenuTextColor">#fff</item><!-- actionbar buttons text color -->
+        <item name="android:textColorPrimary">#fff</item><!-- actionbar text color -->
+        <item name="android:textColorSecondary">#fff</item><!-- actionbar buttons color -->
+    </style>
 </resources>

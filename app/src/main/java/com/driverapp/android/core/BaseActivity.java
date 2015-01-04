@@ -12,10 +12,12 @@ import com.driverapp.android.R;
 public class BaseActivity extends ActionBarActivity {
 
 
+    protected Toolbar toolbar;
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         if(toolbar!=null){
             setSupportActionBar(toolbar);
         }

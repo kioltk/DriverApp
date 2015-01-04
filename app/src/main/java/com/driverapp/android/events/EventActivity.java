@@ -7,14 +7,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.events.comments.EventCommentsActivity;
+import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.Event;
+import com.driverapp.android.models.EventComment;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jesus Christ. Amen.
@@ -30,21 +35,31 @@ public class EventActivity extends BaseActivity {
     private ImageView imageView;
     private ImageView userPhotoView;
     private TextView dateView;
+    private ListView commentsList;
+    private View contentView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        imageView = (ImageView) findViewById(R.id.image);
-        bodyView = (TextView) findViewById(R.id.body);
-        dateView = (TextView) findViewById(R.id.date);
-        addressView = (TextView) findViewById(R.id.address);
-        userNameView = (TextView) findViewById(R.id.user_name);
-        userPhotoView = (ImageView) findViewById(R.id.user_photo);
-        categoryView = (TextView) findViewById(R.id.category);
-        ImageButton comments = (ImageButton) findViewById(R.id.comment);
-        ImageView likeButton = (ImageView) findViewById(R.id.like);
+        commentsList = (ListView) findViewById(R.id.list);
+
+        contentView = getLayoutInflater().inflate(R.layout.activity_event_content, null);
+
+        commentsList.addHeaderView(contentView, null, false);
+        commentsList.setAdapter(new EventCommentsAdapter(this, new ArrayList<EventComment>()));
+        //commentsList.addFooterView(null);
+
+        imageView = (ImageView) contentView.findViewById(R.id.image);
+        bodyView = (TextView) contentView.findViewById(R.id.body);
+        dateView = (TextView) contentView.findViewById(R.id.date);
+        addressView = (TextView) contentView.findViewById(R.id.address);
+        userNameView = (TextView) contentView.findViewById(R.id.user_name);
+        userPhotoView = (ImageView) contentView.findViewById(R.id.user_photo);
+        categoryView = (TextView) contentView.findViewById(R.id.category);
+        View comments =  contentView.findViewById(R.id.comment_holder);
+        View likeButton =  contentView.findViewById(R.id.like_holder);
 
 
         Bundle extras = getIntent().getExtras();
@@ -52,7 +67,6 @@ public class EventActivity extends BaseActivity {
         new EventTask(id) {
             @Override
             protected void onSuccess(Event result) {
-
                 bodyView.setText(result.desc);
                 dateView.setText(result.date_create);
                 categoryView.setText(result.category_name);
@@ -60,7 +74,6 @@ public class EventActivity extends BaseActivity {
                 userNameView.setText(result.getUserName());
                 ImageLoader.getInstance().displayImage(result.user_avatar_path, userPhotoView);
                 ImageLoader.getInstance().displayImage(result.photo_path, imageView);
-
             }
 
             @Override
