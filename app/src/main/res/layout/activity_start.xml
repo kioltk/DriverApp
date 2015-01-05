@@ -21,24 +21,22 @@
             android:layout_marginBottom="-12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <TextView
+        <com.driverapp.android.views.LightTextView
             android:id="@+id/title"
             android:text="Driver"
             android:textColor="#6E6E6E"
             android:textSize="68sp"
-            android:fontFamily="roboto-light"
             android:layout_marginBottom="-5dp"
             android:layout_alignTop="@+id/background"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false" />
-        <TextView
+        <com.driverapp.android.views.LightTextView
             android:id="@+id/subtitle"
             android:text="Simple road events"
             android:textSize="19sp"
             android:textColor="#999999"
-            android:fontFamily="roboto-light"
             android:layout_marginBottom="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -92,7 +90,7 @@
             android:paddingLeft="4dp"
             android:background="@drawable/login_skip"
             android:layout_width="wrap_content"
-            android:layout_height="30dp" />
+            android:layout_height="25dp" />
         <TextView
             android:id="@+id/login_force"
             android:gravity="center"
