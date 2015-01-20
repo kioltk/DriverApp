@@ -1,7 +1,6 @@
 package com.driverapp.android;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +26,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        toolbar.setLogo(R.drawable.ic_logo_ab);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new EventListFragment())
@@ -79,7 +78,7 @@ public class MainActivity extends BaseActivity {
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
-            case R.id.refresh:
+            case R.id.action_refresh:
                 update();
                 return true;
         }

@@ -8,7 +8,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGener
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.vk.sdk.VKSdk;
+// import com.vk.sdk.VKSdk;
 
 /**
  * Created by Jesus Christ. Amen.

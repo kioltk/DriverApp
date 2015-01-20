@@ -24,6 +24,14 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/auth"
+            android:background="@drawable/item_button_background"
+            android:text="Зайдите, чтобы комментировать"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
         <EditText
             android:id="@+id/comment_text"
             android:layout_toLeftOf="@+id/send"

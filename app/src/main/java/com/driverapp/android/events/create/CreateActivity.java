@@ -7,9 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -219,7 +218,11 @@ public class CreateActivity extends BaseActivity {
                         selectedCity = bundle.getString(LocationPickerActivity.EXTRA_CITY);
                         selectedLongitude = bundle.getDouble(LocationPickerActivity.EXTRA_LONGITUDE);
                         selectedLatitude = bundle.getDouble(LocationPickerActivity.EXTRA_LAT);
-                        pickLocationTextView.setText(selectedStreet);
+                        if(selectedStreet==null || selectedStreet.equals("")){
+                            pickLocationTextView.setText(R.string.create_pick_map_unknown);
+                        } else {
+                            pickLocationTextView.setText(selectedStreet);
+                        }
                     }
                 }
                 break;

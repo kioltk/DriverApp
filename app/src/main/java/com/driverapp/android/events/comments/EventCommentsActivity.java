@@ -1,6 +1,8 @@
 package com.driverapp.android.events.comments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
+import com.driverapp.android.core.utils.UserUtil;
 import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.EventComment;
 
@@ -48,6 +51,33 @@ public class EventCommentsActivity extends BaseActivity {
 
         View sendButton = findViewById(R.id.send);
         final EditText commentBox = (EditText) findViewById(R.id.comment_text);
+        View authView = findViewById(R.id.auth);
+
+
+        if(UserUtil.user_id==0){
+            /*new AlertDialog.Builder(EventCommentsActivity.this)
+                    .setTitle("Сначала нужно зайти")
+                    .setMessage("Пока не сделано")
+                    .setPositiveButton("Зайти", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setNegativeButton("Ладно", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .show();*/
+            sendButton.setVisibility(View.GONE);
+            commentBox.setVisibility(View.GONE);
+            authView.setVisibility(View.GONE);
+            return;
+        }
+
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

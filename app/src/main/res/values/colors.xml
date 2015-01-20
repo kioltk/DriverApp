@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="main_color">#00B7AB</color>
     <color name="actionbar_background">#fafafa</color>
     <color name="actionbar_button">#767676</color>
     <color name="actionbar_button_pressed">#aaa</color>

@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.driverapp.android.MainActivity;
 import com.driverapp.android.R;
-import com.vk.sdk.VKUIHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -130,6 +129,6 @@ public class StartActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        VKUIHelper.onActivityResult(this,requestCode,resultCode,data);
+        // VKUIHelper.onActivityResult(this,requestCode,resultCode,data);
     }
 }

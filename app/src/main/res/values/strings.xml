@@ -25,5 +25,7 @@
     <string name="login_twitter">Войти через Twitter</string>
     <string name="login_skip">Войти без авторизации</string>
     <string name="login_subtitle">Мы обещаем не размещать информацию без вашего согласия</string>
+    <string name="action_profile">Профиль</string>
+    <string name="create_pick_map_unknown">Unknow location</string>
 
 </resources>
