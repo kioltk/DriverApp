@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.driverapp.android.R;
+import com.driverapp.android.core.BaseActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class LocationPickerActivity extends ActionBarActivity {
+public class LocationPickerActivity extends BaseActivity {
 
     public static final String EXTRA_LAT = "extra_lat";
     public static final String EXTRA_LONGITUDE = "extra_lon";
@@ -122,6 +122,8 @@ public class LocationPickerActivity extends ActionBarActivity {
     private void setUpMap() {
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setMyLocationButtonEnabled(false);
+        uiSettings.setCompassEnabled(false);
+        uiSettings.setMapToolbarEnabled(false);
         mMap.setMyLocationEnabled(true);
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -166,8 +168,8 @@ public class LocationPickerActivity extends ActionBarActivity {
 
 
         currentPickView.setVisibility(View.VISIBLE);
-        currentPickTitleView.setText("Подождите");
-        currentPickSubtitleView.setText("Загрузка адреса");
+        currentPickTitleView.setText(R.string.picker_location_advice_wait);
+        currentPickSubtitleView.setText(R.string.picker_location_advice_loading);
         AddressTask task = new AddressTask(this, currentPick.getPosition()) {
             @Override
             protected void onPostExecute(Address s) {
@@ -186,7 +188,7 @@ public class LocationPickerActivity extends ActionBarActivity {
                     }
                 }else{
                     currentPickedAddress = null;
-                    currentPickTitleView.setText("Адрес не установлен");
+                    currentPickTitleView.setText(R.string.picker_location_advice_error);
                     currentPickSubtitleView.setText("");
                 }
                 select.setEnabled(true);

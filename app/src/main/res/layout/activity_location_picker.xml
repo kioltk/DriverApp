@@ -43,7 +43,7 @@
         </LinearLayout>
         <View
             android:layout_above="@+id/current_pick"
-            android:background="@drawable/toolbar_shadow"
+            android:background="@drawable/bottombar_shadow"
             android:layout_width="match_parent"
             android:layout_height="2dp"/>
         <com.melnykov.fab.FloatingActionButton

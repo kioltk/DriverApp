@@ -45,5 +45,8 @@
     <string name="login_twitter">Login via twitter</string>
     <string name="title_activity_create">Create</string>
     <string name="event_title">Событие</string>
+    <string name="picker_location_advice_wait">Подождите</string>
+    <string name="picker_location_advice_loading">Загрузка адреса</string>
+    <string name="picker_location_advice_error">Адрес не установлен</string>
 
 </resources>

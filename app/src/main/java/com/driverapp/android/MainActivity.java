@@ -11,6 +11,7 @@ import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.events.feed.EventListFragment;
 import com.driverapp.android.events.feed.EventMapFragment;
 import com.driverapp.android.settings.SettingsActivity;
+import com.melnykov.fab.FloatingActionButton;
 
 
 public class MainActivity extends BaseActivity {
@@ -40,20 +41,22 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        View mapButton = findViewById(R.id.map);
-        mapButton.setOnClickListener(new View.OnClickListener() {
+        final FloatingActionButton viewToggler = (FloatingActionButton) findViewById(R.id.toggler);
+        viewToggler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentView == VIEW_MAP) {
+                if (currentView == VIEW_MAP) {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container, new EventListFragment())
                             .commit();
                     currentView = VIEW_LIST;
+                    viewToggler.setImageResource(R.drawable.ic_map);
                 } else {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container, new EventMapFragment())
                             .commit();
                     currentView = VIEW_MAP;
+                    viewToggler.setImageResource(R.drawable.ic_cards);
                 }
             }
         });

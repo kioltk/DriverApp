@@ -37,4 +37,7 @@
     <string name="title_activity_maps">Карта</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_test2">Карта</string>
+    <string name="picker_location_advice_wait">Подождите</string>
+    <string name="picker_location_advice_loading">Загрузка адреса</string>
+    <string name="picker_location_advice_error">Адрес не установлен</string>
 </resources>
