@@ -12,7 +12,7 @@
         android:layout_height="24dp" />
     <TextView
         android:id="@+id/text"
-        android:text="Название категории"
+        android:text="Category name"
         android:gravity="center_vertical"
         android:layout_toRightOf="@+id/image"
         android:layout_width="match_parent"

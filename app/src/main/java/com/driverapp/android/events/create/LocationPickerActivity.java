@@ -3,8 +3,8 @@ package com.driverapp.android.events.create;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class LocationPickerActivity extends FragmentActivity {
+public class LocationPickerActivity extends ActionBarActivity {
 
     public static final String EXTRA_LAT = "extra_lat";
     public static final String EXTRA_LONGITUDE = "extra_lon";
@@ -38,6 +38,7 @@ public class LocationPickerActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_picker);
         setUpMapIfNeeded();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

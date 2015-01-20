@@ -23,7 +23,7 @@
             android:layout_height="wrap_content" />
         <com.driverapp.android.views.LightTextView
             android:id="@+id/title"
-            android:text="Driver"
+            android:text="@string/splash_title"
             android:textColor="#6E6E6E"
             android:textSize="68sp"
             android:layout_marginBottom="-5dp"
@@ -34,7 +34,7 @@
             android:focusableInTouchMode="false" />
         <com.driverapp.android.views.LightTextView
             android:id="@+id/subtitle"
-            android:text="Simple road events"
+            android:text="@string/splash_subtitle"
             android:textSize="19sp"
             android:textColor="#999999"
             android:layout_marginBottom="25dp"

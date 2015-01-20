@@ -35,7 +35,7 @@
         </activity>
         <activity
             android:name=".events.EventActivity"
-            android:label="FeedActivity" >
+            android:label="@string/event_title" >
         </activity>
         <activity
             android:name=".settings.SettingsActivity"

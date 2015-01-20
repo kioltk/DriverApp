@@ -18,14 +18,14 @@
         android:textColorLink="#00E3E7"
         android:textColor="#343434"
         android:paddingLeft="8dp"
-        android:text="Классное событие, вандерфул и это самый длинный комментарий ваще"
+        android:text="text"
         android:layout_toRightOf="@+id/user_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
         android:paddingLeft="8dp"
         android:id="@+id/date"
-        android:text="2x"
+        android:text="time"
         android:layout_below="@+id/body"
         android:layout_toRightOf="@+id/user_photo"
         android:layout_width="wrap_content"

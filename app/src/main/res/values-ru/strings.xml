@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DriverApp</string>
+    <string name="action_profile">Профиль</string>
+    <string name="action_report">Жалоба</string>
+    <string name="action_settings">Настройки</string>
+    <string name="comment_this">Прокоментируйте событие</string>
+    <string name="create">Создать</string>
+    <string name="create_describe">Опишите событие</string>
+    <string name="create_facebook">Фейсбук</string>
+    <string name="create_pick_category">Выберите категорию</string>
+    <string name="create_pick_image_photo">Сделать фото</string>
+    <string name="create_pick_image_gallery">Выбрать из галлереи</string>
+    <string name="create_pick_image_title">Фография события</string>
+    <string name="create_pick_map">ВЫберите местоположение</string>
+    <string name="create_pick_map_unknown">Неизвестное местоположение</string>
+    <string name="create_share_title">Опубликовать через</string>
+    <string name="create_twitter">Твиттер</string>
+    <string name="create_vk">ВКонтакте</string>
+    <string name="error_connection_check">Проверьте ваше интернет соединение</string>
+    <string name="event_show_comments">Показать комментарии (%d)</string>
+    <string name="google_maps_key"></string>
+    <string name="login_fb">Войти через Facebook</string>
+    <string name="login_skip">Войти без авторизации</string>
+    <string name="login_subtitle">Мы обещаем не размещать информацию без вашего согласия</string>
+    <string name="login_twitter">Войти через Twitter</string>
+    <string name="login_vk">Войти через ВКонтакте</string>
+    <string name="picker_location_advice_tap_subtitle">Чтобы узнать местоположение</string>
+    <string name="picker_location_advice_tap_title">Нажмите на карте</string>
+    <string name="retry">Повторить</string>
+    <string name="splash_subtitle">Simple road events</string>
+    <string name="splash_title">Driver</string>
+    <string name="title_activity_category">Категории</string>
+    <string name="title_activity_comments">Комментарии</string>
+    <string name="title_activity_create">Новое событие</string>
+    <string name="title_activity_location_picker">Карта</string>
+    <string name="title_activity_maps">Карта</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="title_activity_test2">Карта</string>
+</resources>

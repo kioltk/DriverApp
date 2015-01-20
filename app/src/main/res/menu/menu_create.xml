@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.driverapp.android.events.create.CreateActivity">
     <item android:id="@+id/create"
-        android:title="Create"
+        android:title="@string/create"
         android:icon="@drawable/ic_ok"
         app:showAsAction="always"
         />

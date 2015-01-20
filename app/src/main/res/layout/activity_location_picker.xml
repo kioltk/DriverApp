@@ -17,11 +17,11 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_marginBottom="75dp"
             tools:layout="@layout/picker_map_fake_fragment" />
+
         <LinearLayout
             android:id="@+id/current_pick"
             android:padding="15dp"
             android:background="#fff"
-            android:layout_marginTop="25dp"
             android:gravity="center_vertical"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
@@ -29,7 +29,7 @@
             android:layout_height="75dp">
             <TextView
                 android:id="@+id/current_pick_title"
-                android:text="Степан упрт"
+                android:text="@string/picker_location_advice_tap_title"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -37,14 +37,19 @@
                 android:id="@+id/current_pick_subtitle"
                 android:textColor="#888"
                 android:textSize="12sp"
-                android:text="Увозите тело"
+                android:text="@string/picker_location_advice_tap_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+        <View
+            android:layout_above="@+id/current_pick"
+            android:background="@drawable/toolbar_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/select"
             android:scaleType="center"
-            android:src="@drawable/ic_ok"
+            android:src="@drawable/ic_ok_white"
             android:layout_marginBottom="40dp"
             android:layout_marginRight="10dp"
             android:layout_alignParentBottom="true"
@@ -62,4 +67,10 @@
             android:layout_width="50dp"
             android:layout_height="50dp" />
     </RelativeLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="#44000000"
+        app:theme="@style/actionbar_style.transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

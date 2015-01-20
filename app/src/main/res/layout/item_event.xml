@@ -127,7 +127,6 @@
                         <ImageView
                             android:id="@+id/like"
                             android:src="@drawable/ic_like"
-                            android:text="Like"
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:layout_marginLeft="8dp"
@@ -159,7 +158,6 @@
                             android:id="@+id/share"
                             android:src="@drawable/ic_share"
                             android:layout_toLeftOf="@+id/share_counter"
-                            android:text="Share"
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:layout_marginLeft="8dp"
@@ -194,7 +192,6 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:layout_marginLeft="8dp"
-                            android:text="Share"
                             android:scaleType="centerInside"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />

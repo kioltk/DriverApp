@@ -11,6 +11,7 @@ import com.driverapp.android.R;
 import com.driverapp.android.models.Event;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -57,7 +58,8 @@ public class EventMapFragment extends Fragment {
             @Override
             protected void onSuccess(ArrayList<Event> result) {
                 for (Event event : result) {
-                    mMap.addMarker(new MarkerOptions().position(event.getGeodata()).title(event.desc));
+                    MarkerOptions option = new MarkerOptions().position(event.getGeodata()).title(event.desc);
+                    mMap.addMarker(option);
                 }
             }
 
@@ -66,5 +68,11 @@ public class EventMapFragment extends Fragment {
 
             }
         }.execute();
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return true;
+            }
+        });
     }
 }

@@ -103,7 +103,6 @@
                 android:id="@+id/like"
                 android:layout_weight="1"
                 android:src="@drawable/ic_like"
-                android:text="Like"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
@@ -161,7 +160,7 @@
         android:id="@+id/comment_holder"
         android:background="@drawable/item_button_background"
         android:gravity="center"
-        android:text="Показать комментарии (%d)"
+        android:text="@string/event_show_comments"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 </LinearLayout>

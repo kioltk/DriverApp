@@ -21,7 +21,7 @@
             android:layout_marginBottom="8dp"
             android:layout_toLeftOf="@+id/image"
             android:gravity="top"
-            android:hint="Опишите событие"
+            android:hint="@string/create_describe"
             android:capitalize="sentences"
             android:background="#00000000"
             android:layout_width="match_parent"
@@ -29,7 +29,7 @@
         <ImageView
             android:id="@+id/image"
             android:background="#D8D8D8"
-            android:src="@drawable/ic_add_black"
+            android:src="@drawable/ic_add"
             android:scaleType="centerInside"
             android:layout_margin="5dp"
             android:layout_alignParentRight="true"
@@ -51,7 +51,7 @@
 
             <TextView
                 android:id="@+id/pick_map_text"
-                android:text="Укажите место"
+                android:text="@string/create_pick_map"
                 android:textColor="#343434"
                 android:textSize="16sp"
                 android:gravity="left|center_vertical"
@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/pick_category_text"
-                android:text="Выберите категорию"
+                android:text="@string/create_pick_category"
                 android:textColor="#343434"
                 android:textSize="16sp"
                 android:gravity="left|center_vertical"
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Опубликовать в:"
+                android:text="@string/create_share_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <RelativeLayout
@@ -106,7 +106,7 @@
                 <TextView
                     android:layout_toRightOf="@+id/facebook_image"
                     android:layout_centerVertical="true"
-                    android:text="Facebook"
+                    android:text="@string/create_facebook"
                     android:textSize="16sp"
                     android:textColor="#343434"
                     android:background="#00000000"
@@ -132,7 +132,7 @@
                 <TextView
                     android:layout_toRightOf="@+id/vk_image"
                     android:layout_centerVertical="true"
-                    android:text="ВКонтакте"
+                    android:text="@string/create_vk"
                     android:textSize="16sp"
                     android:textColor="#343434"
                     android:background="#00000000"
@@ -158,7 +158,7 @@
                 <TextView
                     android:layout_toRightOf="@+id/twitter_image"
                     android:layout_centerVertical="true"
-                    android:text="ВКонтакте"
+                    android:text="@string/create_twitter"
                     android:textSize="16sp"
                     android:textColor="#343434"
                     android:background="#00000000"
