@@ -1,11 +1,15 @@
 package com.driverapp.android.events;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,6 +17,8 @@ import android.widget.Toast;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
+import com.driverapp.android.core.utils.DeviceUtil;
+import com.driverapp.android.core.utils.UserUtil;
 import com.driverapp.android.events.comments.EventCommentsActivity;
 import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.Event;
@@ -79,7 +85,23 @@ public class EventActivity extends BaseActivity {
                 addressView.setText(result.address);
                 userNameView.setText(result.getUserName());
                 ImageLoader.getInstance().displayImage(result.user_avatar_path, userPhotoView);
-                ImageLoader.getInstance().displayImage(result.photo_path, imageView);
+                if (result.photo_path == null) {
+                    imageView.setVisibility(View.INVISIBLE);
+                    final TypedArray styledAttributes = getTheme().obtainStyledAttributes(
+                            new int[] { android.R.attr.actionBarSize });
+                    int mActionBarSize = (int) styledAttributes.getDimension(0, 0);
+                    styledAttributes.recycle();
+                    ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                    params.height = mActionBarSize;
+                    imageView.setLayoutParams(params);
+
+
+                } else {
+                    ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                    params.height = DeviceUtil.getDisplayMetrics().widthPixels;
+                    imageView.setLayoutParams(params);
+                    ImageLoader.getInstance().displayImage(result.photo_path, imageView);
+                }
             }
 
             @Override
@@ -98,7 +120,29 @@ public class EventActivity extends BaseActivity {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LikeTogglerTask likeTogglerTask = new LikeTogglerTask(id) {
+
+
+                if(UserUtil.user_id==0){
+                    new AlertDialog.Builder(EventActivity.this)
+                            .setTitle("Сначала нужно зайти")
+                            .setMessage("Пока не сделано")
+                            .setPositiveButton("Зайти", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setNegativeButton("Ладно", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                    return;
+                }
+
+                LikeTogglerTask likeTogglerTask = new LikeTogglerTask(UserUtil.user_id, id) {
                     @Override
                     protected void onSuccess(LikeToggleResult result) {
                         Toast.makeText(getBaseContext(), result.act,Toast.LENGTH_SHORT).show();
@@ -114,6 +158,13 @@ public class EventActivity extends BaseActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_event, menu);
+        return true;
     }
 
     @Override

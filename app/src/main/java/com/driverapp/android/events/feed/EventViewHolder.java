@@ -66,19 +66,29 @@ public class EventViewHolder extends ViewHolder {
         });
         imageView.setOnClickListener(new View.OnClickListener() {
             public long lastTimeClick = 0;
+            public boolean doubleClicked;
 
             @Override
             public void onClick(View v) {
                 if(System.currentTimeMillis() - lastTimeClick < 250){
+                    lastTimeClick = 0;
+                    doubleClicked = true;
                     bigLikeView.setVisibility(View.VISIBLE);
                     bigLikeView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                            bigLikeView.setVisibility(View.GONE);
                         }
-                    }, 2000);
+                    }, 1200);
                 }else{
                     lastTimeClick = System.currentTimeMillis();
+                    imageView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!doubleClicked)
+                                itemView.performClick();
+                        }
+                    },300);
                 }
             }
         });
@@ -128,6 +138,11 @@ public class EventViewHolder extends ViewHolder {
     }
 
     public void setPhoto(String photoPath) {
+        if(photoPath == null || photoPath.equals("")){
+            imageView.setVisibility(View.GONE);
+            return;
+        }
+        imageView.setVisibility(View.VISIBLE);
         int width = DeviceUtil.getDisplayMetrics().widthPixels;
         imageView.getLayoutParams().height = width/2;
         imageView.requestLayout();

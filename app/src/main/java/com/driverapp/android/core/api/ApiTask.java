@@ -31,7 +31,7 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
     private static final String serverUrl = "http://driverapp.ru/api/";
     private final String methodName;
     private final boolean post;
-    private NameValuePair file = null;
+    private NameValuePair fileArgument = null;
     List<NameValuePair> arguments;
     public ApiTask(String methodName, List<NameValuePair> arguments, boolean post){
         this.arguments = arguments;
@@ -42,7 +42,7 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
         this.methodName = methodName;
         this.arguments = arguments;
         this.post = true;
-        this.file = fileArgument;
+        this.fileArgument = fileArgument;
     }
 
     @Override
@@ -55,11 +55,11 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
             HttpRequestBase request;
             if(post) {
                 HttpEntity entity;
-                if(file==null) {
+                if(fileArgument ==null) {
                     entity = new UrlEncodedFormEntity(arguments);
                 }else{
                     entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                    ((MultipartEntity)entity).addPart(file.getValue(), new FileBody(new File(file.getValue())));
+                    ((MultipartEntity)entity).addPart(fileArgument.getName(), new FileBody(new File(fileArgument.getValue())));
                     for (NameValuePair argument : arguments) {
                         ((MultipartEntity) entity).addPart(argument.getName(), new StringBody(argument.getValue()));
                     }

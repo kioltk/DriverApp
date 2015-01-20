@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by Jesus Christ. Amen.
  */
 public abstract class LikeTogglerTask extends ApiTask<LikeToggleResult> {
-    public LikeTogglerTask(final int eventId) {
+    public LikeTogglerTask(int user_id, final int eventId) {
         super("toggle_like",new ArrayList<NameValuePair>(){{ add(new BasicNameValuePair("event_id", String.valueOf(eventId))); }}, true);
     }
 }
