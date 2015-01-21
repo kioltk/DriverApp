@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:background="#000"
+    tools:context=".events.create.CropActivity">
+
+    <com.driverapp.android.events.create.cropping.PhotoView
+        android:id="@+id/crop_holder"
+        android:layout_alignBottom="@+id/cropper_frame"
+        android:layout_alignTop="@+id/cropper_frame"
+        android:layout_alignRight="@+id/cropper_frame"
+        android:layout_alignLeft="@+id/cropper_frame"
+        android:layout_width="360dp"
+        android:layout_height="360dp" />
+    <View
+        android:layout_above="@+id/cropper_frame"
+        android:background="#44000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <View
+        android:layout_below="@+id/cropper_frame"
+        android:background="#44000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <View
+        android:id="@+id/cropper_frame"
+        android:background="@drawable/cropping"
+        android:layout_centerInParent="true"
+        android:layout_width="360dp"
+        android:layout_height="360dp" />
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:text="cancel"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textAllCaps="true"
+            android:background="#05b"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/crop"
+            android:text="crop"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textAllCaps="true"
+            android:background="#05b"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        </LinearLayout>
+    <ImageView
+        android:id="@+id/cropped"
+        android:background="#a0000000"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

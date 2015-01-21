@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,10 +21,8 @@ import android.widget.Toast;
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.core.Core;
+import com.driverapp.android.events.create.cropping.CropActivity;
 import com.driverapp.android.models.EventCategory;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,6 +34,7 @@ public class CreateActivity extends BaseActivity {
     private static final int PICK_CATEGORY = 101;
     private static final int PICK_MAP = 102;
     private static final int PICK_PHOTO = 103;
+    private static final int CROP_PICTURE = 104;
     private ImageView imageView;
     private EventCategory selectedCategory;
     private View pickCategoryView;
@@ -117,6 +117,18 @@ public class CreateActivity extends BaseActivity {
 
         try {
             switch (requestCode) {
+                case CROP_PICTURE:
+                    if(resultCode == RESULT_OK) {
+                        String path = data.getStringExtra(CropActivity.IMAGE_PATH_RESULT);
+
+                        if (path == null) {
+                            return;
+                        }
+                        selectedImageFile = new File(path);
+                        selectedImageBitmap = BitmapFactory.decodeFile(path);
+                        imageView.setImageBitmap(selectedImageBitmap);
+                    }
+                    break;
                 case PICK_IMAGE:
                     if (resultCode == RESULT_OK) {
                         Uri imageUri = data.getData();
@@ -125,33 +137,11 @@ public class CreateActivity extends BaseActivity {
                         Cursor cursor = getContentResolver().query(imageUri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
                         cursor.moveToFirst();
 
-                        //Link to the image
                         final String imageFilePath = cursor.getString(0);
-                        selectedImageFile = new File(imageFilePath);
-                        ImageLoader.getInstance().displayImage(imageUri.toString(), imageView, new ImageLoadingListener() {
-                            @Override
-                            public void onLoadingStarted(String imageUri, View view) {
 
-                            }
-
-                            @Override
-                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                            }
-
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                selectedImageBitmap = loadedImage;
-                                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            }
-
-                            @Override
-                            public void onLoadingCancelled(String imageUri, View view) {
-
-                            }
-                        });
-                        // todo cropper?
                         cursor.close();
+
+                        crop(imageFilePath);
                     }
                     break;
                 case PICK_PHOTO: {
@@ -159,41 +149,23 @@ public class CreateActivity extends BaseActivity {
                     // todo cropper?
                     if(resultCode == RESULT_OK) {
                         Bundle extras = data.getExtras();
-                        selectedImageBitmap = (Bitmap) extras.get("data");
+                        Bitmap capturedPhotoBitmap = (Bitmap) extras.get("data");
                         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        selectedImageFile = new  File(getCacheDir(),
-                                "img" + System.currentTimeMillis()+
-                                ".jpg"
+                        File capturedPhotoFile = new  File(getCacheDir(),
+                                "temp"
                                 );
+                        if(capturedPhotoFile.exists()){
+                            capturedPhotoFile.delete();
+                            capturedPhotoFile.createNewFile();
+                        }
                         //selectedImageFile.mkdirs();
 
-                        FileOutputStream fOut = new FileOutputStream(selectedImageFile);
+                        FileOutputStream fOut = new FileOutputStream(capturedPhotoFile);
 
-                        selectedImageBitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                        capturedPhotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
                         fOut.flush();
                         fOut.close();
-
-                        ImageLoader.getInstance().displayImage("file:/"+selectedImageFile.getAbsolutePath(), imageView, new ImageLoadingListener() {
-                            @Override
-                            public void onLoadingStarted(String imageUri, View view) {
-
-                            }
-
-                            @Override
-                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                            }
-
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                selectedImageBitmap = loadedImage;
-                            }
-
-                            @Override
-                            public void onLoadingCancelled(String imageUri, View view) {
-
-                            }
-                        });
+                        crop(capturedPhotoFile.getPath());
                     }
                 }
                 break;
@@ -234,6 +206,17 @@ public class CreateActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void crop(String imageFilePath) {
+        Intent intent = new Intent(this, CropActivity.class);
+
+        String filePath = imageFilePath;
+        intent.putExtra(CropActivity.IMAGE_PATH, filePath);
+        intent.putExtra(CropActivity.IMAGE_PATH_RESULT, getCacheDir()+"/pic"+System.currentTimeMillis()+".jpg");
+
+        startActivityForResult(intent, CROP_PICTURE);
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -256,16 +239,17 @@ public class CreateActivity extends BaseActivity {
                 return true;
             }
             case R.id.create:
+                if(selectedCategory==null){
+                    Toast.makeText(this, "Сначала выберите категорию", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 final AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Отправка")
                         .setMessage("Терпение")
                         .setCancelable(false)
                         .show();
                 String body = bodyView.getText().toString();
-                if(selectedCategory==null){
-                    Toast.makeText(this, "Сначала выберите категорию", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+
                 CreateEventTask createEventTask = new CreateEventTask(
                         body, selectedCategory.id,
                         selectedLongitude,selectedLatitude,
