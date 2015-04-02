@@ -15,7 +15,6 @@
     <string name="title_activity_comments">Comments</string>
     <string name="title_activity_category">Categories</string>
     <string name="title_activity_test2">Map</string>
-    <string name="title_activity_location_picker">Map</string>
     <string name="create_pick_image_gallery">Select from gallery</string>
     <string name="create_pick_image_photo">Take a picture</string>
     <string name="create_pick_image_title">Event photo</string>
@@ -23,7 +22,7 @@
     <string name="login_vk">Login via VK</string>
     <string name="login_skip">Login without auth</string>
     <string name="action_profile">Profile</string>
-    <string name="create_pick_map_unknown">Unknow location</string>
+    <string name="create_pick_map_unknown">Dropped pin</string>
     <string name="create">Create</string>
     <string name="action_report">Report</string>
     <string name="error_connection_check">Check your internet connection</string>
@@ -45,8 +44,23 @@
     <string name="login_twitter">Login via twitter</string>
     <string name="title_activity_create">Create</string>
     <string name="event_title">Событие</string>
-    <string name="picker_location_advice_wait">Подождите</string>
-    <string name="picker_location_advice_loading">Загрузка адреса</string>
-    <string name="picker_location_advice_error">Адрес не установлен</string>
+    <string name="picker_location_title">Pick location</string>
+    <string name="picker_location_advice_wait">Wait please</string>
+    <string name="picker_location_advice_loading">Location identification</string>
+    <string name="picker_location_advice_error">Unknown location</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="saving_image">Saving image</string>
+    <string name="preparing_card">Preparing card</string>
+    <string name="no_storage_card">No storage card</string>
+    <string name="not_enough_space">Not enough space</string>
+    <string name="cropper_title">Crop image</string>
+    <string name="stats" formatted="false">%d comments · %d likes</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="username_placeholder">Name</string>
+    <string name="login_google">Login via Google</string>
+    <string name="create_sending">Sending</string>
+    <string name="create_sending_message">Event is creating</string>
+    <string name="create_addphoto">+ Add photo</string>
 
 </resources>

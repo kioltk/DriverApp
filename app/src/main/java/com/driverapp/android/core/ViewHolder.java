@@ -1,6 +1,7 @@
 package com.driverapp.android.core;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -17,5 +18,8 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     public Context getContext() {
         return context;
+    }
+    public Resources getResources(){
+        return context.getResources();
     }
 }

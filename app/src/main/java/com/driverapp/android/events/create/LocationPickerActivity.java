@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ public class LocationPickerActivity extends BaseActivity {
     private TextView currentPickTitleView;
     private TextView currentPickSubtitleView;
     private boolean myLocationFocused = true;
+    private boolean myLocationDetectedFirstTime = false;
+    private Location currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,10 @@ public class LocationPickerActivity extends BaseActivity {
         setContentView(R.layout.activity_location_picker);
         setUpMapIfNeeded();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        currentPickView = findViewById(R.id.current_pick);
+        currentPickTitleView = (TextView) findViewById(R.id.current_pick_title);
+        currentPickSubtitleView = (TextView) findViewById(R.id.current_pick_subtitle);
     }
 
     @Override
@@ -48,15 +55,16 @@ public class LocationPickerActivity extends BaseActivity {
 
 
 
-        currentPickView = findViewById(R.id.current_pick);
-        currentPickTitleView = (TextView) findViewById(R.id.current_pick_title);
-        currentPickSubtitleView = (TextView) findViewById(R.id.current_pick_subtitle);
 
         View myLocationButton = findViewById(R.id.my_location);
         myLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myLocationFocused = !myLocationFocused;
+                if(mMap!=null) {
+                    myLocationFocused = !myLocationFocused;
+                    mMap.setMyLocationEnabled(myLocationFocused);
+                    // todo change indicator?
+                }
             }
         });
 
@@ -72,8 +80,9 @@ public class LocationPickerActivity extends BaseActivity {
                 bundle.putDouble(EXTRA_LAT, geoData.latitude);
                 bundle.putDouble(EXTRA_LONGITUDE, geoData.longitude);
                 if(currentPickedAddress!=null) {
-                    if (currentPickedAddress.getMaxAddressLineIndex() > 0)
+                    if (currentPickedAddress.getMaxAddressLineIndex() > 0) {
                         bundle.putString(EXTRA_STREET, currentPickedAddress.getAddressLine(0));
+                    }
                     if (currentPickedAddress.getLocality() != null) {
                         bundle.putString(EXTRA_CITY, currentPickedAddress.getLocality());
                     }
@@ -128,14 +137,26 @@ public class LocationPickerActivity extends BaseActivity {
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                if (myLocationFocused) {
+                if(!myLocationDetectedFirstTime && location.hasAccuracy() && location.getAccuracy() < 100){
+                    myLocationDetectedFirstTime = true;
+                    pin(new LatLng(location.getLatitude(), location.getLongitude()));
                     mMap.animateCamera(
                             CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(location.getLatitude(), location.getLongitude()),
                                     15
                             )
                     );
+
                 }
+                currentLocation = location;
+                /*if (myLocationFocused) {
+                    mMap.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(location.getLatitude(), location.getLongitude()),
+                                    15
+                            )
+                    );
+                }*/
             }
         });
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
@@ -147,22 +168,26 @@ public class LocationPickerActivity extends BaseActivity {
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-
-                if (currentPick == null) {
-                    mMap.clear();
-                    MarkerOptions currentPickOptions = new MarkerOptions()
-                            .draggable(true)
-                            .position(latLng);
-                    currentPick = mMap.addMarker(currentPickOptions);
-                } else {
-                    currentPick.setPosition(latLng);
-                }
-
-                showMapCurrentPin();
+                pin(latLng);
             }
         });
     }
-    public void showMapCurrentPin(){
+
+    private void pin(LatLng latLng) {
+        if (currentPick == null) {
+            mMap.clear();
+            MarkerOptions currentPickOptions = new MarkerOptions()
+                    .draggable(true)
+                    .position(latLng);
+            currentPick = mMap.addMarker(currentPickOptions);
+        } else {
+            currentPick.setPosition(latLng);
+        }
+
+        updateMapCurrentPin();
+    }
+
+    public void updateMapCurrentPin(){
 
         // todo animate
 
@@ -196,5 +221,15 @@ public class LocationPickerActivity extends BaseActivity {
         };
         task.execute();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

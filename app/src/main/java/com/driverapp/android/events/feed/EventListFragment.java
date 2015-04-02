@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.driverapp.android.MainActivity;
 import com.driverapp.android.R;
+import com.driverapp.android.core.utils.Updatable;
 import com.driverapp.android.models.Event;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by d_great on 24.12.14.
  */
-public class EventListFragment extends Fragment {
+public class EventListFragment extends Fragment implements Updatable {
 
     private MainActivity activity;
     private View rootView;
@@ -29,6 +30,7 @@ public class EventListFragment extends Fragment {
     private ArrayList<Event> items;
     private TextView statusView;
     private View progressView;
+    private RecyclerView recycler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class EventListFragment extends Fragment {
 
         statusView = (TextView) rootView.findViewById(R.id.status);
         progressView = rootView.findViewById(R.id.progress);
-        final RecyclerView recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
+        recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
 
         recycler.setLayoutManager(new LinearLayoutManager(activity));
 
@@ -66,5 +68,29 @@ public class EventListFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = (MainActivity) activity;
+    }
+
+    @Override
+    public void update() {
+        progressView.setVisibility(View.VISIBLE);
+        recycler.setVisibility(View.GONE);
+        new EventListTask(){
+
+
+            @Override
+            protected void onSuccess(ArrayList<Event> result) {
+                progressView.setVisibility(View.GONE);
+                recycler.setVisibility(View.VISIBLE);
+                items = result;
+                recycler.setAdapter(new EventListAdapter(items, activity));
+            }
+
+            @Override
+            protected void onError(Exception exp) {
+                progressView.setVisibility(View.GONE);
+                statusView.setVisibility(View.VISIBLE);
+                statusView.setText(exp.getMessage());
+            }
+        }.execute();
     }
 }

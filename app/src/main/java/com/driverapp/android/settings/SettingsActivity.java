@@ -1,38 +1,29 @@
 package com.driverapp.android.settings;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
+import android.preference.PreferenceFragment;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.driverapp.android.R;
-import com.github.machinarius.preferencefragment.PreferenceFragment;
+import com.driverapp.android.core.BaseActivity;
 
 
-public class SettingsActivity extends ActionBarActivity {
+public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.container, new SettingFragment())
                     .commit();
         }
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,10 +32,13 @@ public class SettingsActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

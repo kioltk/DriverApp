@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.driverapp.android.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,6 +30,23 @@ public class CropActivity extends ActionBarActivity {
         final PhotoView photoView = (PhotoView) findViewById(R.id.crop_holder);
         View cropButton = findViewById(R.id.crop);
         View cancelButton = findViewById(R.id.cancel);
+
+        final View frame = findViewById(R.id.cropper_frame);
+
+        frame.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ViewGroup.LayoutParams frameParams = frame.getLayoutParams();
+                frameParams.height = frame.getWidth();
+                frame.setLayoutParams(frameParams);
+
+
+                ViewGroup.LayoutParams cropParams = photoView.getLayoutParams();
+                cropParams.height = photoView.getWidth();
+                photoView.setLayoutParams(cropParams);
+
+            }
+        }, 1);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();

@@ -15,6 +15,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  */
 public class DriverApp extends Application {
 
+    public static String getUserId() {
+        return "1";
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -2,14 +2,17 @@ package com.driverapp.android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.driverapp.android.core.BaseActivity;
+import com.driverapp.android.core.utils.Updatable;
 import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.events.feed.EventListFragment;
 import com.driverapp.android.events.feed.EventMapFragment;
+import com.driverapp.android.profile.ProfileActivity;
 import com.driverapp.android.settings.SettingsActivity;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -21,16 +24,17 @@ public class MainActivity extends BaseActivity {
     private static final int VIEW_MAP = 1;
 
     private int currentView = 0;
+    private Fragment updatableFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar.setLogo(R.drawable.ic_logo_ab);
-
+        toolbar.setLogo(R.drawable.ic_logo_ab_compat);
+        updatableFragment = new EventListFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new EventListFragment())
+                .replace(R.id.container, updatableFragment)
                 .commit();
 
         View addButton = findViewById(R.id.add);
@@ -46,14 +50,16 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (currentView == VIEW_MAP) {
+                    updatableFragment = new EventListFragment();
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, new EventListFragment())
+                            .replace(R.id.container, updatableFragment)
                             .commit();
                     currentView = VIEW_LIST;
                     viewToggler.setImageResource(R.drawable.ic_map);
                 } else {
+                    updatableFragment = new EventMapFragment();
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, new EventMapFragment())
+                            .replace(R.id.container, updatableFragment)
                             .commit();
                     currentView = VIEW_MAP;
                     viewToggler.setImageResource(R.drawable.ic_cards);
@@ -84,12 +90,17 @@ public class MainActivity extends BaseActivity {
             case R.id.action_refresh:
                 update();
                 return true;
+            case R.id.action_profile:
+                startActivity(new Intent(this, ProfileActivity.class));
+                return true;
         }
 
 
         return super.onOptionsItemSelected(item);
     }
     void update(){
-
+        if(updatableFragment instanceof Updatable){
+            ((Updatable) updatableFragment).update();
+        }
     }
 }

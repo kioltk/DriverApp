@@ -28,6 +28,19 @@ public abstract class RegisterTask extends ApiTask<RegisterResult> {
 
     }
 
+    public RegisterTask(final String givenName, final String surname, final String source, final String profile, final String email, final String authType, final String authToken, String imageUrl) {
+        super("create_user", new ArrayList<NameValuePair>() {{
+            add(new BasicNameValuePair("name", givenName));
+            add(new BasicNameValuePair("surname", surname));
+            add(new BasicNameValuePair("source", source));
+            add(new BasicNameValuePair("profile", profile));
+            add(new BasicNameValuePair("mail", email));
+            add(new BasicNameValuePair("authType", authType));
+            add(new BasicNameValuePair("authToken", authToken));
+            add(new BasicNameValuePair("imageUrl", authToken));
+        }}, true);;
+    }
+
     @Override
     protected RegisterResult parse(String json) {
         return new Gson().fromJson(json, RegisterResult.class);

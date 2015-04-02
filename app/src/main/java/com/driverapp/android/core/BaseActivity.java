@@ -2,7 +2,6 @@ package com.driverapp.android.core;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.driverapp.android.R;
 
@@ -23,4 +22,9 @@ public class BaseActivity extends ActionBarActivity {
         }
 
     }
+
+    public void setBackButtonEnabled(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
 }

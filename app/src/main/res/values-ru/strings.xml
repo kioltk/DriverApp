@@ -10,10 +10,10 @@
     <string name="create_facebook">Фейсбук</string>
     <string name="create_pick_category">Выберите категорию</string>
     <string name="create_pick_image_photo">Сделать фото</string>
-    <string name="create_pick_image_gallery">Выбрать из галлереи</string>
-    <string name="create_pick_image_title">Фография события</string>
-    <string name="create_pick_map">ВЫберите местоположение</string>
-    <string name="create_pick_map_unknown">Неизвестное местоположение</string>
+    <string name="create_pick_image_gallery">Выбрать из галереи</string>
+    <string name="create_pick_image_title">Фотография события</string>
+    <string name="create_pick_map">Укажите место</string>
+    <string name="create_pick_map_unknown">Маркер без названия</string>
     <string name="create_share_title">Опубликовать через</string>
     <string name="create_twitter">Твиттер</string>
     <string name="create_vk">ВКонтакте</string>
@@ -33,11 +33,15 @@
     <string name="title_activity_category">Категории</string>
     <string name="title_activity_comments">Комментарии</string>
     <string name="title_activity_create">Новое событие</string>
-    <string name="title_activity_location_picker">Карта</string>
+    <string name="picker_location_title">Выберите местоположение</string>
     <string name="title_activity_maps">Карта</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_test2">Карта</string>
     <string name="picker_location_advice_wait">Подождите</string>
     <string name="picker_location_advice_loading">Загрузка адреса</string>
     <string name="picker_location_advice_error">Адрес не установлен</string>
+    <string name="create_sending">Отправка</string>
+    <string name="create_sending_message">Событие создаётся</string>
+    <string name="create_addphoto">+ Добавить фото</string>
+    <string name="cropper_title"></string>
 </resources>

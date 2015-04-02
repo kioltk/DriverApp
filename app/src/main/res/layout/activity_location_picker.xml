@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_marginBottom="75dp"
+            android:layout_above="@+id/current_pick"
             tools:layout="@layout/picker_map_fake_fragment" />
 
         <LinearLayout
@@ -50,6 +50,9 @@
             android:id="@+id/select"
             android:scaleType="center"
             android:src="@drawable/ic_ok_white"
+            app:fab_colorNormal="@color/main_color"
+            app:fab_colorPressed="@color/main_color"
+            app:fab_colorRipple="@color/main_color"
             android:layout_marginBottom="40dp"
             android:layout_marginRight="10dp"
             android:layout_alignParentBottom="true"
@@ -61,9 +64,12 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/picker_map_location"
             app:fab_colorNormal="#fff"
+            app:fab_colorPressed="#fff"
+            app:fab_colorRipple="#fff"
             android:layout_above="@+id/select"
             android:scaleType="center"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="16dp"
             android:layout_width="50dp"
             android:layout_height="50dp" />
     </RelativeLayout>

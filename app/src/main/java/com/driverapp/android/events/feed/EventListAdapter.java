@@ -37,11 +37,12 @@ public class EventListAdapter extends RecyclerView.Adapter {
             EventViewHolder eventViewHolder = (EventViewHolder) viewHolder;
             eventViewHolder.setTitle("id: " + item.id);
             eventViewHolder.setBody(item.desc);
-            eventViewHolder.setAddress(item.address);
+            eventViewHolder.setAddress(item.address + ", " + item.city);
             eventViewHolder.setBody(item.desc);
             eventViewHolder.setUserName(item.getUserName());
             eventViewHolder.setUserPhoto(item.user_avatar_path);
             eventViewHolder.setCategoryName(item.category_name);
+            eventViewHolder.setColor(item.category_color);
             eventViewHolder.setPhoto(item.photo_path);
             eventViewHolder.setOnItemClick(item);
         } else {

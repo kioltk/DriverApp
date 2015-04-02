@@ -156,11 +156,4 @@
 
 
     </RelativeLayout>
-    <TextView
-        android:id="@+id/comment_holder"
-        android:background="@drawable/item_button_background"
-        android:gravity="center"
-        android:text="@string/event_show_comments"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
 </LinearLayout>

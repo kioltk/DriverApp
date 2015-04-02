@@ -2,6 +2,10 @@ package com.driverapp.android.events.feed;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +34,8 @@ public class EventViewHolder extends ViewHolder {
     private final View likeView;
     private final View commentView;
     private final View shareView;
+    private final View backgroundView;
+    private final View dividerView;
     private TextView userNameView;
     private ImageView bigLikeView;
 //    private final TextView ratingView;
@@ -46,6 +52,8 @@ public class EventViewHolder extends ViewHolder {
         shareView = itemView.findViewById(R.id.share_holder);
         commentView = itemView.findViewById(R.id.comment_holder);
         bigLikeView = (ImageView) itemView.findViewById(R.id.like_big);
+        backgroundView = itemView.findViewById(R.id.background);
+        dividerView = itemView.findViewById(R.id.divider);
 
 
         //ratingView = (TextView) itemView.findViewById(R.id.rating);
@@ -61,7 +69,7 @@ public class EventViewHolder extends ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getContext().startActivity(EventActivity.getActivityIntent(v.getContext(), item));
+                v.getContext().startActivity(EventActivity.getActivityIntent(v.getContext(), item.id));
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -140,9 +148,11 @@ public class EventViewHolder extends ViewHolder {
     public void setPhoto(String photoPath) {
         if(photoPath == null || photoPath.equals("")){
             imageView.setVisibility(View.GONE);
+            dividerView.setVisibility(View.VISIBLE);
             return;
         }
         imageView.setVisibility(View.VISIBLE);
+        dividerView.setVisibility(View.GONE);
         int width = DeviceUtil.getDisplayMetrics().widthPixels;
         imageView.getLayoutParams().height = width/2;
         imageView.requestLayout();
@@ -169,5 +179,12 @@ public class EventViewHolder extends ViewHolder {
 
             }
         });
+    }
+
+    public void setColor(String categoryColor) {
+        Drawable background = getResources().getDrawable(R.drawable.card_item_background);
+        ColorFilter filter = new LightingColorFilter(0xFFFFFFFF, Color.parseColor("#"+categoryColor));
+        background.setColorFilter(filter);
+        backgroundView.setBackgroundDrawable(background);
     }
 }

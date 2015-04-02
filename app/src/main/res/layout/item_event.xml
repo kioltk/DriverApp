@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/background"
             android:background="@drawable/card_item_background"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -83,7 +87,16 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
                 </RelativeLayout>
+            <View
+                android:id="@+id/divider"
+                android:background="#ddd"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                />
             <TextView
                 android:id="@+id/address"
                 android:ellipsize="end"
@@ -103,7 +116,7 @@
                 android:paddingBottom="18dp"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="Новости 3123 123 213 12России и мира на сайте МК.RU обновляются каждую минуту. #бред"
                 android:layout_below="@+id/image"
                 android:layout_width="match_parent"

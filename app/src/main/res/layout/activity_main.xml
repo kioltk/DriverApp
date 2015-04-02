@@ -6,7 +6,9 @@
     android:layout_height="match_parent">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        android:contentInsetStart="80dp"
         android:background="#fafafa"
+        app:theme="@style/actionbar_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <RelativeLayout
@@ -23,7 +25,7 @@
             android:src="@drawable/ic_map"
             android:scaleType="centerInside"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/floating_divider"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             app:fab_colorNormal="@color/main_color"

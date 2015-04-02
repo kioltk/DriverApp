@@ -1,8 +1,6 @@
 package com.driverapp.android.events;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -18,8 +16,6 @@ import android.widget.Toast;
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.core.utils.DeviceUtil;
-import com.driverapp.android.core.utils.UserUtil;
-import com.driverapp.android.events.comments.EventCommentsActivity;
 import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.Event;
 import com.driverapp.android.models.EventComment;
@@ -68,7 +64,6 @@ public class EventActivity extends BaseActivity {
         userNameView = (TextView) contentView.findViewById(R.id.user_name);
         userPhotoView = (ImageView) contentView.findViewById(R.id.user_photo);
         categoryView = (TextView) contentView.findViewById(R.id.category);
-        View comments =  contentView.findViewById(R.id.comment_holder);
         View likeButton =  contentView.findViewById(R.id.like_holder);
 
 
@@ -110,19 +105,14 @@ public class EventActivity extends BaseActivity {
             }
         }.execute();
 
-        comments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(EventCommentsActivity.getActivityIntent(getBaseContext(), id));
-            }
-        });
+
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                if(UserUtil.user_id==0){
+                /*if(UserUtil.user_id==0){
                     new AlertDialog.Builder(EventActivity.this)
                             .setTitle("Сначала нужно зайти")
                             .setMessage("Пока не сделано")
@@ -140,9 +130,9 @@ public class EventActivity extends BaseActivity {
                             })
                             .show();
                     return;
-                }
+                }*/
 
-                LikeTogglerTask likeTogglerTask = new LikeTogglerTask(UserUtil.user_id, id) {
+                LikeTogglerTask likeTogglerTask = new LikeTogglerTask(id) {
                     @Override
                     protected void onSuccess(LikeToggleResult result) {
                         Toast.makeText(getBaseContext(), result.act,Toast.LENGTH_SHORT).show();
@@ -156,7 +146,7 @@ public class EventActivity extends BaseActivity {
                 likeTogglerTask.start();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setBackButtonEnabled();
 
     }
 
@@ -177,9 +167,9 @@ public class EventActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Intent getActivityIntent(Context context, Event item) {
+    public static Intent getActivityIntent(Context context, int eventid) {
         Bundle bundle = new Bundle();
-        bundle.putInt(EXTRA_ID, item.id);
+        bundle.putInt(EXTRA_ID, eventid);
         //String[] photosArray = new String[item.photos.size()];
         //item.photos.toArray(photosArray);
         //bundle.putStringArray(EXTRA_PHOTOS_ARRAY, photosArray);

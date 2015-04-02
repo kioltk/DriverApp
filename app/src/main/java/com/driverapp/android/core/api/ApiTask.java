@@ -73,6 +73,12 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
             }
 
             Log.i(LOG_TAG,"Executing request to url: " + url);
+            String argumentsLogging = "";
+            for (NameValuePair argument : arguments) {
+                argumentsLogging += argument.getName() + " = " + argument.getValue() + "\n";
+            }
+            Log.i(LOG_TAG,"Arguments: " + argumentsLogging);
+
             HttpResponse httpResponse = httpClient.execute(request);
             HttpEntity httpEntity = httpResponse.getEntity();
             String responseString = EntityUtils.toString(httpEntity);
@@ -87,7 +93,6 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
     }
 
     protected ResultType parse(String json) {
-
         return new Gson().fromJson(json, new TypeToken<ResultType>() {
         }.getType());
     }

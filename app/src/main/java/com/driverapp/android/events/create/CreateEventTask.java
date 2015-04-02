@@ -24,7 +24,7 @@ public abstract class CreateEventTask extends ApiTask<CreateEventResult> {
             add(new BasicNameValuePair("desc", String.valueOf(body)));
             add(new BasicNameValuePair("category_id", String.valueOf(categoryId)));
 
-        }}, new BasicNameValuePair("photo", photoFile.getAbsolutePath()));
+        }}, photoFile==null?null:new BasicNameValuePair("photo", photoFile.getAbsolutePath()));
 
     }
 
