@@ -44,4 +44,5 @@
     <string name="create_sending_message">Событие создаётся</string>
     <string name="create_addphoto">+ Добавить фото</string>
     <string name="cropper_title"></string>
+    <string name="cropping">Cropping</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.driverapp.android.events.create;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -158,14 +160,29 @@ public class CreateActivity extends BaseActivity {
             switch (requestCode) {
                 case CROP_PICTURE:
                     if (resultCode == RESULT_OK) {
-                        String path = data.getStringExtra(CropActivity.IMAGE_PATH_RESULT);
+                        final String path = data.getStringExtra(CropActivity.IMAGE_PATH_RESULT);
 
                         if (path == null) {
                             return;
                         }
                         selectedImageFile = new File(path);
-                        selectedImageBitmap = BitmapFactory.decodeFile(path);
-                        imagePickBackgroundView.setImageBitmap(selectedImageBitmap);
+                        final AlertDialog alert = new ProgressDialog.Builder(this)
+                                .setMessage(R.string.cropping)
+                                .setCancelable(false).show();
+                        AsyncTask task = new AsyncTask() {
+                            @Override
+                            protected Object doInBackground(Object[] params) {
+                                selectedImageBitmap = BitmapFactory.decodeFile(path);
+                                return null;
+                            }
+
+                            @Override
+                            protected void onPostExecute(Object o) {
+                                imagePickBackgroundView.setImageBitmap(selectedImageBitmap);
+                                alert.dismiss();
+                            }
+                        };
+                        task.execute();
                         imagePickView.setTextColor(0xffffffff);
                     }
                     break;

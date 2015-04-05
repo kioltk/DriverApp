@@ -62,5 +62,6 @@
     <string name="create_sending">Sending</string>
     <string name="create_sending_message">Event is creating</string>
     <string name="create_addphoto">+ Add photo</string>
+    <string name="cropping">Cropping</string>
 
 </resources>
