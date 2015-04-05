@@ -33,11 +33,11 @@ public class EventListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         Event item = items.get(i);
-        if(viewHolder instanceof EventViewHolder) {
+        if (viewHolder instanceof EventViewHolder) {
             EventViewHolder eventViewHolder = (EventViewHolder) viewHolder;
             eventViewHolder.setTitle("id: " + item.id);
             eventViewHolder.setBody(item.desc);
-            eventViewHolder.setAddress(item.address + ", " + item.city);
+            eventViewHolder.setAddress(item.city + ", " + item.address);
             eventViewHolder.setBody(item.desc);
             eventViewHolder.setUserName(item.getUserName());
             eventViewHolder.setUserPhoto(item.user_avatar_path);

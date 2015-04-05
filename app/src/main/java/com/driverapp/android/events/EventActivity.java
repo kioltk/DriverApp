@@ -78,7 +78,7 @@ public class EventActivity extends BaseActivity {
                 bodyView.setText(result.desc);
                 dateView.setText(TimeUtils.getTime(result.date_create));
                 categoryView.setText(result.category_name);
-                addressView.setText(result.address);
+                addressView.setText(result.city + ", " + result.address);
                 userNameView.setText(result.getUserName());
                 ImageLoader.getInstance().displayImage(result.user_avatar_path, userPhotoView);
                 if (result.photo_path == null) {
