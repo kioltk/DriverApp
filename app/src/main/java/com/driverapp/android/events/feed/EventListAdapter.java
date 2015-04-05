@@ -44,6 +44,7 @@ public class EventListAdapter extends RecyclerView.Adapter {
             eventViewHolder.setCategoryName(item.category_name);
             eventViewHolder.setColor(item.category_color);
             eventViewHolder.setPhoto(item.photo_path);
+            eventViewHolder.setDate(item.date_create);
             eventViewHolder.setOnItemClick(item);
         } else {
 

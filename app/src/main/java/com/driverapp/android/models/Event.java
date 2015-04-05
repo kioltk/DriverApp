@@ -1,6 +1,5 @@
 package com.driverapp.android.models;
 
-import com.driverapp.android.models.EventComment;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Event {
     public String city;
     public String address;
     private LatLng geodata;
-    public String date_create;
+    public int date_create;
 
     public LatLng getGeodata(){
         if(geodata==null)

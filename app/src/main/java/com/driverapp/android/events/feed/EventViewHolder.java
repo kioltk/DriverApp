@@ -15,6 +15,7 @@ import com.driverapp.android.R;
 import com.driverapp.android.core.ViewHolder;
 import com.driverapp.android.core.utils.DeviceUtil;
 import com.driverapp.android.core.utils.ImageUtil;
+import com.driverapp.android.core.utils.TimeUtils;
 import com.driverapp.android.events.EventActivity;
 import com.driverapp.android.events.comments.EventCommentsActivity;
 import com.driverapp.android.models.Event;
@@ -36,6 +37,7 @@ public class EventViewHolder extends ViewHolder {
     private final View shareView;
     private final View backgroundView;
     private final View dividerView;
+    private final TextView dateView;
     private TextView userNameView;
     private ImageView bigLikeView;
 //    private final TextView ratingView;
@@ -54,7 +56,7 @@ public class EventViewHolder extends ViewHolder {
         bigLikeView = (ImageView) itemView.findViewById(R.id.like_big);
         backgroundView = itemView.findViewById(R.id.background);
         dividerView = itemView.findViewById(R.id.divider);
-
+        dateView = (TextView) itemView.findViewById(R.id.date);
 
         //ratingView = (TextView) itemView.findViewById(R.id.rating);
     }
@@ -186,5 +188,9 @@ public class EventViewHolder extends ViewHolder {
         ColorFilter filter = new LightingColorFilter(0xFFFFFFFF, Color.parseColor("#"+categoryColor));
         background.setColorFilter(filter);
         backgroundView.setBackgroundDrawable(background);
+    }
+
+    public void setDate(int date) {
+        dateView.setText(TimeUtils.getTime(date));
     }
 }

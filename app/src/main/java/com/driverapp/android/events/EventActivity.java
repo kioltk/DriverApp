@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.core.utils.DeviceUtil;
+import com.driverapp.android.core.utils.TimeUtils;
 import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.Event;
 import com.driverapp.android.models.EventComment;
@@ -75,7 +76,7 @@ public class EventActivity extends BaseActivity {
                 progress.setVisibility(View.GONE);
                 contentView.setVisibility(View.VISIBLE);
                 bodyView.setText(result.desc);
-                dateView.setText(result.date_create);
+                dateView.setText(TimeUtils.getTime(result.date_create));
                 categoryView.setText(result.category_name);
                 addressView.setText(result.address);
                 userNameView.setText(result.getUserName());
