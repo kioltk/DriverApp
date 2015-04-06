@@ -63,5 +63,11 @@
     <string name="create_sending_message">Event is creating</string>
     <string name="create_addphoto">+ Add photo</string>
     <string name="cropping">Cropping</string>
+    <string name="title_activity_test_nav">TestNavActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
 
 </resources>

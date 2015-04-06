@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
-import com.driverapp.android.core.utils.DeviceUtil;
+import com.driverapp.android.core.utils.ScreenUtil;
 import com.driverapp.android.core.utils.TimeUtils;
 import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.Event;
@@ -94,7 +94,7 @@ public class EventActivity extends BaseActivity {
 
                 } else {
                     ViewGroup.LayoutParams params = imageView.getLayoutParams();
-                    params.height = DeviceUtil.getDisplayMetrics().widthPixels;
+                    params.height = ScreenUtil.getWidth();
                     imageView.setLayoutParams(params);
                     ImageLoader.getInstance().displayImage(result.photo_path, imageView);
                 }

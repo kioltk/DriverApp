@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.ViewHolder;
-import com.driverapp.android.core.utils.DeviceUtil;
 import com.driverapp.android.core.utils.ImageUtil;
+import com.driverapp.android.core.utils.ScreenUtil;
 import com.driverapp.android.core.utils.TimeUtils;
 import com.driverapp.android.events.EventActivity;
 import com.driverapp.android.events.comments.EventCommentsActivity;
@@ -155,7 +155,7 @@ public class EventViewHolder extends ViewHolder {
         }
         imageView.setVisibility(View.VISIBLE);
         dividerView.setVisibility(View.GONE);
-        int width = DeviceUtil.getDisplayMetrics().widthPixels;
+        int width = ScreenUtil.getWidth();
         imageView.getLayoutParams().height = width/2;
         imageView.requestLayout();
 

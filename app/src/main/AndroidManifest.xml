@@ -8,7 +8,6 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
@@ -35,6 +34,7 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".events.create.CreateActivity"
             android:label="@string/title_activity_create" >
@@ -54,10 +54,6 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test" >
-        </activity>
-        <activity
             android:name=".start.StartActivity"
             android:label="@string/title_activity_start" >
             <intent-filter>
@@ -73,10 +69,6 @@
         <activity
             android:name=".events.create.CategoryPickerActivity"
             android:label="@string/title_activity_category" >
-        </activity>
-        <activity
-            android:name=".TestActivity2"
-            android:label="@string/title_activity_test2" >
         </activity>
         <activity
             android:name=".profile.ProfileActivity"

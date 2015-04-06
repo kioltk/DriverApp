@@ -27,4 +27,7 @@ public class BaseActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
 }

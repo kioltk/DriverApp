@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent">
+    <RelativeLayout
+
+        android:background="#f0f0f0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/user_photo"
+            android:src="@drawable/photo_placeholder"
+            android:layout_width="72dp"
+            android:layout_height="72dp" />
+        <LinearLayout
+            android:paddingRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="16dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_below="@+id/user_photo"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+            <TextView
+                android:id="@+id/user_name"
+                android:text="@string/username_placeholder"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:alpha="0.75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/user_sub"
+                android:paddingTop="2dp"
+                android:text="Subheader"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:alpha="0.54"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        </RelativeLayout>
+    <View
+        android:background="#d0d4d4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</LinearLayout>
