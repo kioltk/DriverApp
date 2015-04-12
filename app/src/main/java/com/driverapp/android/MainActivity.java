@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.driverapp.android.auth.AuthUtil;
 import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.core.utils.Updatable;
 import com.driverapp.android.events.create.CreateActivity;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //toolbar.setLogo(R.drawable.ic_logo_ab_compat);
 
