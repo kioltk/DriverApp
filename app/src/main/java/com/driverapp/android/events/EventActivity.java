@@ -113,7 +113,7 @@ public class EventActivity extends BaseActivity {
             public void onClick(View v) {
 
 
-                /*if(UserUtil.user_id==0){
+                /*if(UserUtil.id==0){
                     new AlertDialog.Builder(EventActivity.this)
                             .setTitle("Сначала нужно зайти")
                             .setMessage("Пока не сделано")

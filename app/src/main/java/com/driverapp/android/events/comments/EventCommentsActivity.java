@@ -1,10 +1,7 @@
 package com.driverapp.android.events.comments;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +12,6 @@ import android.widget.TextView;
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.core.utils.UserUtil;
-import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.models.EventComment;
 
 import java.util.ArrayList;
@@ -54,7 +50,7 @@ public class EventCommentsActivity extends BaseActivity {
         View authView = findViewById(R.id.auth);
 
 
-        if(UserUtil.user_id==0){
+        if(UserUtil.id ==0){
             /*new AlertDialog.Builder(EventCommentsActivity.this)
                     .setTitle("Сначала нужно зайти")
                     .setMessage("Пока не сделано")

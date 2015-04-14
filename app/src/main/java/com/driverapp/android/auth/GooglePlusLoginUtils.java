@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
@@ -24,7 +23,7 @@ import com.google.android.gms.plus.model.people.Person;
 public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFailedListener,OnClickListener {
     private String TAG = "GooglePlusLoginUtils";
     /* Request code used to invoke sign in user interactions. */
-    private static final int RC_SIGN_IN = 0;
+    public static final int RC_SIGN_IN = 0;
     private static final int PROFILE_PIC_SIZE = 400;
     public static final String NAME = "name";
     public static final String EMAIL = "email";
@@ -34,7 +33,7 @@ public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFa
     /* Client used to interact with Google APIs. */
     private GoogleApiClient mGoogleApiClient;
     private boolean mIntentInProgress;
-    private boolean mSignInClicked;
+    public boolean mSignInClicked;
     private ConnectionResult mConnectionResult;
 
     private View btnSignIn;
@@ -114,7 +113,7 @@ public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFa
         }
     }
 
-    private void signInWithGplus() {
+    public void signInWithGplus() {
         Log.i(TAG, "signInWithGplus");
         if (!mGoogleApiClient.isConnecting()) {
             mSignInClicked = true;
@@ -138,7 +137,6 @@ public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFa
     @Override
     public void onConnected(Bundle arg0) {
         Log.i(TAG, "onConnected");
-        mSignInClicked = false;
         Toast.makeText(ctx, "User is connected!", Toast.LENGTH_LONG).show();
 
         // Get user's information
