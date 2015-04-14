@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -37,6 +40,7 @@ public class EventMapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_feed_map, null);
+        setHasOptionsMenu(true);
         eventHolder = rootView.findViewById(R.id.event_holder);
         imageView = (ImageView) eventHolder.findViewById(R.id.image);
         titleView = (TextView) rootView.findViewById(R.id.title);
@@ -46,6 +50,33 @@ public class EventMapFragment extends Fragment {
         setUpMapIfNeeded();
 
         return rootView;
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_feed, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id){
+            case R.id.action_settings:
+                return true;
+            case R.id.action_refresh:
+                update();
+                return true;
+            /*case R.id.action_profile:
+                startActivity(new Intent(getActivity(), ProfileActivity.class));
+                return true;*/
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setUpMapIfNeeded() {
@@ -98,5 +129,11 @@ public class EventMapFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    public void update() {
+        mMap.clear();
+        eventMarkersHash.clear();
+        setUpMap();
     }
 }

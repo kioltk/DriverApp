@@ -43,7 +43,7 @@ public class Core {
         }});
         categories.add(new EventCategory(){{
             id = 7;
-            name = "Опасность";
+            name = "Нужна помощь";
             imgResId = R.drawable.ic_category_dangerous;
         }});
         categories.add(new EventCategory(){{

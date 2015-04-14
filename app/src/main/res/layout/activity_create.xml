@@ -16,7 +16,6 @@
         <ImageView
             android:id="@+id/image_pick_background"
             android:scaleType="centerCrop"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
@@ -28,7 +27,6 @@
             android:textSize="18sp"
             android:textColor="#555"
             android:scaleType="centerInside"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_alignParentRight="true"
             android:layout_width="match_parent"

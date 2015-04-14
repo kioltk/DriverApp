@@ -46,7 +46,7 @@
         </LinearLayout>
         </RelativeLayout>
     <View
-        android:background="#d0d4d4"
+        android:background="@drawable/toolbar_shadow"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="2dp"/>
 </LinearLayout>

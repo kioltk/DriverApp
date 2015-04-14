@@ -12,10 +12,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.internal.widget.TintImageView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -58,7 +60,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedPosition = 2;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -293,34 +295,45 @@ public class NavigationDrawerFragment extends Fragment {
                 return view;
             }
             if(position==1||position==6){
-                view = new View(parent.getContext());
-                view.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ScreenUtil.dp(8)));
-                view.setBackgroundColor(0xd0d4d4);
+                view = new ImageView(parent.getContext());
+                AbsListView.LayoutParams params = new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ScreenUtil.dp(8));
+                if(position==6){
+                    ((ImageView)view).setBackgroundColor(0xffd0d4d4);
+                    params.height = 1;
+
+                }
+                view.setLayoutParams(params);
                 return view;
             }
 
             view = LayoutInflater.from(context).inflate(R.layout.navigation_item, parent, false);
             TextView textView = (TextView) view.findViewById(R.id.text);
-            ImageView imageView = (ImageView) view.findViewById(R.id.image);
+            TintImageView imageView = (TintImageView) view.findViewById(R.id.image);
             switch (position) {
                 case 2:
-                    textView.setText("Events");
+                    textView.setText("Events feed");
+                    imageView.setImageResource(R.drawable.ic_cards);
                     break;
                 case 3:
-                    textView.setText("Events feed");
+                    textView.setText("Events map");
+                    imageView.setImageResource(R.drawable.ic_map);
                     break;
                 case 4:
                     textView.setText("Add event");
+                    imageView.setImageResource(R.drawable.ic_cards);
                     break;
                 case 5:
                     textView.setText("My events");
+                    imageView.setImageResource(R.drawable.ic_cards);
                     break;
                 case 7:
                     textView.setText("Settings");
+                    imageView.setImageResource(R.drawable.ic_cards);
                     break;
                 case 8:
-                    textView.setText("Exit");
+                    textView.setText("About");
+                    imageView.setImageResource(R.drawable.ic_cards);
                     break;
             }
 
