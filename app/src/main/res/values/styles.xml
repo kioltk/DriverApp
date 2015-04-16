@@ -35,4 +35,8 @@
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/selector_crop_button</item>
     </style>
+
+    <style name="actionbar_popup" parent="ThemeOverlay.AppCompat.Light">
+        <!--<item name="android:textColorPrimary">#444</item>-->
+    </style>
 </resources>

@@ -8,6 +8,12 @@
         app:showAsAction="always"
         />-->
     <item
+        android:id="@+id/action_create"
+        android:title="refresh"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_add_white"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/report"
         android:title="@string/action_report"
         app:showAsAction="never"

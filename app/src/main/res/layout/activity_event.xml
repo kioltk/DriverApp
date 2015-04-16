@@ -3,8 +3,8 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ListView
-        android:id="@+id/list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <ProgressBar
@@ -16,6 +16,7 @@
         android:id="@+id/toolbar"
         android:background="#40000000"
         app:theme="@style/actionbar_style.transparent"
+        app:popupTheme="@style/actionbar_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </RelativeLayout>

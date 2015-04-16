@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity
                     .replace(R.id.feedContainer, updatableFragment)
                     .commit();
 
-            View addButton = rootView.findViewById(R.id.add);
+            View addButton = rootView.findViewById(R.id.create);
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -1,25 +1,11 @@
 package com.driverapp.android.events.comments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
-import com.driverapp.android.core.utils.UserUtil;
-import com.driverapp.android.models.EventComment;
-
-import java.util.ArrayList;
 
 
 public class EventCommentsActivity extends BaseActivity {
 
-    private static final java.lang.String EXTRA_EVENTID = "extra_event_id";
+    /*private static final java.lang.String EXTRA_EVENTID = "extra_event_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +37,7 @@ public class EventCommentsActivity extends BaseActivity {
 
 
         if(UserUtil.id ==0){
-            /*new AlertDialog.Builder(EventCommentsActivity.this)
+            *//*new AlertDialog.Builder(EventCommentsActivity.this)
                     .setTitle("Сначала нужно зайти")
                     .setMessage("Пока не сделано")
                     .setPositiveButton("Зайти", new DialogInterface.OnClickListener() {
@@ -66,7 +52,7 @@ public class EventCommentsActivity extends BaseActivity {
 
                         }
                     })
-                    .show();*/
+                    .show();*//*
             sendButton.setVisibility(View.GONE);
             commentBox.setVisibility(View.GONE);
             authView.setVisibility(View.GONE);
@@ -101,5 +87,5 @@ public class EventCommentsActivity extends BaseActivity {
         bundle.putInt(EXTRA_EVENTID, id);
         intent.putExtras(bundle);
         return intent;
-    }
+    }*/
 }

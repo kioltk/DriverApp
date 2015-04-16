@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.driverapp.android.R;
 import com.driverapp.android.models.Event;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -51,6 +53,7 @@ public class EventMapFragment extends Fragment {
 
         return rootView;
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_feed, menu);
@@ -64,7 +67,7 @@ public class EventMapFragment extends Fragment {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch (id){
+        switch (id) {
             case R.id.action_settings:
                 return true;
             case R.id.action_refresh:
@@ -129,6 +132,7 @@ public class EventMapFragment extends Fragment {
                 return true;
             }
         });
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(57, 43), 4));
     }
 
     public void update() {

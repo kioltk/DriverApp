@@ -8,10 +8,10 @@ import android.view.View;
 /**
  * Created by Jesus Christ. Amen.
  */
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class BaseViewHolder extends RecyclerView.ViewHolder {
     private final Context context;
 
-    public ViewHolder(View itemView) {
+    public BaseViewHolder(View itemView) {
         super(itemView);
         this.context = itemView.getContext();
     }

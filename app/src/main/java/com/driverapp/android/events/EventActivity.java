@@ -2,25 +2,19 @@ package com.driverapp.android.events;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
-import com.driverapp.android.core.utils.ScreenUtil;
-import com.driverapp.android.core.utils.TimeUtils;
 import com.driverapp.android.events.comments.EventCommentsAdapter;
+import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.models.Event;
 import com.driverapp.android.models.EventComment;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -31,41 +25,26 @@ public class EventActivity extends BaseActivity {
 
 
     private static final String EXTRA_ID = "extra_id";
-    private TextView addressView;
-    private TextView userNameView;
-    private TextView categoryView;
-    private TextView bodyView;
-    private ImageView imageView;
-    private ImageView userPhotoView;
-    private TextView dateView;
-    private ListView commentsList;
+    private RecyclerView contentRecycler;
     private View contentView;
     private View progress;
+    private EventCommentsAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        commentsList = (ListView) findViewById(R.id.list);
+        contentRecycler = (RecyclerView) findViewById(R.id.recycler);
+        contentRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        contentView = getLayoutInflater().inflate(R.layout.activity_event_content, null);
-
-        commentsList.addHeaderView(contentView, null, false);
-        commentsList.setAdapter(new EventCommentsAdapter(this, new ArrayList<EventComment>()));
-        //commentsList.addFooterView(null);
+        adapter = new EventCommentsAdapter(this, new ArrayList<EventComment>());
+        contentRecycler.setAdapter(adapter);
+        //contentRecycler.addFooterView(null);
 
 
         progress = findViewById(R.id.progress);
 
-        imageView = (ImageView) contentView.findViewById(R.id.image);
-        bodyView = (TextView) contentView.findViewById(R.id.body);
-        dateView = (TextView) contentView.findViewById(R.id.date);
-        addressView = (TextView) contentView.findViewById(R.id.address);
-        userNameView = (TextView) contentView.findViewById(R.id.user_name);
-        userPhotoView = (ImageView) contentView.findViewById(R.id.user_photo);
-        categoryView = (TextView) contentView.findViewById(R.id.category);
-        View likeButton =  contentView.findViewById(R.id.like_holder);
 
 
         Bundle extras = getIntent().getExtras();
@@ -74,30 +53,8 @@ public class EventActivity extends BaseActivity {
             @Override
             protected void onSuccess(Event result) {
                 progress.setVisibility(View.GONE);
-                contentView.setVisibility(View.VISIBLE);
-                bodyView.setText(result.desc);
-                dateView.setText(TimeUtils.getTime(result.date_create));
-                categoryView.setText(result.category_name);
-                addressView.setText(result.city + ", " + result.address);
-                userNameView.setText(result.getUserName());
-                ImageLoader.getInstance().displayImage(result.user_avatar_path, userPhotoView);
-                if (result.photo_path == null) {
-                    imageView.setVisibility(View.INVISIBLE);
-                    final TypedArray styledAttributes = getTheme().obtainStyledAttributes(
-                            new int[] { android.R.attr.actionBarSize });
-                    int mActionBarSize = (int) styledAttributes.getDimension(0, 0);
-                    styledAttributes.recycle();
-                    ViewGroup.LayoutParams params = imageView.getLayoutParams();
-                    params.height = mActionBarSize;
-                    imageView.setLayoutParams(params);
+                adapter.setEvent(result);
 
-
-                } else {
-                    ViewGroup.LayoutParams params = imageView.getLayoutParams();
-                    params.height = ScreenUtil.getWidth();
-                    imageView.setLayoutParams(params);
-                    ImageLoader.getInstance().displayImage(result.photo_path, imageView);
-                }
             }
 
             @Override
@@ -108,45 +65,7 @@ public class EventActivity extends BaseActivity {
 
 
 
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-                /*if(UserUtil.id==0){
-                    new AlertDialog.Builder(EventActivity.this)
-                            .setTitle("Сначала нужно зайти")
-                            .setMessage("Пока не сделано")
-                            .setPositiveButton("Зайти", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .setNegativeButton("Ладно", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .show();
-                    return;
-                }*/
-
-                LikeTogglerTask likeTogglerTask = new LikeTogglerTask(id) {
-                    @Override
-                    protected void onSuccess(LikeToggleResult result) {
-                        Toast.makeText(getBaseContext(), result.act,Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    protected void onError(Exception exp) {
-                        Toast.makeText(getBaseContext(), "Error " + exp.toString(),Toast.LENGTH_SHORT).show();
-                    }
-                };
-                likeTogglerTask.start();
-            }
-        });
         setBackButtonEnabled();
 
     }
@@ -164,6 +83,8 @@ public class EventActivity extends BaseActivity {
         if (id == android.R.id.home) {
             finish();
             return true;
+        } else if (id==R.id.action_create){
+            startActivity(CreateActivity.getActivityIntent(this));
         }
         return super.onOptionsItemSelected(item);
     }

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.driverapp.android.MainActivity;
 import com.driverapp.android.R;
 import com.driverapp.android.core.utils.ScreenUtil;
+import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.models.Event;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class EventListFragment extends Fragment  {
     private TextView statusView;
     private View progressView;
     private RecyclerView recycler;
+    private View createButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,6 +49,13 @@ public class EventListFragment extends Fragment  {
         statusView = (TextView) rootView.findViewById(R.id.status);
         progressView = rootView.findViewById(R.id.progress);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
+        createButton = rootView.findViewById(R.id.create);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(CreateActivity.getActivityIntent(getActivity()));
+            }
+        });
 
         if(ScreenUtil.isTablet())
             recycler.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));

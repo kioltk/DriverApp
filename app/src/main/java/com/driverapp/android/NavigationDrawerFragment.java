@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -24,9 +25,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.driverapp.android.core.utils.ImageUtil;
 import com.driverapp.android.core.utils.ScreenUtil;
 import com.driverapp.android.core.utils.UserUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -283,10 +287,30 @@ public class NavigationDrawerFragment extends Fragment {
                 view = LayoutInflater.from(context).inflate(R.layout.navigation_user, parent, false);
 
                 TextView nameView = (TextView) view.findViewById(R.id.user_name);
-                ImageView photoView = (ImageView) view.findViewById(R.id.user_photo);
+                final ImageView photoView = (ImageView) view.findViewById(R.id.user_photo);
                 if(UserUtil.getId()!=0) {
                     nameView.setText(UserUtil.getName());
-                    ImageLoader.getInstance().displayImage(UserUtil.getPhoto(), photoView);
+                    ImageLoader.getInstance().loadImage(UserUtil.getPhoto(), new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            photoView.setImageBitmap(ImageUtil.circle(loadedImage));
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String imageUri, View view) {
+
+                        }
+                    });
                 } else{
                     nameView.setText(R.string.login);
                     photoView.setImageResource(R.drawable.app_logo);
