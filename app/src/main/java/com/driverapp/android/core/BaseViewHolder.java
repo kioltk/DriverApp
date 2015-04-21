@@ -16,6 +16,10 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         this.context = itemView.getContext();
     }
 
+    public View findViewById(int resid){
+        return itemView.findViewById(resid);
+    }
+
     public Context getContext() {
         return context;
     }

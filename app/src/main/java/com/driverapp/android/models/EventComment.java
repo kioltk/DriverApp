@@ -14,7 +14,7 @@ public class EventComment {
     public String user_photo_path;
 
     public String getUserName(){
-        return user_name + " " + user_surname;
+        return user_name;
     }
 
     public int event_id;

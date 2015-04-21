@@ -50,8 +50,9 @@ public class UserUtil {
     }
 
     public static int getId() {
-        if(id==0)
+        return 1;
+        /*if(id==0)
             id = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getInt("id", 0);
-        return id;
+        return id;*/
     }
 }
