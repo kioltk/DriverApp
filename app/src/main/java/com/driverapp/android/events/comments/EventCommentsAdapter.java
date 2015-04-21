@@ -2,23 +2,31 @@ package com.driverapp.android.events.comments;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseViewHolder;
+import com.driverapp.android.core.utils.ImageUtil;
 import com.driverapp.android.core.utils.ScreenUtil;
 import com.driverapp.android.core.utils.TimeUtils;
+import com.driverapp.android.core.utils.UserUtil;
 import com.driverapp.android.events.LikeToggleResult;
 import com.driverapp.android.events.LikeTogglerTask;
 import com.driverapp.android.models.Event;
 import com.driverapp.android.models.EventComment;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -28,6 +36,8 @@ import java.util.ArrayList;
 public class EventCommentsAdapter extends RecyclerView.Adapter {
 
     private static final int EVENT_VIEW_TYPE = 0;
+    private static final int NEW_COMMENT_VIEW_TYPE =1;
+
     private final ArrayList<EventComment> comments;
     private final Context context;
     private Event event;
@@ -39,35 +49,38 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return comments.size()+1;
-    }
-
-    public EventComment getItem(int position) {
-        return comments.get(position);
+        if(event==null)
+            return 0;
+        return comments.size()+2;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
             return EVENT_VIEW_TYPE;
-        }
-        return 1;
+        } else
+        if(position==getItemCount()-1)
+            return NEW_COMMENT_VIEW_TYPE;
+        return 2;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == EVENT_VIEW_TYPE) {
             return new EventFullViewHolder(LayoutInflater.from(context).inflate(R.layout.activity_event_content, parent, false));
-        }
-        return null;
+        } else if (viewType == NEW_COMMENT_VIEW_TYPE)
+            return new NewCommentViewHolder(LayoutInflater.from(context).inflate(R.layout.item_comment_add, parent, false));
+        return new CommentViewHolder(LayoutInflater.from(context).inflate(R.layout.item_comment, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(position==0){
+        if(holder instanceof EventFullViewHolder){
             if(event!=null) {
                 ((EventFullViewHolder) holder).bind(event);
             }
+        } else if(holder instanceof CommentViewHolder){
+            ((CommentViewHolder)holder).bind(comments.get(position-1));
         }
     }
 
@@ -77,25 +90,11 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
     }
 
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.item_comment, null);
 
-        ImageView userPhoto = (ImageView) itemView.findViewById(R.id.user_photo);
-        TextView dateView = (TextView) itemView.findViewById(R.id.date);
-        TextView bodyView = (TextView) itemView.findViewById(R.id.body);
-
-        EventComment comment = getItem(position);
-
-        bodyView.setText(comment.getUserName() + " " + comment.comment);
-        dateView.setText(comment.date_create);
-        ImageLoader.getInstance().displayImage(comment.user_photo_path, userPhoto);
-
-        return itemView;
-    }
 
     public void setEvent(Event result) {
         this.event = result;
-        notifyItemChanged(0);
+        notifyItemRangeInserted(0, 2);
     }
 
     private class EventFullViewHolder extends BaseViewHolder {
@@ -195,9 +194,91 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private class CommentViewHolder extends RecyclerView.ViewHolder {
+    private class CommentViewHolder extends BaseViewHolder {
+        private final ImageView userPhoto;
+        private final TextView bodyView;
+        private final TextView dateView;
+
         public CommentViewHolder(View itemView) {
             super(itemView);
+            userPhoto = (ImageView) findViewById(R.id.user_photo);
+            bodyView = (TextView) findViewById(R.id.body);
+            dateView = (TextView) findViewById(R.id.date);
+        }
+        public void bind(EventComment comment){
+
+            bodyView.setText(comment.getUserName() + ": " + comment.comment);
+            dateView.setText(comment.date_create);
+            ImageLoader.getInstance().loadImage(comment.user_photo_path, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    userPhoto.setImageBitmap(ImageUtil.circle(loadedImage));
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            });
+        }
+    }
+
+    private class NewCommentViewHolder extends BaseViewHolder {
+        private final View send;
+
+        public NewCommentViewHolder(View itemView) {
+            super(itemView);
+            send = findViewById(R.id.send);
+            final EditText editText = ((EditText)findViewById(R.id.text));
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    send.setEnabled(s.length() != 0);
+                }
+            });
+            send.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AddCommentTask(event.id,String.valueOf(editText.getText())) {
+                        @Override
+                        protected void onSuccess(final AddCommentResult result) {
+                            comments.add(new EventComment(){{
+                                id = result.id;
+                                comment = String.valueOf(editText.getText());
+                                user_photo_path = UserUtil.getPhoto();
+                                user_id = UserUtil.id;
+                                user_name = UserUtil.getName();
+                            }});
+                            editText.setText("");
+                        }
+
+                        @Override
+                        protected void onError(Exception exp) {
+
+                        }
+                    }.execute();
+                }
+            });
         }
     }
 }
