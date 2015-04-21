@@ -12,12 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.driverapp.android.R;
-import com.driverapp.android.core.ViewHolder;
+import com.driverapp.android.core.BaseViewHolder;
 import com.driverapp.android.core.utils.ImageUtil;
 import com.driverapp.android.core.utils.ScreenUtil;
 import com.driverapp.android.core.utils.TimeUtils;
 import com.driverapp.android.events.EventActivity;
-import com.driverapp.android.events.comments.EventCommentsActivity;
 import com.driverapp.android.models.Event;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -26,7 +25,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 /**
  * Created by Jesus Christ. Amen.
  */
-public class EventViewHolder extends ViewHolder {
+public class EventViewHolder extends BaseViewHolder {
     private final TextView bodyView;
     private final TextView titleView;
     private final TextView addressView;
@@ -111,7 +110,7 @@ public class EventViewHolder extends ViewHolder {
         commentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getContext().startActivity(EventCommentsActivity.getActivityIntent(getContext(), item.id));
+                //getContext().startActivity(EventCommentsActivity.getActivityIntent(getContext(), item.id));
             }
         });
         shareView.setOnClickListener(new View.OnClickListener() {
@@ -155,8 +154,8 @@ public class EventViewHolder extends ViewHolder {
         }
         imageView.setVisibility(View.VISIBLE);
         dividerView.setVisibility(View.GONE);
-        int width = ScreenUtil.getWidth();
-        imageView.getLayoutParams().height = width/2;
+        int width = ScreenUtil.getWidth()/(ScreenUtil.isTablet()?3:1);
+        imageView.getLayoutParams().height = width;
         imageView.requestLayout();
 
         imageView.setImageResource(R.drawable.event_item_placeholder);

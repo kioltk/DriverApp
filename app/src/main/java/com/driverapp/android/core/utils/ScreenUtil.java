@@ -1,6 +1,11 @@
 package com.driverapp.android.core.utils;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Surface;
+import android.view.WindowManager;
 
 import static com.driverapp.android.DriverApp.app;
 
@@ -41,4 +46,15 @@ public class ScreenUtil {
         return app().getResources().getDisplayMetrics().heightPixels;
     }
 
+    public static boolean isTablet() {
+        return (app().getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public static boolean isLandscape() {
+        Display display = ((WindowManager) app().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int rotation = display.getRotation();
+        return (getWidth()>getHeight()) == (rotation== Surface.ROTATION_0||rotation==Surface.ROTATION_180);
+    }
 }

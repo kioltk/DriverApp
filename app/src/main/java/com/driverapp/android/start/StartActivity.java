@@ -3,7 +3,6 @@ package com.driverapp.android.start;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,16 +16,13 @@ import android.widget.Toast;
 
 import com.driverapp.android.MainActivity;
 import com.driverapp.android.R;
-import com.driverapp.android.auth.AuthActivty;
 import com.driverapp.android.auth.AuthUtil;
 import com.driverapp.android.auth.GooglePlusLoginUtils;
+import com.driverapp.android.core.utils.UserUtil;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +32,9 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
 
     private static final int AUTH_CODE_REQUEST_CODE = 10;
     private static final String TAG = "StartActivity";
+    private static final int RC_GOOGLE_RESOLUTION = 10;
     private GooglePlusLoginUtils gLogin;
+    private boolean authing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
         AuthUtil.getCertificateFingerprint(this);
 
         SharedPreferences prefs = getSharedPreferences("start", MODE_MULTI_PROCESS);
-        boolean firstStart = true;// prefs.getBoolean("first", true);
+        boolean firstStart = prefs.getBoolean("first", true);
         if (!firstStart) {
             LinearLayout container = (LinearLayout) findViewById(R.id.logins_holder);
             container.setGravity(Gravity.CENTER);
@@ -153,7 +151,10 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
         finish();
     }
 
-    void auth(){
+    void auth() {
+        if(authing || !gLogin.mSignInClicked)
+            return;
+        authing = true;
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
@@ -167,6 +168,7 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
                             accountName,  // String accountName
                             scopes                                            // String scope
                     );
+                    Log.d("code", code);
                     return code;
                 } catch (IOException transientEx) {
                     // network or server error, the call is expected to succeed if you try again later.
@@ -194,31 +196,64 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
 
             @Override
             protected void onPostExecute(String code) {
+                authing = false;
+                gLogin.mSignInClicked = false;
+                if(code!=null && !code.isEmpty()){
+                    register(code);
+                }
 
-                Toast.makeText(getBaseContext(), code, Toast.LENGTH_SHORT).show();
             }
         }.execute();
-
     }
+
+    private void register(String code) {
+        new RegisterTask(gLogin.loginedPersonName, "", "android", gLogin.loginedPersonGooglePlusProfile, gLogin.loginedEmail, "google", code, gLogin.loginedPersonPhotoUrl) {
+            @Override
+            protected void onSuccess(RegisterResult result) {
+                UserUtil.setUserId(result.user_id);
+                UserUtil.setUserName(gLogin.loginedPersonName);
+                UserUtil.setUserPhoto(gLogin.loginedPersonPhotoUrl);
+                startMain();
+            }
+
+            @Override
+            protected void onError(Exception exp) {
+                Log.e("Registration error","", exp);
+            }
+        }.execute();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         gLogin.connect();
     }
+
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         gLogin.disconnect();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int responseCode,
                                     Intent intent) {
         gLogin.onActivityResult(requestCode, responseCode, intent);
-
+        if(requestCode==AUTH_CODE_REQUEST_CODE) {
+            register(intent.getExtras().getString("authToken"));
+        }
     }
 
     @Override
     public void OnSuccessGPlusLogin() {
+        if (authing) {
+            return;
+        }
         auth();
     }
 }

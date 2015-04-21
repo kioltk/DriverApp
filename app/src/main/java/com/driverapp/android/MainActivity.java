@@ -6,18 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.driverapp.android.auth.AuthUtil;
 import com.driverapp.android.core.BaseActivity;
-import com.driverapp.android.core.utils.Updatable;
 import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.events.feed.EventListFragment;
 import com.driverapp.android.events.feed.EventMapFragment;
+import com.driverapp.android.profile.MyEventsFragment;
 import com.driverapp.android.profile.ProfileActivity;
 import com.driverapp.android.settings.SettingsActivity;
 import com.melnykov.fab.FloatingActionButton;
@@ -49,9 +45,33 @@ public class MainActivity extends BaseActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
+            case 0:
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
+            case 2:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new EventListFragment())
+                        .commit();
+                break;
+            case 3:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new EventMapFragment())
+                        .commit();
+                break;
+            case 4:
+                startActivity(new Intent(this, CreateActivity.class));
+                break;
+            case 5:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new MyEventsFragment())
+                        .commit();
+                break;
+            case 7:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
             default:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, new MainFragment())
+                        .replace(R.id.container, new Fragment())
                         .commit();
         }
     }
@@ -88,7 +108,7 @@ public class MainActivity extends BaseActivity
                     .replace(R.id.feedContainer, updatableFragment)
                     .commit();
 
-            View addButton = rootView.findViewById(R.id.add);
+            View addButton = rootView.findViewById(R.id.create);
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,18 +121,9 @@ public class MainActivity extends BaseActivity
                 @Override
                 public void onClick(View v) {
                     if (currentView == VIEW_MAP) {
-                        updatableFragment = new EventListFragment();
-                        getChildFragmentManager().beginTransaction()
-                                .replace(R.id.feedContainer, updatableFragment)
-                                .commit();
                         currentView = VIEW_LIST;
                         viewToggler.setImageResource(R.drawable.ic_map);
                     } else {
-                        updatableFragment = new EventMapFragment();
-                        getChildFragmentManager().beginTransaction()
-                                .replace(R.id.feedContainer, updatableFragment)
-                                .commit();
-                        currentView = VIEW_MAP;
                         viewToggler.setImageResource(R.drawable.ic_cards);
                     }
                 }
@@ -120,38 +131,10 @@ public class MainActivity extends BaseActivity
         }
 
         void update(){
-            if(updatableFragment instanceof Updatable){
-                ((Updatable) updatableFragment).update();
-            }
+
         }
 
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            inflater.inflate(R.menu.menu_main, menu);
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            switch (id){
-                case R.id.action_settings:
-                    startActivity(new Intent(getActivity(), SettingsActivity.class));
-                    return true;
-                case R.id.action_refresh:
-                    update();
-                    return true;
-                case R.id.action_profile:
-                    startActivity(new Intent(getActivity(), ProfileActivity.class));
-                    return true;
-            }
 
 
-            return super.onOptionsItemSelected(item);
-        }
     }
 }
