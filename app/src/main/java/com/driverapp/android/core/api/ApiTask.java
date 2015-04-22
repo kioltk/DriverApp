@@ -56,7 +56,7 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
             if(post) {
                 HttpEntity entity;
                 if(fileArgument ==null) {
-                    entity = new UrlEncodedFormEntity(arguments);
+                    entity = new UrlEncodedFormEntity(arguments, "utf-8");
                 }else{
                     entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                     ((MultipartEntity)entity).addPart(fileArgument.getName(), new FileBody(new File(fileArgument.getValue())));
