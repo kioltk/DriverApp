@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:id="@+id/user_photo"
+                    android:id="@+id/userPhoto"
                     android:background="@drawable/photo_placeholder"
                     android:layout_marginRight="8dp"
                     android:layout_width="40dp"
@@ -32,7 +32,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/user_photo"
+                    android:layout_toRightOf="@+id/userPhoto"
                     android:layout_toLeftOf="@+id/category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -52,7 +52,7 @@
                         android:textSize="13sp"
                         android:textColor="#8F9595"
                         android:layout_below="@+id/user_name"
-                        android:layout_toRightOf="@+id/user_photo"
+                        android:layout_toRightOf="@+id/userPhoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     </LinearLayout>

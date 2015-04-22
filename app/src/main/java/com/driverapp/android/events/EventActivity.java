@@ -25,6 +25,7 @@ public class EventActivity extends BaseActivity {
 
 
     private static final String EXTRA_ID = "extra_id";
+    private static final String EXTRA_SCROLL_TO_COMMENT = "extra_scroll_to_comment";
     private RecyclerView contentRecycler;
     private View contentView;
     private View progress;
@@ -104,9 +105,10 @@ public class EventActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Intent getActivityIntent(Context context, int eventid) {
+    public static Intent getActivityIntent(Context context, int eventid, boolean scrollToComment) {
         Bundle bundle = new Bundle();
         bundle.putInt(EXTRA_ID, eventid);
+        bundle.putBoolean(EXTRA_SCROLL_TO_COMMENT, scrollToComment);
         //String[] photosArray = new String[item.photos.size()];
         //item.photos.toArray(photosArray);
         //bundle.putStringArray(EXTRA_PHOTOS_ARRAY, photosArray);

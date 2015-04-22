@@ -1,7 +1,6 @@
 package com.driverapp.android.events.comments;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -12,16 +11,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseViewHolder;
 import com.driverapp.android.core.utils.ImageUtil;
-import com.driverapp.android.core.utils.ScreenUtil;
-import com.driverapp.android.core.utils.TimeUtils;
 import com.driverapp.android.core.utils.UserUtil;
-import com.driverapp.android.events.LikeToggleResult;
-import com.driverapp.android.events.LikeTogglerTask;
+import com.driverapp.android.events.feed.EventViewHolder;
 import com.driverapp.android.models.Event;
 import com.driverapp.android.models.EventComment;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -102,34 +97,19 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
         notifyItemRangeInserted(1, comments.size());
     }
 
-    private class EventFullViewHolder extends BaseViewHolder {
+    private class EventFullViewHolder extends EventViewHolder {
 
-        private View likeButton;
-        private TextView addressView;
-        private TextView userNameView;
-        private TextView categoryView;
-        private TextView bodyView;
-        private ImageView imageView;
-        private ImageView userPhotoView;
-        private TextView dateView;
 
 
         public EventFullViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.image);
-            bodyView = (TextView) itemView.findViewById(R.id.body);
-            dateView = (TextView) itemView.findViewById(R.id.date);
-            addressView = (TextView) itemView.findViewById(R.id.address);
-            userNameView = (TextView) itemView.findViewById(R.id.user_name);
-            userPhotoView = (ImageView) itemView.findViewById(R.id.user_photo);
-            categoryView = (TextView) itemView.findViewById(R.id.category);
-            likeButton =  itemView.findViewById(R.id.like_holder);
 
         }
 
         public void bind(final Event event){
             itemView.setVisibility(View.VISIBLE);
-            bodyView.setText(event.desc);
+            super.bind(event);
+            /*bodyView.setText(event.desc);
             dateView.setText(TimeUtils.getTime(event.date_create));
             categoryView.setText(event.category_name);
             addressView.setText(event.city + ", " + event.address);
@@ -162,7 +142,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
 
 
-                /*if(UserUtil.id==0){
+                *//*if(UserUtil.id==0){
                     new AlertDialog.Builder(EventActivity.this)
                             .setTitle("Сначала нужно зайти")
                             .setMessage("Пока не сделано")
@@ -180,7 +160,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
                             })
                             .show();
                     return;
-                }*/
+                }*//*
 
                     LikeTogglerTask likeTogglerTask = new LikeTogglerTask(event.id) {
                         @Override
@@ -195,7 +175,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
                     };
                     likeTogglerTask.start();
                 }
-            });
+            });*/
         }
     }
 
@@ -207,7 +187,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
 
         public CommentViewHolder(View itemView) {
             super(itemView);
-            userPhoto = (ImageView) findViewById(R.id.user_photo);
+            userPhoto = (ImageView) findViewById(R.id.userPhoto);
             userName = (TextView) findViewById(R.id.user_name);
             bodyView = (TextView) findViewById(R.id.body);
             dateView = (TextView) findViewById(R.id.date);
@@ -275,7 +255,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
                                 comment = String.valueOf(editText.getText());
                                 user_photo_path = UserUtil.getPhoto();
                                 user_id = UserUtil.id;
-                                user_name = UserUtil.getName();
+                                user_name = UserUtil.getFullName();
                             }});
                             editText.setText("");
                         }

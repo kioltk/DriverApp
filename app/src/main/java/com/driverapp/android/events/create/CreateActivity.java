@@ -359,7 +359,7 @@ public class CreateActivity extends BaseActivity {
             @Override
             protected void onSuccess(CreateEventResult result) {
                 dialog.dismiss();
-                startActivity(EventActivity.getActivityIntent(getBaseContext(), result.event_id));
+                startActivity(EventActivity.getActivityIntent(getBaseContext(), result.event_id, false));
                 finish();
             }
 

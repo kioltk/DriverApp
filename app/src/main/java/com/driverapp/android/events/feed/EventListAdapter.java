@@ -26,8 +26,7 @@ public class EventListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = View.inflate(context, R.layout.item_event, null);
-        EventViewHolder eventViewHolder = new EventViewHolder(itemView);
-        return eventViewHolder;
+        return new EventViewHolder(itemView);
     }
 
     @Override
@@ -35,16 +34,7 @@ public class EventListAdapter extends RecyclerView.Adapter {
         Event item = items.get(i);
         if (viewHolder instanceof EventViewHolder) {
             EventViewHolder eventViewHolder = (EventViewHolder) viewHolder;
-            eventViewHolder.setTitle("id: " + item.id);
-            eventViewHolder.setBody(item.desc);
-            eventViewHolder.setAddress(item.city + ", " + item.address);
-            eventViewHolder.setBody(item.desc);
-            eventViewHolder.setUserName(item.getUserName());
-            eventViewHolder.setUserPhoto(item.user_avatar_path);
-            eventViewHolder.setCategoryName(item.category_name);
-            eventViewHolder.setColor(item.category_color);
-            eventViewHolder.setPhoto(item.photo_path);
-            eventViewHolder.setDate(item.date_create);
+            eventViewHolder.bind(item);
             eventViewHolder.setOnItemClick(item);
         } else {
 

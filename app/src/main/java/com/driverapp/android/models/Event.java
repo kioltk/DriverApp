@@ -37,7 +37,9 @@ public class Event {
     public String category_name;
     public String category_color;
 
-    public ArrayList<EventComment> eventComments = new ArrayList<>();
+    public int count_likes;
+    public int count_comments;
+
 
     public String getUserName() {
         return user_name + " " + user_surname;
