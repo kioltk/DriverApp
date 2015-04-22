@@ -29,6 +29,7 @@ public class EventActivity extends BaseActivity {
     private View contentView;
     private View progress;
     private EventCommentsAdapter adapter;
+    private int id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,13 +49,13 @@ public class EventActivity extends BaseActivity {
 
 
         Bundle extras = getIntent().getExtras();
-        final int id = extras.getInt(EXTRA_ID, 0);
+        id = extras.getInt(EXTRA_ID, 0);
         new EventTask(id) {
             @Override
             protected void onSuccess(Event result) {
                 progress.setVisibility(View.GONE);
                 adapter.setEvent(result);
-
+                fetchComments();
             }
 
             @Override
@@ -68,6 +69,20 @@ public class EventActivity extends BaseActivity {
 
         setBackButtonEnabled();
 
+    }
+
+    private void fetchComments() {
+        new CommentsListTask(id) {
+            @Override
+            protected void onSuccess(ArrayList<EventComment> result) {
+                adapter.setComments(result);
+            }
+
+            @Override
+            protected void onError(Exception exp) {
+
+            }
+        }.execute();
     }
 
 

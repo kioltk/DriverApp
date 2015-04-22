@@ -16,7 +16,7 @@ public abstract class AddCommentTask extends ApiTask<AddCommentResult> {
     public AddCommentTask(final int eventId, final String commentBody) {
         super("add_comment", new ArrayList<NameValuePair>() {{
             add(new BasicNameValuePair("event_id", String.valueOf(eventId)));
-            add(new BasicNameValuePair("event_id", String.valueOf(UserUtil.getId())));
+            add(new BasicNameValuePair("user_id", String.valueOf(UserUtil.getId())));
             add(new BasicNameValuePair("comment", commentBody));
         }}, true);
 

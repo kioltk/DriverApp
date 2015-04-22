@@ -97,6 +97,11 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
         notifyItemRangeInserted(0, 2);
     }
 
+    public void setComments(ArrayList<EventComment> comments) {
+        this.comments.addAll(comments);
+        notifyItemRangeInserted(1, comments.size());
+    }
+
     private class EventFullViewHolder extends BaseViewHolder {
 
         private View likeButton;
@@ -198,16 +203,19 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
         private final ImageView userPhoto;
         private final TextView bodyView;
         private final TextView dateView;
+        private final TextView userName;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
             userPhoto = (ImageView) findViewById(R.id.user_photo);
+            userName = (TextView) findViewById(R.id.user_name);
             bodyView = (TextView) findViewById(R.id.body);
             dateView = (TextView) findViewById(R.id.date);
         }
         public void bind(EventComment comment){
 
-            bodyView.setText(comment.getUserName() + ": " + comment.comment);
+            userName.setText(comment.getUserName());
+            bodyView.setText(comment.comment);
             dateView.setText(comment.date_create);
             ImageLoader.getInstance().loadImage(comment.user_photo_path, new ImageLoadingListener() {
                 @Override
@@ -259,10 +267,10 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
             send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new AddCommentTask(event.id,String.valueOf(editText.getText())) {
+                    new AddCommentTask(event.id, String.valueOf(editText.getText())) {
                         @Override
                         protected void onSuccess(final AddCommentResult result) {
-                            comments.add(new EventComment(){{
+                            comments.add(new EventComment() {{
                                 id = result.id;
                                 comment = String.valueOf(editText.getText());
                                 user_photo_path = UserUtil.getPhoto();
