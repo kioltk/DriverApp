@@ -199,19 +199,20 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
                 authing = false;
                 gLogin.mSignInClicked = false;
                 if(code!=null && !code.isEmpty()){
-                    register(code);
+                    registerGoogle(code);
                 }
 
             }
         }.execute();
     }
 
-    private void register(String code) {
-        new RegisterTask(gLogin.loginedPersonName, "", "android", gLogin.loginedPersonGooglePlusProfile, gLogin.loginedEmail, "google", code, gLogin.loginedPersonPhotoUrl) {
+    private void registerGoogle(String code) {
+        new RegisterTask(gLogin.loginedPersonName, gLogin.loginedPersonSurname, "android", gLogin.loginedPersonGooglePlusProfile, gLogin.loginedEmail, "google", code, gLogin.loginedPersonPhotoUrl) {
             @Override
             protected void onSuccess(RegisterResult result) {
                 UserUtil.setUserId(result.user_id);
                 UserUtil.setUserName(gLogin.loginedPersonName);
+                UserUtil.setUserSurname(gLogin.loginedPersonSurname);
                 UserUtil.setUserPhoto(gLogin.loginedPersonPhotoUrl);
                 startMain();
             }
@@ -245,8 +246,14 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
                                     Intent intent) {
         gLogin.onActivityResult(requestCode, responseCode, intent);
         if(requestCode==AUTH_CODE_REQUEST_CODE) {
-            register(intent.getExtras().getString("authToken"));
+            String authToken = intent.getExtras().getString("authToken");
+            if (authToken != null && !authToken.isEmpty()) {
+                registerGoogle(authToken);
+            } else {
+                auth();
+            }
         }
+
     }
 
     @Override

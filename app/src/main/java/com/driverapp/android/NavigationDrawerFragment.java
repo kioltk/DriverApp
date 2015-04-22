@@ -287,9 +287,9 @@ public class NavigationDrawerFragment extends Fragment {
                 view = LayoutInflater.from(context).inflate(R.layout.navigation_user, parent, false);
 
                 TextView nameView = (TextView) view.findViewById(R.id.user_name);
-                final ImageView photoView = (ImageView) view.findViewById(R.id.user_photo);
+                final ImageView photoView = (ImageView) view.findViewById(R.id.userPhoto);
                 if(UserUtil.getId()!=0) {
-                    nameView.setText(UserUtil.getName());
+                    nameView.setText(UserUtil.getFullName());
                     ImageLoader.getInstance().loadImage(UserUtil.getPhoto(), new ImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {

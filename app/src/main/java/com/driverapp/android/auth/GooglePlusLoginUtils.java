@@ -40,6 +40,7 @@ public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFa
     private Context ctx;
     private GPlusLoginStatus loginstatus;
     public String loginedPersonName;
+    public String loginedPersonSurname;
     public String loginedPersonPhotoUrl;
     public String loginedPersonGooglePlusProfile;
     public String loginedEmail;
@@ -156,7 +157,8 @@ public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFa
             if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
                 Person currentPerson = Plus.PeopleApi
                         .getCurrentPerson(mGoogleApiClient);
-                loginedPersonName = currentPerson.getDisplayName();
+                loginedPersonName = currentPerson.getName().getGivenName();
+                loginedPersonSurname = currentPerson.getName().getFamilyName();
                 loginedPersonPhotoUrl = currentPerson.getImage().getUrl();
                 loginedPersonGooglePlusProfile = currentPerson.getUrl();
                 loginedEmail = Plus.AccountApi.getAccountName(mGoogleApiClient);
