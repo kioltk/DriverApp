@@ -87,7 +87,7 @@ public class EventViewHolder extends BaseViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getContext().startActivity(EventActivity.getActivityIntent(v.getContext(), event.id, false));
+                v.getContext().startActivity(EventActivity.open(v.getContext(), event.id, false));
             }
         });
 
@@ -185,7 +185,7 @@ public class EventViewHolder extends BaseViewHolder {
             commentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getContext().startActivity(EventActivity.getActivityIntent(getContext(), event.id, true));
+                    getContext().startActivity(EventActivity.open(getContext(), event.id, true));
                 }
             });
         shareView.setOnClickListener(new View.OnClickListener() {

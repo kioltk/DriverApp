@@ -45,7 +45,7 @@
             android:layout_above="@+id/current_pick"
             android:background="@drawable/bottombar_shadow"
             android:layout_width="match_parent"
-            android:layout_height="2dp"/>
+            android:layout_height="5dp"/>
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/select"
             android:scaleType="center"

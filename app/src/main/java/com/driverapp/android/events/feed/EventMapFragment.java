@@ -13,15 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.driverapp.android.R;
+import com.driverapp.android.core.Core;
+import com.driverapp.android.events.EventActivity;
 import com.driverapp.android.models.Event;
+import com.driverapp.android.views.MaterialInterpolator;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,20 +39,21 @@ public class EventMapFragment extends Fragment {
     private HashMap<String, Event> eventMarkersHash = new HashMap();
     private View eventHolder;
     private TextView titleView;
-    private TextView bodyView;
-    private TextView addressView;
+    //private TextView bodyView;
+    //private TextView addressView;
     private TextView statsView;
     private ImageView imageView;
+    private boolean showingItem = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_feed_map, null);
         setHasOptionsMenu(true);
-        eventHolder = rootView.findViewById(R.id.event_holder);
+        eventHolder = rootView.findViewById(R.id.event);
         imageView = (ImageView) eventHolder.findViewById(R.id.image);
         titleView = (TextView) rootView.findViewById(R.id.title);
-        bodyView = (TextView) rootView.findViewById(R.id.body);
-        addressView = (TextView) rootView.findViewById(R.id.address);
+        //bodyView = (TextView) rootView.findViewById(R.id.body);
+        //addressView = (TextView) rootView.findViewById(R.id.address);
         statsView = (TextView) rootView.findViewById(R.id.stats);
         setUpMapIfNeeded();
 
@@ -108,8 +112,9 @@ public class EventMapFragment extends Fragment {
             @Override
             protected void onSuccess(ArrayList<Event> result) {
                 for (Event event : result) {
+                    int iconRes = Core.getCategories().get(event.category_id-1).pinResId;
                     MarkerOptions option = new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
+                            .icon(BitmapDescriptorFactory.fromResource(iconRes))
                             .position(event.getGeodata())
                             .title(event.desc);
                     eventMarkersHash.put(mMap.addMarker(option).getId(), event);
@@ -124,16 +129,26 @@ public class EventMapFragment extends Fragment {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Event event = eventMarkersHash.get(marker.getId());
-                eventHolder.animate().translationY(-eventHolder.getHeight()).setDuration(0).start();
-                eventHolder.animate().translationY(0).setDuration(250).start();
-
+                final Event event = eventMarkersHash.get(marker.getId());
+                if(!showingItem) {
+                    eventHolder.animate()
+                            .setInterpolator(new MaterialInterpolator())
+                            .translationY(eventHolder.getHeight()).setDuration(0).start();
+                    eventHolder.animate().translationY(0).setDuration(250).start();
+                }
                 titleView.setText(event.category_name);
-                addressView.setText(event.address);
-                bodyView.setText(event.desc);
-                statsView.setText(getString(R.string.stats, 0, 0));
+                //addressView.setText(event.address);
+                //bodyView.setText(event.desc);
+                statsView.setText(getString(R.string.stats, event.count_comments, event.count_likes));
+                ImageLoader.getInstance().displayImage(event.photo_path,imageView);
                 // todo likes and comments count?
-
+                showingItem = true;
+                eventHolder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(EventActivity.open(getActivity(), event.id));
+                    }
+                });
                 return true;
             }
         });

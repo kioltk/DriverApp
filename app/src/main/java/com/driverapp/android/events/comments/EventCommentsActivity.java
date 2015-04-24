@@ -81,7 +81,7 @@ public class EventCommentsActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Intent getActivityIntent(Context context, int id) {
+    public static Intent open(Context context, int id) {
         Intent intent = new Intent(context, EventCommentsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt(EXTRA_EVENTID, id);

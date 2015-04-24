@@ -3,6 +3,7 @@ package com.driverapp.android.events;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -105,7 +106,7 @@ public class EventActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Intent getActivityIntent(Context context, int eventid, boolean scrollToComment) {
+    public static Intent open(Context context, int eventid, boolean scrollToComment) {
         Bundle bundle = new Bundle();
         bundle.putInt(EXTRA_ID, eventid);
         bundle.putBoolean(EXTRA_SCROLL_TO_COMMENT, scrollToComment);
@@ -116,5 +117,9 @@ public class EventActivity extends BaseActivity {
         Intent intent = new Intent(context, EventActivity.class);
         intent.putExtras(bundle);
         return intent;
+    }
+
+    public static Intent open(Context context, int eventid) {
+        return open(context, eventid, false);
     }
 }
