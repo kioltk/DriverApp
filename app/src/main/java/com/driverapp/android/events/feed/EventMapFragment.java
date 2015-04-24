@@ -17,6 +17,8 @@ import com.driverapp.android.models.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -106,7 +108,10 @@ public class EventMapFragment extends Fragment {
             @Override
             protected void onSuccess(ArrayList<Event> result) {
                 for (Event event : result) {
-                    MarkerOptions option = new MarkerOptions().position(event.getGeodata()).title(event.desc);
+                    MarkerOptions option = new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
+                            .position(event.getGeodata())
+                            .title(event.desc);
                     eventMarkersHash.put(mMap.addMarker(option).getId(), event);
                 }
             }

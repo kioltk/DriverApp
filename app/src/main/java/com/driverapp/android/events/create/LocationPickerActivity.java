@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -177,6 +178,7 @@ public class LocationPickerActivity extends BaseActivity {
         if (currentPick == null) {
             mMap.clear();
             MarkerOptions currentPickOptions = new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
                     .draggable(true)
                     .position(latLng);
             currentPick = mMap.addMarker(currentPickOptions);
