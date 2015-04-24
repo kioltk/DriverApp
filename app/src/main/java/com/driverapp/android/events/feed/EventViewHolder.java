@@ -1,5 +1,9 @@
 package com.driverapp.android.events.feed;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -7,6 +11,7 @@ import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +21,10 @@ import com.driverapp.android.core.BaseViewHolder;
 import com.driverapp.android.core.utils.ImageUtil;
 import com.driverapp.android.core.utils.ScreenUtil;
 import com.driverapp.android.core.utils.TimeUtils;
+import com.driverapp.android.core.utils.UserUtil;
 import com.driverapp.android.events.EventActivity;
+import com.driverapp.android.events.LikeToggleResult;
+import com.driverapp.android.events.LikeTogglerTask;
 import com.driverapp.android.models.Event;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -32,6 +40,7 @@ public class EventViewHolder extends BaseViewHolder {
     protected final TextView categoryView;
     protected final ImageView imageView;
     protected final View likeView;
+    protected final ImageView likeIconView;
     protected final View commentView;
     protected final View shareView;
     protected final View backgroundView;
@@ -53,6 +62,7 @@ public class EventViewHolder extends BaseViewHolder {
         categoryView = (TextView) itemView.findViewById(R.id.category);
         imageView = (ImageView) itemView.findViewById(R.id.image);
         likeView = itemView.findViewById(R.id.like_holder);
+        likeIconView = (ImageView) itemView.findViewById(R.id.likeIcon);
         likesCounterView = (TextView) itemView.findViewById(R.id.likes_counter);
         commentsCounterView = (TextView) itemView.findViewById(R.id.comments_counter);
         shareView = itemView.findViewById(R.id.share_holder);
@@ -73,54 +83,111 @@ public class EventViewHolder extends BaseViewHolder {
     public void setBody(String body){
         bodyView.setText(body);
     }
-    public void setOnItemClick(final Event item){
+    public void setOnItemClick(final Event event){
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getContext().startActivity(EventActivity.getActivityIntent(v.getContext(), item.id, false));
+                v.getContext().startActivity(EventActivity.getActivityIntent(v.getContext(), event.id, false));
             }
         });
+
+    }
+    void like(final Event event){
+        if(!UserUtil.isLogined()){
+            new AlertDialog.Builder(getContext())
+                    .setTitle(getContext().getString(R.string.error))
+                    .setMessage(getContext().getString(R.string.error_loginfirstly))
+                    .setPositiveButton(getContext().getString(R.string.ok_login), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setNegativeButton(getContext().getString(R.string.no_well), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .show();
+            return;
+        }
+
+
+        LikeTogglerTask likeTogglerTask = new LikeTogglerTask(event.id) {
+            @Override
+            protected void onSuccess(LikeToggleResult result) {
+                event.count_likes = result.likes_count;
+                likesCounterView.setText(""+(event.count_likes));
+            }
+
+            @Override
+            protected void onError(Exception exp) {
+
+                Toast.makeText(getContext(), "Error " + exp.toString(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        likeTogglerTask.start();
+    }
+    public void setClicks(final Event event){
         imageView.setOnClickListener(new View.OnClickListener() {
             public long lastTimeClick = 0;
             public boolean doubleClicked;
 
             @Override
             public void onClick(View v) {
-                if(System.currentTimeMillis() - lastTimeClick < 250){
+                if (System.currentTimeMillis() - lastTimeClick < 250) {
                     lastTimeClick = 0;
                     doubleClicked = true;
-                    bigLikeView.setVisibility(View.VISIBLE);
-                    bigLikeView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                           bigLikeView.setVisibility(View.GONE);
-                        }
-                    }, 1200);
-                }else{
+                    like(event);
+                    bigLikeView.setScaleX(0.75f);
+                    bigLikeView.setScaleY(0.75f);
+                    bigLikeView.animate()
+                            .setInterpolator(new OvershootInterpolator(0.8f))
+                            .alpha(1)
+                            .scaleX(1)
+                            .scaleY(1)
+                            .setStartDelay(0)
+                            .setDuration(400)
+                            .setListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    bigLikeView.animate().setStartDelay(800).setDuration(200).alpha(0).setListener(new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            doubleClicked = false;
+                                        }
+                                    }).start();
+                                }
+                            }).start();
+
+                } else {
                     lastTimeClick = System.currentTimeMillis();
                     imageView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(!doubleClicked)
+                            if (!doubleClicked)
                                 itemView.performClick();
                         }
-                    },300);
+                    }, 300);
                 }
             }
         });
         likeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "like eventeid: " +item.id, Toast.LENGTH_SHORT).show();
+
+                like(event);
+
             }
         });
         if(commentView!=null)
-        commentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContext().startActivity(EventActivity.getActivityIntent(getContext(), item.id, true));
-            }
-        });
+            commentView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getContext().startActivity(EventActivity.getActivityIntent(getContext(), event.id, true));
+                }
+            });
         shareView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,12 +298,13 @@ public class EventViewHolder extends BaseViewHolder {
         setBody(event.desc);
         setAddress(event.city + ", " + event.address);
         setBody(event.desc);
-        setUserName(event.getUserName());
+        setUserName(event.getUserFullName());
         setUserPhoto(event.user_avatar_path);
         setCategoryName(event.category_name);
         setColor(event.category_color);
         setPhoto(event.photo_path);
         setDate(event.date_create);
+        setClicks(event);
 
         likesCounterView.setText("" + event.count_likes);
         if(commentsCounterView!=null)

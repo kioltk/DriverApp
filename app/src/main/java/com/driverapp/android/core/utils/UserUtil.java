@@ -70,4 +70,8 @@ public class UserUtil {
             id = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getInt("id", 0);
         return id;
     }
+
+    public static boolean isLogined() {
+        return id!=0;
+    }
 }

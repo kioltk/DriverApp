@@ -41,7 +41,7 @@
                 android:layout_below="@+id/toolbar"
                 android:background="@drawable/toolbar_shadow"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"/>
+                android:layout_height="3dp"/>
 
 
     </RelativeLayout>

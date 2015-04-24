@@ -41,7 +41,7 @@ public class Event {
     public int count_comments;
 
 
-    public String getUserName() {
+    public String getUserFullName() {
         return user_name + " " + user_surname;
     }
 }

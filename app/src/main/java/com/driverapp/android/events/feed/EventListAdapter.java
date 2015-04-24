@@ -36,6 +36,7 @@ public class EventListAdapter extends RecyclerView.Adapter {
             EventViewHolder eventViewHolder = (EventViewHolder) viewHolder;
             eventViewHolder.bind(item);
             eventViewHolder.setOnItemClick(item);
+            eventViewHolder.setClicks(item);
         } else {
 
         }

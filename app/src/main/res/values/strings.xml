@@ -72,5 +72,9 @@
     <string name="client_id">910124595768-onqau0v51phh4io4v8gve9ccoed2udll.apps.googleusercontent.com</string>
     <string name="title_activity_auth_actiivty">AuthActiivty</string>
     <string name="login">Login</string>
+    <string name="error_loginfirstly">Сначала нужно зайти</string>
+    <string name="error">Ошибка</string>
+    <string name="ok_login">Зайти</string>
+    <string name="no_well">Ладно</string>
 
 </resources>

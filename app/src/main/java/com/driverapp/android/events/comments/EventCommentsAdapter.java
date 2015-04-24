@@ -113,7 +113,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
             dateView.setText(TimeUtils.getTime(event.date_create));
             categoryView.setText(event.category_name);
             addressView.setText(event.city + ", " + event.address);
-            userNameView.setText(event.getUserName());
+            userNameView.setText(event.getUserFullName());
             userPhotoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -255,7 +255,8 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
                                 comment = String.valueOf(editText.getText());
                                 user_photo_path = UserUtil.getPhoto();
                                 user_id = UserUtil.id;
-                                user_name = UserUtil.getFullName();
+                                user_name = UserUtil.getName();
+                                user_surname = UserUtil.getSurname();
                             }});
                             editText.setText("");
                         }
