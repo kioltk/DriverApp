@@ -69,8 +69,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
-    <string name="client_id">910124595768-onqau0v51phh4io4v8gve9ccoed2udll.apps.googleusercontent.com</string>
+    <string name="google_client_id">910124595768-onqau0v51phh4io4v8gve9ccoed2udll.apps.googleusercontent.com</string>
     <string name="title_activity_auth_actiivty">AuthActiivty</string>
     <string name="login">Login</string>
-
+    <string name="facebook_app_id">1655600708003374</string>
 </resources>

@@ -17,8 +17,10 @@ import android.widget.Toast;
 import com.driverapp.android.MainActivity;
 import com.driverapp.android.R;
 import com.driverapp.android.auth.AuthUtil;
-import com.driverapp.android.auth.GooglePlusLoginUtils;
+import com.driverapp.android.auth.FacebookLoginUtil;
+import com.driverapp.android.auth.GoogleLoginUtil;
 import com.driverapp.android.core.utils.UserUtil;
+import com.facebook.CallbackManager;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -28,13 +30,15 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class StartActivity extends ActionBarActivity implements GooglePlusLoginUtils.GPlusLoginStatus {
+public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.GPlusLoginStatus {
 
     private static final int AUTH_CODE_REQUEST_CODE = 10;
     private static final String TAG = "StartActivity";
     private static final int RC_GOOGLE_RESOLUTION = 10;
-    private GooglePlusLoginUtils gLogin;
+    private GoogleLoginUtil googleLoginUtil;
+    private FacebookLoginUtil facebookLoginUtil;
     private boolean authing = false;
+    private CallbackManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
 
         SharedPreferences prefs = getSharedPreferences("start", MODE_MULTI_PROCESS);
         boolean firstStart = prefs.getBoolean("first", true);
-        if (!firstStart) {
+        if (false) {
             LinearLayout container = (LinearLayout) findViewById(R.id.logins_holder);
             container.setGravity(Gravity.CENTER);
             /*findViewById(R.id.login_fb).setVisibility(View.GONE);
@@ -67,7 +71,7 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
             @Override
             public void onClick(View v) {
 
-                gLogin.connect();
+                googleLoginUtil.connect();
                 *//*startActivity(new Intent(StartActivity.this, AuthActivty.class));
                 if (!mGoogleApiClient.isConnecting()) {
                     mSignInClicked = true;
@@ -76,8 +80,12 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
             }
 
         });*/
-        gLogin = new GooglePlusLoginUtils(this, R.id.login_google);
-        gLogin.setLoginStatus(this);
+
+        // google
+        googleLoginUtil = new GoogleLoginUtil(this, this, R.id.login_google);
+
+        // facebook
+        facebookLoginUtil = new FacebookLoginUtil(this);
 
 
         findViewById(R.id.login_force).setOnClickListener(new View.OnClickListener() {
@@ -152,7 +160,7 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
     }
 
     void auth() {
-        if(authing || !gLogin.mSignInClicked)
+        if(authing || !googleLoginUtil.mSignInClicked)
             return;
         authing = true;
         new AsyncTask<Void, Void, String>() {
@@ -160,7 +168,7 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
             protected String doInBackground(Void... params) {
                 String scopes = "oauth2:server:client_id:910124595768-igk02c58ocgsn8s6vb0vf9i7pe32bdrf.apps.googleusercontent.com:api_scope:" + Scopes.PLUS_LOGIN;
                 String code = null;
-                String accountName = gLogin.loginedEmail;
+                String accountName = googleLoginUtil.loginedEmail;
                 Exception exp;
                 try {
                     code = GoogleAuthUtil.getToken(
@@ -197,7 +205,7 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
             @Override
             protected void onPostExecute(String code) {
                 authing = false;
-                gLogin.mSignInClicked = false;
+                googleLoginUtil.mSignInClicked = false;
                 if(code!=null && !code.isEmpty()){
                     register(code);
                 }
@@ -207,12 +215,12 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
     }
 
     private void register(String code) {
-        new RegisterTask(gLogin.loginedPersonName, "", "android", gLogin.loginedPersonGooglePlusProfile, gLogin.loginedEmail, "google", code, gLogin.loginedPersonPhotoUrl) {
+        new RegisterTask(googleLoginUtil.loginedPersonName, "", "android", googleLoginUtil.loginedPersonGooglePlusProfile, googleLoginUtil.loginedEmail, "google", code, googleLoginUtil.loginedPersonPhotoUrl) {
             @Override
             protected void onSuccess(RegisterResult result) {
                 UserUtil.setUserId(result.user_id);
-                UserUtil.setUserName(gLogin.loginedPersonName);
-                UserUtil.setUserPhoto(gLogin.loginedPersonPhotoUrl);
+                UserUtil.setUserName(googleLoginUtil.loginedPersonName);
+                UserUtil.setUserPhoto(googleLoginUtil.loginedPersonPhotoUrl);
                 startMain();
             }
 
@@ -226,7 +234,7 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
     @Override
     protected void onStart() {
         super.onStart();
-        gLogin.connect();
+        googleLoginUtil.connect();
     }
 
     @Override
@@ -237,15 +245,17 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        gLogin.disconnect();
+        googleLoginUtil.disconnect();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int responseCode,
                                     Intent intent) {
-        gLogin.onActivityResult(requestCode, responseCode, intent);
-        if(requestCode==AUTH_CODE_REQUEST_CODE) {
-            register(intent.getExtras().getString("authToken"));
+        if (!googleLoginUtil.onActivityResult(requestCode, responseCode, intent) &&
+                !facebookLoginUtil.onActivityResult(requestCode, responseCode, intent)) {
+            if (requestCode == AUTH_CODE_REQUEST_CODE) {
+                register(intent.getExtras().getString("authToken"));
+            }
         }
     }
 

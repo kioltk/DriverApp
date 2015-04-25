@@ -16,6 +16,7 @@ import com.driverapp.android.events.feed.EventMapFragment;
 import com.driverapp.android.profile.MyEventsFragment;
 import com.driverapp.android.profile.ProfileActivity;
 import com.driverapp.android.settings.SettingsActivity;
+import com.facebook.appevents.AppEventsLogger;
 import com.melnykov.fab.FloatingActionButton;
 
 
@@ -40,6 +41,18 @@ public class MainActivity extends BaseActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override

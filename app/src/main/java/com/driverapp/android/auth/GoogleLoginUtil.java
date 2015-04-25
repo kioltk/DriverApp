@@ -20,7 +20,7 @@ import com.google.android.gms.plus.model.people.Person;
 /**
  * Created by Jesus Christ. Amen.
  */
-public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFailedListener,OnClickListener {
+public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedListener,OnClickListener {
     private String TAG = "GooglePlusLoginUtils";
     /* Request code used to invoke sign in user interactions. */
     public static final int RC_SIGN_IN = 0;
@@ -48,8 +48,9 @@ public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFa
         public void OnSuccessGPlusLogin();
     }
 
-    public GooglePlusLoginUtils(Context ctx, int btnRes) {
-        Log.i(TAG, "GooglePlusLoginUtils");
+    public GoogleLoginUtil(Context ctx, GPlusLoginStatus loginStatus, int btnRes) {
+        Log.i(TAG, "Create");
+        this.loginstatus = loginStatus;
         this.ctx = ctx;
         this.btnSignIn =  ((Activity) ctx).findViewById(btnRes);
         btnSignIn.setOnClickListener(this);
@@ -65,6 +66,7 @@ public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFa
 
     public void setLoginStatus(GPlusLoginStatus loginStatus) {
         this.loginstatus = loginStatus;
+
     }
 
     @Override
@@ -191,14 +193,16 @@ public class GooglePlusLoginUtils implements ConnectionCallbacks, OnConnectionFa
         signInWithGplus();
     }
 
-    public void onActivityResult(int requestCode, int responseCode, Intent intent) {
+    public boolean onActivityResult(int requestCode, int responseCode, Intent intent) {
         if (requestCode == RC_SIGN_IN) {
             if (responseCode != ((Activity) ctx).RESULT_OK) {
                 setSignInClicked(false);
             }
             setIntentInProgress(false);
             reconnect();
+            return true;
         }
+        return false;
     }
 
 
