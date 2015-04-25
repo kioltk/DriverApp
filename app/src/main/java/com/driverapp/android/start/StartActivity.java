@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -20,25 +19,16 @@ import com.driverapp.android.auth.AuthUtil;
 import com.driverapp.android.auth.FacebookLoginUtil;
 import com.driverapp.android.auth.GoogleLoginUtil;
 import com.driverapp.android.core.utils.UserUtil;
-import com.facebook.CallbackManager;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.Scopes;
 
 import java.io.File;
 import java.io.IOException;
 
 
-public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.GPlusLoginStatus {
+public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.GoogleLoginListener, FacebookLoginUtil.FacebookLoginListener {
 
-    private static final int AUTH_CODE_REQUEST_CODE = 10;
     private static final String TAG = "StartActivity";
-    private static final int RC_GOOGLE_RESOLUTION = 10;
     private GoogleLoginUtil googleLoginUtil;
     private FacebookLoginUtil facebookLoginUtil;
-    private boolean authing = false;
-    private CallbackManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +61,11 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
             @Override
             public void onClick(View v) {
 
-                googleLoginUtil.connect();
+                googleLoginUtil.onStart();
                 *//*startActivity(new Intent(StartActivity.this, AuthActivty.class));
                 if (!mGoogleApiClient.isConnecting()) {
                     mSignInClicked = true;
-                    mGoogleApiClient.connect();
+                    mGoogleApiClient.onStart();
                 }*//*
             }
 
@@ -85,7 +75,7 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
         googleLoginUtil = new GoogleLoginUtil(this, this, R.id.login_google);
 
         // facebook
-        facebookLoginUtil = new FacebookLoginUtil(this);
+        facebookLoginUtil = new FacebookLoginUtil(this, this, R.id.login_facebook);
 
 
         findViewById(R.id.login_force).setOnClickListener(new View.OnClickListener() {
@@ -159,68 +149,15 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
         finish();
     }
 
-    void auth() {
-        if(authing || !googleLoginUtil.mSignInClicked)
-            return;
-        authing = true;
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                String scopes = "oauth2:server:client_id:910124595768-igk02c58ocgsn8s6vb0vf9i7pe32bdrf.apps.googleusercontent.com:api_scope:" + Scopes.PLUS_LOGIN;
-                String code = null;
-                String accountName = googleLoginUtil.loginedEmail;
-                Exception exp;
-                try {
-                    code = GoogleAuthUtil.getToken(
-                            StartActivity.this,                                              // Context context
-                            accountName,  // String accountName
-                            scopes                                            // String scope
-                    );
-                    Log.d("code", code);
-                    return code;
-                } catch (IOException transientEx) {
-                    // network or server error, the call is expected to succeed if you try again later.
-                    // Don't attempt to call again immediately - the request is likely to
-                    // fail, you'll hit quotas or back-off.
-                    exp = transientEx;
-                } catch (UserRecoverableAuthException e) {
-                    // Requesting an authorization code will always throw
-                    // UserRecoverableAuthException on the first call to GoogleAuthUtil.getToken
-                    // because the user must consent to offline access to their data.  After
-                    // consent is granted control is returned to your activity in onActivityResult
-                    // and the second call to GoogleAuthUtil.getToken will succeed.
-                    startActivityForResult(e.getIntent(), AUTH_CODE_REQUEST_CODE);
-                    exp = e;
-                } catch (GoogleAuthException authEx) {
-                    // Failure. The call is not expected to ever succeed so it should not be
-                    // retried.
-                    exp = authEx;
-                } catch (Exception e) {
-                    exp = e;
-                }
-                exp.printStackTrace();
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(String code) {
-                authing = false;
-                googleLoginUtil.mSignInClicked = false;
-                if(code!=null && !code.isEmpty()){
-                    register(code);
-                }
 
-            }
-        }.execute();
-    }
-
-    private void register(String code) {
-        new RegisterTask(googleLoginUtil.loginedPersonName, "", "android", googleLoginUtil.loginedPersonGooglePlusProfile, googleLoginUtil.loginedEmail, "google", code, googleLoginUtil.loginedPersonPhotoUrl) {
+    private void register(String token, final String firstName, final String lastName, String link, String email, String source, final String photoUrl) {
+        new RegisterTask(firstName, lastName, "android", link, email, source, token, photoUrl) {
             @Override
             protected void onSuccess(RegisterResult result) {
                 UserUtil.setUserId(result.user_id);
-                UserUtil.setUserName(googleLoginUtil.loginedPersonName);
-                UserUtil.setUserPhoto(googleLoginUtil.loginedPersonPhotoUrl);
+                UserUtil.setUserName(lastName + " " + firstName);
+                UserUtil.setUserPhoto(photoUrl);
                 startMain();
             }
 
@@ -234,36 +171,31 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
     @Override
     protected void onStart() {
         super.onStart();
-        googleLoginUtil.connect();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+        googleLoginUtil.onStart();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        googleLoginUtil.disconnect();
+        googleLoginUtil.onDestroy();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int responseCode,
-                                    Intent intent) {
+    protected void onActivityResult(int requestCode, int responseCode,Intent intent) {
         if (!googleLoginUtil.onActivityResult(requestCode, responseCode, intent) &&
                 !facebookLoginUtil.onActivityResult(requestCode, responseCode, intent)) {
-            if (requestCode == AUTH_CODE_REQUEST_CODE) {
-                register(intent.getExtras().getString("authToken"));
-            }
+
         }
     }
 
     @Override
-    public void OnSuccessGPlusLogin() {
-        if (authing) {
-            return;
-        }
-        auth();
+    public void facebookAuthorized() {
+        register(facebookLoginUtil.token, facebookLoginUtil.firstName, facebookLoginUtil.lastName, facebookLoginUtil.link,facebookLoginUtil.email,"facebook", facebookLoginUtil.photoUrl);
+    }
+
+    @Override
+    public void googleAuthorized() {
+        register(googleLoginUtil.loginedAccessToken, googleLoginUtil.loginedPersonName, null, googleLoginUtil.loginedPersonGooglePlusProfile, googleLoginUtil.loginedEmail,"google", googleLoginUtil.loginedPersonPhotoUrl);
+
     }
 }

@@ -1,29 +1,38 @@
 package com.driverapp.android.auth;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+
+import java.io.IOException;
+
 /**
  * Created by Jesus Christ. Amen.
  */
-public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedListener,OnClickListener {
+public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedListener, OnClickListener {
     private String TAG = "GooglePlusLoginUtils";
     /* Request code used to invoke sign in user interactions. */
-    public static final int RC_SIGN_IN = 0;
+    public static final int REQUEST_CODE_LOGIN = 414215;
+    private static final int REQUEST_CODE_AUTH_TOKEN = 10;
+
     private static final int PROFILE_PIC_SIZE = 400;
     public static final String NAME = "name";
     public static final String EMAIL = "email";
@@ -37,25 +46,29 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
     private ConnectionResult mConnectionResult;
 
     private View btnSignIn;
-    private Context ctx;
-    private GPlusLoginStatus loginstatus;
+    private Activity activity;
+    private GoogleLoginListener loginListener;
     public String loginedPersonName;
     public String loginedPersonPhotoUrl;
     public String loginedPersonGooglePlusProfile;
     public String loginedEmail;
+    public String loginedAccessToken;
 
-    public interface GPlusLoginStatus {
-        public void OnSuccessGPlusLogin();
+    private boolean authing = false;
+
+
+    public interface GoogleLoginListener {
+        public void googleAuthorized();
     }
 
-    public GoogleLoginUtil(Context ctx, GPlusLoginStatus loginStatus, int btnRes) {
+    public GoogleLoginUtil(Activity activity, GoogleLoginListener loginListener, int btnRes) {
         Log.i(TAG, "Create");
-        this.loginstatus = loginStatus;
-        this.ctx = ctx;
-        this.btnSignIn =  ((Activity) ctx).findViewById(btnRes);
+        setLoginStatus(loginListener);
+        this.activity = activity;
+        this.btnSignIn =  activity.findViewById(btnRes);
         btnSignIn.setOnClickListener(this);
         // Initializing google plus api client
-        mGoogleApiClient = new GoogleApiClient.Builder(ctx)
+        mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
@@ -64,8 +77,16 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
 
     }
 
-    public void setLoginStatus(GPlusLoginStatus loginStatus) {
-        this.loginstatus = loginStatus;
+    public void setLoginStatus(final GoogleLoginListener loginListener) {
+
+        this.loginListener = new GoogleLoginListener() {
+            @Override
+            public void googleAuthorized() {
+                if(loginListener!=null){
+                    loginListener.googleAuthorized();
+                }
+            }
+        };
 
     }
 
@@ -74,7 +95,7 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
         Log.i(TAG, "onConnectionFailed");
         Log.i(TAG, "Error Code " + result.getErrorCode());
         if (!result.hasResolution()) {
-            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), (Activity) ctx, 0).show();
+            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), (Activity) activity, 0).show();
             return;
         }
 
@@ -99,7 +120,7 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
         mIntentInProgress = value;
     }
 
-    public void connect() {
+    public void onStart() {
         mGoogleApiClient.connect();
     }
 
@@ -109,7 +130,7 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
         }
     }
 
-    public void disconnect() {
+    public void onDestroy() {
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
@@ -128,7 +149,7 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
         if (mConnectionResult!=null && mConnectionResult.hasResolution()) {
             try {
                 mIntentInProgress = true;
-                mConnectionResult.startResolutionForResult((Activity) ctx, RC_SIGN_IN);
+                mConnectionResult.startResolutionForResult((Activity) activity, REQUEST_CODE_LOGIN);
             } catch (SendIntentException e) {
                 mIntentInProgress = false;
                 mGoogleApiClient.connect();
@@ -139,7 +160,7 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
     @Override
     public void onConnected(Bundle arg0) {
         Log.i(TAG, "onConnected");
-        Toast.makeText(ctx, "User is connected!", Toast.LENGTH_LONG).show();
+        Toast.makeText(activity, "User is connected!", Toast.LENGTH_LONG).show();
 
         // Get user's information
         getProfileInformation();
@@ -175,12 +196,12 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
                         loginedPersonPhotoUrl.length() - 2)
                         + PROFILE_PIC_SIZE;
 
-                loginstatus.OnSuccessGPlusLogin();
+                getAccess();
 
                 //   new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
 
             } else {
-                Toast.makeText(ctx,
+                Toast.makeText(activity,
                         "Person information is null", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
@@ -193,14 +214,81 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
         signInWithGplus();
     }
 
+    void googleAuth() {
+        if(authing || !mSignInClicked)
+            return;
+        authing = true;
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String scopes = "oauth2:server:client_id:910124595768-igk02c58ocgsn8s6vb0vf9i7pe32bdrf.apps.googleusercontent.com:api_scope:" + Scopes.PLUS_LOGIN;
+                String code = null;
+                String accountName = loginedEmail;
+                Exception exp;
+                try {
+                    code = GoogleAuthUtil.getToken(
+                            activity,                                              // Context activity
+                            accountName,  // String accountName
+                            scopes                                            // String scope
+                    );
+                    Log.d("code", code);
+                    return code;
+                } catch (IOException transientEx) {
+                    // network or server error, the call is expected to succeed if you try again later.
+                    // Don't attempt to call again immediately - the request is likely to
+                    // fail, you'll hit quotas or back-off.
+                    exp = transientEx;
+                } catch (UserRecoverableAuthException e) {
+                    // Requesting an authorization code will always throw
+                    // UserRecoverableAuthException on the first call to GoogleAuthUtil.getToken
+                    // because the user must consent to offline access to their data.  After
+                    // consent is granted control is returned to your activity in onActivityResult
+                    // and the second call to GoogleAuthUtil.getToken will succeed.
+                    activity.startActivityForResult(e.getIntent(), REQUEST_CODE_AUTH_TOKEN);
+                    exp = e;
+                } catch (GoogleAuthException authEx) {
+                    // Failure. The call is not expected to ever succeed so it should not be
+                    // retried.
+                    exp = authEx;
+                } catch (Exception e) {
+                    exp = e;
+                }
+                exp.printStackTrace();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String code) {
+                authing = false;
+                mSignInClicked = false;
+                if(code!=null && !code.isEmpty()){
+                    loginedAccessToken = code;
+                     loginListener.googleAuthorized();
+                }
+
+            }
+        }.execute();
+    }
+    public void getAccess() {
+        if (authing) {
+            return;
+        }
+        googleAuth();
+    }
+
     public boolean onActivityResult(int requestCode, int responseCode, Intent intent) {
-        if (requestCode == RC_SIGN_IN) {
-            if (responseCode != ((Activity) ctx).RESULT_OK) {
+        if (requestCode == REQUEST_CODE_LOGIN) {
+            if (responseCode != ((Activity) activity).RESULT_OK) {
                 setSignInClicked(false);
             }
             setIntentInProgress(false);
             reconnect();
             return true;
+        } else{
+            if (requestCode == REQUEST_CODE_AUTH_TOKEN) {
+                loginedAccessToken = intent.getExtras().getString("authToken");
+                loginListener.googleAuthorized();
+            }
         }
         return false;
     }
