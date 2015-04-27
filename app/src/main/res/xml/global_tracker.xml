@@ -15,5 +15,5 @@
         AnalyticsSampleApp EcommerceSampleScreen
     </screenName>
     <!--  todo: analytics code -->
-    <string name="ga_trackingId">UA-CODE</string>
+    <string name="ga_trackingId">UA-56319001-1</string>
 </resources>
