@@ -37,7 +37,7 @@
             android:text="@string/splash_subtitle"
             android:textSize="19sp"
             android:textColor="#999999"
-            android:layout_marginBottom="115dp"
+            android:layout_marginBottom="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <!--<Button
@@ -92,7 +92,49 @@
             android:layout_width="280dp"
             android:layout_height="50dp" />-->
         <RelativeLayout
+            android:id="@+id/login_vk"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/login_vk"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_vk"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/login_vk"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/login_twitter"
+            android:layout_width="280dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="50dp"
+            android:background="@drawable/login_twitter"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_twitter"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/login_twitter"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
             android:id="@+id/login_facebook"
+            android:layout_marginTop="5dp"
             android:layout_width="280dp"
             android:layout_height="50dp"
             android:background="@drawable/login_facebook"
@@ -104,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:text="facebook"
+                android:text="@string/login_fb"
                 android:textStyle="bold"
                 android:textColor="#fff"
                 android:layout_centerInParent="true"
@@ -125,7 +167,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:text="google"
+                android:text="@string/login_google"
+                android:textStyle="bold"
                 android:textColor="#fff"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"

@@ -18,24 +18,28 @@ import com.driverapp.android.R;
 import com.driverapp.android.auth.AuthUtil;
 import com.driverapp.android.auth.FacebookLoginUtil;
 import com.driverapp.android.auth.GoogleLoginUtil;
+import com.driverapp.android.auth.TwitterLoginUtil;
+import com.driverapp.android.auth.VKLoginUtil;
 import com.driverapp.android.core.utils.UserUtil;
 
 import java.io.File;
 import java.io.IOException;
 
 
-public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.GoogleLoginListener, FacebookLoginUtil.FacebookLoginListener {
+public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.GoogleLoginListener, FacebookLoginUtil.FacebookLoginListener,TwitterLoginUtil.TwitterLoginListener, VKLoginUtil.VKLoginListener {
 
     private static final String TAG = "StartActivity";
     private GoogleLoginUtil googleLoginUtil;
     private FacebookLoginUtil facebookLoginUtil;
+    private TwitterLoginUtil twitterLoginUtil;
+    private VKLoginUtil vkLoginUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         AuthUtil.printSignature(this);
-        AuthUtil.getCertificateFingerprint(this);
+        AuthUtil.getCertificateFingerprintHash(this);
 
         SharedPreferences prefs = getSharedPreferences("start", MODE_MULTI_PROCESS);
         boolean firstStart = prefs.getBoolean("first", true);
@@ -77,6 +81,12 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
         // facebook
         facebookLoginUtil = new FacebookLoginUtil(this, this, R.id.login_facebook);
 
+        // twitter
+        twitterLoginUtil = new TwitterLoginUtil(this, this, R.id.login_twitter);
+
+        // vk
+        vkLoginUtil = new VKLoginUtil(this, this, R.id.login_vk);
+        vkLoginUtil.onCreate(this);
 
         findViewById(R.id.login_force).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,15 +185,25 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        vkLoginUtil.onResume(this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         googleLoginUtil.onDestroy();
+        vkLoginUtil.onDestroy(this);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int responseCode,Intent intent) {
         if (!googleLoginUtil.onActivityResult(requestCode, responseCode, intent) &&
-                !facebookLoginUtil.onActivityResult(requestCode, responseCode, intent)) {
+                !facebookLoginUtil.onActivityResult(requestCode, responseCode, intent) &&
+                !twitterLoginUtil.onActivityResult(requestCode, responseCode, intent) &&
+                !vkLoginUtil.onActivityResult(requestCode, responseCode, intent)
+                ) {
 
         }
     }
@@ -196,6 +216,15 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
     @Override
     public void googleAuthorized() {
         register(googleLoginUtil.loginedAccessToken, googleLoginUtil.loginedPersonName, null, googleLoginUtil.loginedPersonGooglePlusProfile, googleLoginUtil.loginedEmail,"google", googleLoginUtil.loginedPersonPhotoUrl);
+    }
 
+    @Override
+    public void twitterAuthorized() {
+        register(twitterLoginUtil.token + "_" + twitterLoginUtil.secret, null, null, "http://twitter.com/intent/user?user_id=" + twitterLoginUtil.id, twitterLoginUtil.username, "twitter", null);
+    }
+
+    @Override
+    public void vkAuthorized() {
+        register(vkLoginUtil.token + "_" + vkLoginUtil.secret, vkLoginUtil.userFirstName, vkLoginUtil.userLastName, "http://vk.com/id=" + vkLoginUtil.userId, vkLoginUtil.email, "vk", vkLoginUtil.userPhotoUrl);
     }
 }

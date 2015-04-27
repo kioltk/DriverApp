@@ -33,7 +33,7 @@ public class AuthUtil {
             e.printStackTrace();
         }
     }
-    public static String getCertificateFingerprint(Context ctx) {
+    public static String getCertificateFingerprintHash(Context ctx) {
         try {
             if (ctx == null || ctx.getPackageManager() == null)
                 return null;
