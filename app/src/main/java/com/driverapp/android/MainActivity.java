@@ -62,11 +62,13 @@ public class MainActivity extends BaseActivity
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case 2:
+                currentView = VIEW_LIST;
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, new EventListFragment())
                         .commit();
                 break;
             case 3:
+                currentView = VIEW_MAP;
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, new EventMapFragment())
                         .commit();
@@ -89,11 +91,26 @@ public class MainActivity extends BaseActivity
         }
     }
 
+    private static final int VIEW_LIST = 0;
+    private static final int VIEW_MAP = 1;
+    private int currentView;
 
+
+    public void fragmentToggle(){
+        if (currentView == VIEW_MAP) {
+            currentView = VIEW_LIST;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new EventListFragment())
+                    .commit();
+        } else {
+            currentView = VIEW_MAP;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new EventMapFragment())
+                    .commit();
+        }
+    }
     public static class MainFragment extends Fragment{
 
-        private static final int VIEW_LIST = 0;
-        private static final int VIEW_MAP = 1;
 
         private int currentView = 0;
         private Fragment updatableFragment;

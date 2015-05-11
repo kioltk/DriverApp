@@ -1,9 +1,9 @@
 package com.driverapp.android.profile;
 
-import android.support.v4.app.Fragment;
+import com.driverapp.android.events.feed.EventListFragment;
 
 /**
  * Created by Jesus Christ. Amen.
  */
-public class MyEventsFragment extends Fragment {
+public class MyEventsFragment extends EventListFragment {
 }
