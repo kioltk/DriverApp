@@ -45,7 +45,6 @@ public class CropActivity extends ActionBarActivity {
 
             }
         }, 1);
-
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         String path = extras.getString(IMAGE_PATH);

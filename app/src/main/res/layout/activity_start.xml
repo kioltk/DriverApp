@@ -112,27 +112,6 @@
                 android:layout_height="wrap_content" />
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/login_twitter"
-            android:layout_width="280dp"
-            android:layout_marginTop="5dp"
-            android:layout_height="50dp"
-            android:background="@drawable/login_twitter"
-            >
-            <ImageView
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_twitter"
-                android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="@string/login_twitter"
-                android:textStyle="bold"
-                android:textColor="#fff"
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <RelativeLayout
             android:id="@+id/login_facebook"
             android:layout_marginTop="5dp"
             android:layout_width="280dp"
@@ -154,7 +133,30 @@
                 android:layout_height="wrap_content" />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/login_twitter"
+            android:layout_width="280dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:background="@drawable/login_twitter"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_twitter"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/login_twitter"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
             android:id="@+id/login_google"
+            android:visibility="gone"
             android:layout_marginTop="5dp"
             android:layout_width="280dp"
             android:layout_height="50dp"
@@ -171,6 +173,19 @@
                 android:textStyle="bold"
                 android:textColor="#fff"
                 android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="280dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/more"
+                android:text="@string/more"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold|italic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>

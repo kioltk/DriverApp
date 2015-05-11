@@ -73,4 +73,5 @@
     <string name="title_activity_auth_actiivty">AuthActiivty</string>
     <string name="login">Login</string>
     <string name="facebook_app_id">1655600708003374</string>
+    <string name="more">more</string>
 </resources>

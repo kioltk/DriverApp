@@ -14,6 +14,7 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -56,6 +57,21 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
 
     private boolean authing = false;
 
+    public boolean isAvailable() {
+        boolean available = false;
+        int status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity);
+        switch (status) {
+            case ConnectionResult.SERVICE_DISABLED:
+            case ConnectionResult.SERVICE_INVALID:
+            case ConnectionResult.SERVICE_MISSING:
+                return false;
+            case ConnectionResult.SERVICE_UPDATING:
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+            default:
+                return true;
+        }
+    }
+
 
     public interface GoogleLoginListener {
         public void googleAuthorized();
@@ -73,7 +89,6 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .addScope(Plus.SCOPE_PLUS_PROFILE).build();
-
 
     }
 
@@ -121,7 +136,9 @@ public class GoogleLoginUtil implements ConnectionCallbacks, OnConnectionFailedL
     }
 
     public void onStart() {
-        mGoogleApiClient.connect();
+        if (isAvailable()) {
+            mGoogleApiClient.connect();
+        }
     }
 
     public void reconnect() {

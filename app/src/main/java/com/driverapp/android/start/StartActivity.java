@@ -61,19 +61,7 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
             }, 1000);
         }
         prefs.edit().putBoolean("first", false).apply();
-        /*findViewById(R.id.login_google).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                googleLoginUtil.onStart();
-                *//*startActivity(new Intent(StartActivity.this, AuthActivty.class));
-                if (!mGoogleApiClient.isConnecting()) {
-                    mSignInClicked = true;
-                    mGoogleApiClient.onStart();
-                }*//*
-            }
-
-        });*/
 
         // google
         googleLoginUtil = new GoogleLoginUtil(this, this, R.id.login_google);
@@ -86,7 +74,8 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
 
         // vk
         vkLoginUtil = new VKLoginUtil(this, this, R.id.login_vk);
-        vkLoginUtil.onCreate(this);
+        VKLoginUtil.onCreate(this);
+
 
         findViewById(R.id.login_force).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +133,16 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
             }
         });
 
-
+        findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.GONE);
+                if (googleLoginUtil.isAvailable()) {
+                    findViewById(R.id.login_google).setVisibility(View.VISIBLE);
+                }
+                findViewById(R.id.login_twitter).setVisibility(View.VISIBLE);
+            }
+        });
         findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,14 +185,14 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
     @Override
     protected void onResume() {
         super.onResume();
-        vkLoginUtil.onResume(this);
+        VKLoginUtil.onResume(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         googleLoginUtil.onDestroy();
-        vkLoginUtil.onDestroy(this);
+        VKLoginUtil.onDestroy(this);
     }
 
     @Override
