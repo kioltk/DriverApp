@@ -70,9 +70,9 @@ public class EventMapFragment extends Fragment {
         switch (id) {
             case R.id.action_settings:
                 return true;
-            case R.id.action_refresh:
+            /*case R.id.action_refresh:
                 update();
-                return true;
+                return true;*/
             /*case R.id.action_profile:
                 startActivity(new Intent(getActivity(), ProfileActivity.class));
                 return true;*/
@@ -123,7 +123,7 @@ public class EventMapFragment extends Fragment {
                 eventHolder.animate().translationY(-eventHolder.getHeight()).setDuration(0).start();
                 eventHolder.animate().translationY(0).setDuration(250).start();
 
-                titleView.setText(event.category_name);
+                titleView.setText(event.categoryName);
                 addressView.setText(event.address);
                 bodyView.setText(event.desc);
                 statsView.setText(getString(R.string.stats, 0, 0));

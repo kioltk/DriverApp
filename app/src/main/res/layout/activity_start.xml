@@ -181,7 +181,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/more"
-                android:text="@string/more"
+                android:text="@string/login_more"
                 android:padding="8dp"
                 android:textSize="16sp"
                 android:layout_alignParentRight="true"

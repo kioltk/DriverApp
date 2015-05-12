@@ -264,7 +264,7 @@ public class CreateActivity extends BaseActivity {
                 case PICK_CATEGORY: {
                     if (resultCode == RESULT_OK) {
                         int categoryId = data.getExtras().getInt(CategoryPickerActivity.EXTRA_ID);
-                        for (EventCategory category : Core.getCategories()) {
+                        for (EventCategory category : Core.categories()) {
                             if (category.id == categoryId) {
                                 selectedCategory = category;
                                 pickCategoryTextView.setText(selectedCategory.name);

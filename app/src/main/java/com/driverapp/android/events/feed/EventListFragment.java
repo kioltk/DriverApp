@@ -112,9 +112,9 @@ public class EventListFragment extends Fragment  {
         switch (id){
             case R.id.action_settings:
                 return true;
-            case R.id.action_refresh:
+            /*case R.id.action_refresh:
                 update();
-                return true;
+                return true;*/
             /*case R.id.action_profile:
                 startActivity(new Intent(getActivity(), ProfileActivity.class));
                 return true;*/

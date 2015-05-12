@@ -43,7 +43,7 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
 
         SharedPreferences prefs = getSharedPreferences("start", MODE_MULTI_PROCESS);
         boolean firstStart = prefs.getBoolean("first", true);
-        if (false) {
+        if (firstStart) {
             LinearLayout container = (LinearLayout) findViewById(R.id.logins_holder);
             container.setGravity(Gravity.CENTER);
             /*findViewById(R.id.login_fb).setVisibility(View.GONE);

@@ -1,5 +1,6 @@
 package com.driverapp.android.events.create.cropping;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -91,5 +92,14 @@ public class CropActivity extends ActionBarActivity {
         });
     }
 
+    public static Intent crop(Context context, String imageFilePath) {
+        Intent intent = new Intent(context, CropActivity.class);
+
+        String filePath = imageFilePath;
+        intent.putExtra(CropActivity.IMAGE_PATH, filePath);
+        intent.putExtra(CropActivity.IMAGE_PATH_RESULT, context.getCacheDir() + "/pic" + System.currentTimeMillis() + ".jpg");
+        return intent;
+
+    }
 
 }
