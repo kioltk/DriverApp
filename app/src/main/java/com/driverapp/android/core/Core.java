@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Jesus Christ. Amen.
  */
 public class Core {
-    public static ArrayList<EventCategory> getCategories() {
+    public static ArrayList<EventCategory> categories() {
         ArrayList<EventCategory> categories = new ArrayList<>();
         categories.add(new EventCategory(){{
             id = 1;

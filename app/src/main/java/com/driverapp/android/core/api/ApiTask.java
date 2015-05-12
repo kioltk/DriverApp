@@ -21,6 +21,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +52,9 @@ public abstract class ApiTask<ResultType> extends AsyncTask<Object,Void,Object> 
 
             String url = serverUrl+methodName;
 
+            if(arguments==null){
+                arguments = new ArrayList<>();
+            }
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpRequestBase request;
             if(post) {

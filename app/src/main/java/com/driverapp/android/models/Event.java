@@ -1,6 +1,7 @@
 package com.driverapp.android.models;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,8 @@ public class Event {
     public String city;
     public String address;
     private LatLng geodata;
-    public int date_create;
+    @SerializedName("date_create")
+    public int date;
 
     public LatLng getGeodata(){
         if(geodata==null)
@@ -33,9 +35,12 @@ public class Event {
     public String user_surname;
     public String user_avatar_path;
 
-    public int category_id;
-    public String category_name;
-    public String category_color;
+    @SerializedName("category_id")
+    public int categoryId;
+    @SerializedName("category_name")
+    public String categoryName;
+    @SerializedName("category_color")
+    public String categoryColor;
 
     public ArrayList<EventComment> eventComments = new ArrayList<>();
 

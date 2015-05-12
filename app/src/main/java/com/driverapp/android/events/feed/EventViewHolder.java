@@ -22,6 +22,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import static com.driverapp.android.core.Core.categories;
+
 /**
  * Created by Jesus Christ. Amen.
  */
@@ -31,6 +33,7 @@ public class EventViewHolder extends BaseViewHolder {
     private final TextView addressView;
     private final TextView categoryView;
     private final ImageView imageView;
+    private final ImageView categoryPictureView;
     private final View likeView;
     private final View commentView;
     private final View shareView;
@@ -48,6 +51,7 @@ public class EventViewHolder extends BaseViewHolder {
         addressView = (TextView) itemView.findViewById(R.id.address);
         userNameView = (TextView) itemView.findViewById(R.id.user_name);
         categoryView = (TextView) itemView.findViewById(R.id.category);
+        categoryPictureView = (ImageView) itemView.findViewById(R.id.categoryPic);
         imageView = (ImageView) itemView.findViewById(R.id.image);
         likeView = itemView.findViewById(R.id.like_holder);
         shareView = itemView.findViewById(R.id.share_holder);
@@ -143,7 +147,6 @@ public class EventViewHolder extends BaseViewHolder {
     }
 
     public void setCategoryName(String categoryName) {
-        categoryView.setText(categoryName);
     }
 
     public void setPhoto(String photoPath) {
@@ -155,7 +158,7 @@ public class EventViewHolder extends BaseViewHolder {
         imageView.setVisibility(View.VISIBLE);
         dividerView.setVisibility(View.GONE);
         int width = ScreenUtil.getWidth()/(ScreenUtil.isTablet()?3:1);
-        imageView.getLayoutParams().height = width;
+        imageView.getLayoutParams().height = width/2;
         imageView.requestLayout();
 
         imageView.setImageResource(R.drawable.event_item_placeholder);
@@ -191,5 +194,22 @@ public class EventViewHolder extends BaseViewHolder {
 
     public void setDate(int date) {
         dateView.setText(TimeUtils.getTime(date));
+    }
+
+    public void bind(Event item) {
+
+        setTitle("id: " + item.id);
+        setBody(item.desc);
+        setAddress(item.city + ", " + item.address);
+        setBody(item.desc);
+        setUserName(item.getUserName());
+        setUserPhoto(item.user_avatar_path);
+        setColor(item.categoryColor);
+        setPhoto(item.photo_path);
+        setDate(item.date);
+        setOnItemClick(item);
+
+        categoryView.setText(item.categoryName);
+        categoryPictureView.setImageResource(categories().get(item.categoryId-1).imgResId);
     }
 }

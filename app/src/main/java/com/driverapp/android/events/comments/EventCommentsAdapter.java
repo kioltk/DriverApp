@@ -125,8 +125,8 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
         public void bind(final Event event){
             itemView.setVisibility(View.VISIBLE);
             bodyView.setText(event.desc);
-            dateView.setText(TimeUtils.getTime(event.date_create));
-            categoryView.setText(event.category_name);
+            dateView.setText(TimeUtils.getTime(event.date));
+            categoryView.setText(event.categoryName);
             addressView.setText(event.city + ", " + event.address);
             userNameView.setText(event.getUserName());
             userPhotoView.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +208,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
         public void bind(EventComment comment){
 
             bodyView.setText(comment.getUserName() + ": " + comment.comment);
-            dateView.setText(comment.date_create);
+            dateView.setText(comment.date);
             ImageLoader.getInstance().loadImage(comment.user_photo_path, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
