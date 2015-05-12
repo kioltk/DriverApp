@@ -9,13 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.driverapp.android.auth.AuthUtil;
 import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.events.feed.EventListFragment;
 import com.driverapp.android.events.feed.EventMapFragment;
 import com.driverapp.android.profile.MyEventsFragment;
 import com.driverapp.android.profile.ProfileActivity;
-import com.driverapp.android.settings.SettingsActivity;
+import com.driverapp.android.settings.AboutFragment;
+import com.driverapp.android.start.StartActivity;
 import com.facebook.appevents.AppEventsLogger;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -82,7 +84,15 @@ public class MainActivity extends BaseActivity
                         .commit();
                 break;
             case 7:
-                startActivity(new Intent(this, SettingsActivity.class));
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new AboutFragment())
+                        .commit();
+                //startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            case 8:
+                AuthUtil.logout();
+                startActivity(new Intent(this, StartActivity.class));
+                finish();
                 break;
             default:
                 getSupportFragmentManager().beginTransaction()

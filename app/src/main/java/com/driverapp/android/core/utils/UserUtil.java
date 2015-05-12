@@ -55,4 +55,13 @@ public class UserUtil {
             id = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getInt("id", 0);
         return id;*/
     }
+
+    public static void logout() {
+        app().getSharedPreferences("user", MODE_MULTI_PROCESS)
+                .edit()
+                .remove("id")
+                .remove("name")
+                .remove("photo")
+                .apply();
+    }
 }
