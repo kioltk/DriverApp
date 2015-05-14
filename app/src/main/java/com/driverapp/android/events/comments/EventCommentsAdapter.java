@@ -100,20 +100,28 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
     private class EventFullViewHolder extends EventViewHolder {
 
 
-
         public EventFullViewHolder(View itemView) {
             super(itemView);
+            imageView = (ImageView) itemView.findViewById(R.id.image);
+            bodyView = (TextView) itemView.findViewById(R.id.body);
+            dateView = (TextView) itemView.findViewById(R.id.date);
+            addressView = (TextView) itemView.findViewById(R.id.address);
+            userNameView = (TextView) itemView.findViewById(R.id.user_name);
+            userPhotoView = (ImageView) itemView.findViewById(R.id.user_photo);
+            categoryView = (TextView) itemView.findViewById(R.id.category);
+            likeButton = itemView.findViewById(R.id.like_holder);
 
         }
 
-        public void bind(final Event event){
+        public void bind(final Event event) {
             itemView.setVisibility(View.VISIBLE);
             super.bind(event);
-            /*bodyView.setText(event.desc);
+            /*
+            bodyView.setText(event.desc);
             dateView.setText(TimeUtils.getTime(event.date_create));
             categoryView.setText(event.category_name);
             addressView.setText(event.city + ", " + event.address);
-            userNameView.setText(event.getUserFullName());
+            userNameView.setText(event.getUserName());
             userPhotoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -142,7 +150,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
 
 
-                *//*if(UserUtil.id==0){
+                /*if(UserUtil.id==0){
                     new AlertDialog.Builder(EventActivity.this)
                             .setTitle("Сначала нужно зайти")
                             .setMessage("Пока не сделано")
@@ -176,6 +184,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
                     likeTogglerTask.start();
                 }
             });*/
+
         }
     }
 

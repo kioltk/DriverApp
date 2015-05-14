@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -17,35 +16,34 @@ import android.widget.Toast;
 import com.driverapp.android.MainActivity;
 import com.driverapp.android.R;
 import com.driverapp.android.auth.AuthUtil;
-import com.driverapp.android.auth.GooglePlusLoginUtils;
+import com.driverapp.android.auth.FacebookLoginUtil;
+import com.driverapp.android.auth.GoogleLoginUtil;
+import com.driverapp.android.auth.TwitterLoginUtil;
+import com.driverapp.android.auth.VKLoginUtil;
 import com.driverapp.android.core.utils.UserUtil;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.Scopes;
 
 import java.io.File;
 import java.io.IOException;
 
 
-public class StartActivity extends ActionBarActivity implements GooglePlusLoginUtils.GPlusLoginStatus {
+public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.GoogleLoginListener, FacebookLoginUtil.FacebookLoginListener,TwitterLoginUtil.TwitterLoginListener, VKLoginUtil.VKLoginListener {
 
-    private static final int AUTH_CODE_REQUEST_CODE = 10;
     private static final String TAG = "StartActivity";
-    private static final int RC_GOOGLE_RESOLUTION = 10;
-    private GooglePlusLoginUtils gLogin;
-    private boolean authing = false;
+    private GoogleLoginUtil googleLoginUtil;
+    private FacebookLoginUtil facebookLoginUtil;
+    private TwitterLoginUtil twitterLoginUtil;
+    private VKLoginUtil vkLoginUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         AuthUtil.printSignature(this);
-        AuthUtil.getCertificateFingerprint(this);
+        AuthUtil.getCertificateFingerprintHash(this);
 
         SharedPreferences prefs = getSharedPreferences("start", MODE_MULTI_PROCESS);
         boolean firstStart = prefs.getBoolean("first", true);
-        if (!firstStart) {
+        if (firstStart) {
             LinearLayout container = (LinearLayout) findViewById(R.id.logins_holder);
             container.setGravity(Gravity.CENTER);
             /*findViewById(R.id.login_fb).setVisibility(View.GONE);
@@ -63,21 +61,20 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
             }, 1000);
         }
         prefs.edit().putBoolean("first", false).apply();
-        /*findViewById(R.id.login_google).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        
 
-                gLogin.connect();
-                *//*startActivity(new Intent(StartActivity.this, AuthActivty.class));
-                if (!mGoogleApiClient.isConnecting()) {
-                    mSignInClicked = true;
-                    mGoogleApiClient.connect();
-                }*//*
-            }
+        // google
+        googleLoginUtil = new GoogleLoginUtil(this, this, R.id.login_google);
 
-        });*/
-        gLogin = new GooglePlusLoginUtils(this, R.id.login_google);
-        gLogin.setLoginStatus(this);
+        // facebook
+        facebookLoginUtil = new FacebookLoginUtil(this, this, R.id.login_facebook);
+
+        // twitter
+        twitterLoginUtil = new TwitterLoginUtil(this, this, R.id.login_twitter);
+
+        // vk
+        vkLoginUtil = new VKLoginUtil(this, this, R.id.login_vk);
+        VKLoginUtil.onCreate(this);
 
 
         findViewById(R.id.login_force).setOnClickListener(new View.OnClickListener() {
@@ -136,7 +133,16 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
             }
         });
 
-
+        findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.GONE);
+                if (googleLoginUtil.isAvailable()) {
+                    findViewById(R.id.login_google).setVisibility(View.VISIBLE);
+                }
+                findViewById(R.id.login_twitter).setVisibility(View.VISIBLE);
+            }
+        });
         findViewById(R.id.skip).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,63 +157,10 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
         finish();
     }
 
-    void auth() {
-        if(authing || !gLogin.mSignInClicked)
-            return;
-        authing = true;
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                String scopes = "oauth2:server:client_id:910124595768-igk02c58ocgsn8s6vb0vf9i7pe32bdrf.apps.googleusercontent.com:api_scope:" + Scopes.PLUS_LOGIN;
-                String code = null;
-                String accountName = gLogin.loginedEmail;
-                Exception exp;
-                try {
-                    code = GoogleAuthUtil.getToken(
-                            StartActivity.this,                                              // Context context
-                            accountName,  // String accountName
-                            scopes                                            // String scope
-                    );
-                    Log.d("code", code);
-                    return code;
-                } catch (IOException transientEx) {
-                    // network or server error, the call is expected to succeed if you try again later.
-                    // Don't attempt to call again immediately - the request is likely to
-                    // fail, you'll hit quotas or back-off.
-                    exp = transientEx;
-                } catch (UserRecoverableAuthException e) {
-                    // Requesting an authorization code will always throw
-                    // UserRecoverableAuthException on the first call to GoogleAuthUtil.getToken
-                    // because the user must consent to offline access to their data.  After
-                    // consent is granted control is returned to your activity in onActivityResult
-                    // and the second call to GoogleAuthUtil.getToken will succeed.
-                    startActivityForResult(e.getIntent(), AUTH_CODE_REQUEST_CODE);
-                    exp = e;
-                } catch (GoogleAuthException authEx) {
-                    // Failure. The call is not expected to ever succeed so it should not be
-                    // retried.
-                    exp = authEx;
-                } catch (Exception e) {
-                    exp = e;
-                }
-                exp.printStackTrace();
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(String code) {
-                authing = false;
-                gLogin.mSignInClicked = false;
-                if(code!=null && !code.isEmpty()){
-                    registerGoogle(code);
-                }
 
-            }
-        }.execute();
-    }
-
-    private void registerGoogle(String code) {
-        new RegisterTask(gLogin.loginedPersonName, gLogin.loginedPersonSurname, "android", gLogin.loginedPersonGooglePlusProfile, gLogin.loginedEmail, "google", code, gLogin.loginedPersonPhotoUrl) {
+    private void register(String token, final String firstName, final String lastName, String link, String email, String source, final String photoUrl) {
+        new RegisterTask(firstName, lastName, "android", link, email, source, token, photoUrl) {
             @Override
             protected void onSuccess(RegisterResult result) {
                 UserUtil.setUserId(result.user_id);
@@ -227,40 +180,50 @@ public class StartActivity extends ActionBarActivity implements GooglePlusLoginU
     @Override
     protected void onStart() {
         super.onStart();
-        gLogin.connect();
+        googleLoginUtil.onStart();
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onResume() {
+        super.onResume();
+        VKLoginUtil.onResume(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        gLogin.disconnect();
+        googleLoginUtil.onDestroy();
+        VKLoginUtil.onDestroy(this);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int responseCode,
-                                    Intent intent) {
-        gLogin.onActivityResult(requestCode, responseCode, intent);
-        if(requestCode==AUTH_CODE_REQUEST_CODE) {
-            String authToken = intent.getExtras().getString("authToken");
-            if (authToken != null && !authToken.isEmpty()) {
-                registerGoogle(authToken);
-            } else {
-                auth();
-            }
-        }
+    protected void onActivityResult(int requestCode, int responseCode,Intent intent) {
+        if (!googleLoginUtil.onActivityResult(requestCode, responseCode, intent) &&
+                !facebookLoginUtil.onActivityResult(requestCode, responseCode, intent) &&
+                !twitterLoginUtil.onActivityResult(requestCode, responseCode, intent) &&
+                !vkLoginUtil.onActivityResult(requestCode, responseCode, intent)
+                ) {
 
+        }
     }
 
     @Override
-    public void OnSuccessGPlusLogin() {
-        if (authing) {
-            return;
-        }
-        auth();
+    public void facebookAuthorized() {
+        register(facebookLoginUtil.token, facebookLoginUtil.firstName, facebookLoginUtil.lastName, facebookLoginUtil.link,facebookLoginUtil.email,"facebook", facebookLoginUtil.photoUrl);
+    }
+
+    @Override
+    public void googleAuthorized() {
+        register(googleLoginUtil.loginedAccessToken, googleLoginUtil.loginedPersonName, null, googleLoginUtil.loginedPersonGooglePlusProfile, googleLoginUtil.loginedEmail,"google", googleLoginUtil.loginedPersonPhotoUrl);
+    }
+
+    @Override
+    public void twitterAuthorized() {
+        register(twitterLoginUtil.token + "_" + twitterLoginUtil.secret, null, null, "http://twitter.com/intent/user?user_id=" + twitterLoginUtil.id, twitterLoginUtil.username, "twitter", null);
+    }
+
+    @Override
+    public void vkAuthorized() {
+        register(vkLoginUtil.token + "_" + vkLoginUtil.secret, vkLoginUtil.userFirstName, vkLoginUtil.userLastName, "http://vk.com/id=" + vkLoginUtil.userId, vkLoginUtil.email, "vk", vkLoginUtil.userPhotoUrl);
     }
 }

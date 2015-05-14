@@ -1,7 +1,6 @@
 package com.driverapp.android.events.create;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +24,7 @@ public class CategoryPickerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         ListView list = (ListView) findViewById(R.id.list);
-        ArrayList<EventCategory> categories = Core.getCategories();
+        ArrayList<EventCategory> categories = Core.categories();
         list.setAdapter(new CategoryAdapter(this, categories));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -56,6 +56,13 @@ public class EventListFragment extends Fragment  {
                 startActivity(CreateActivity.getActivityIntent(getActivity()));
             }
         });
+        View toggler = rootView.findViewById(R.id.map);
+        toggler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).fragmentToggle();
+            }
+        });
 
         if(ScreenUtil.isTablet())
             recycler.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
@@ -105,9 +112,9 @@ public class EventListFragment extends Fragment  {
         switch (id){
             case R.id.action_settings:
                 return true;
-            case R.id.action_refresh:
+            /*case R.id.action_refresh:
                 update();
-                return true;
+                return true;*/
             /*case R.id.action_profile:
                 startActivity(new Intent(getActivity(), ProfileActivity.class));
                 return true;*/

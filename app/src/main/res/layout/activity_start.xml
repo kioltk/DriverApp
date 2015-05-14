@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#EEEEEE"
     tools:context="com.driverapp.android.start.StartActivity">
+
     <LinearLayout
         android:id="@+id/logins_holder"
         android:layout_width="match_parent"
@@ -36,7 +37,7 @@
             android:text="@string/splash_subtitle"
             android:textSize="19sp"
             android:textColor="#999999"
-            android:layout_marginBottom="125dp"
+            android:layout_marginBottom="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <!--<Button
@@ -90,10 +91,104 @@
             android:layout_alignParentBottom="true"
             android:layout_width="280dp"
             android:layout_height="50dp" />-->
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/login_google"
+        <RelativeLayout
+            android:id="@+id/login_vk"
             android:layout_width="280dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:background="@drawable/login_vk"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_vk"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/login_vk"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/login_facebook"
+            android:layout_marginTop="5dp"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/login_facebook"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_facebook"
+                android:layout_marginLeft="19dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/login_fb"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/login_twitter"
+            android:layout_width="280dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:background="@drawable/login_twitter"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_twitter"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/login_twitter"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/login_google"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/login_google"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:src="@drawable/login_google"
+                android:layout_marginLeft="19dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/login_google"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="280dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/more"
+                android:text="@string/login_more"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold|italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
         <Button
             android:id="@+id/skip"
             android:text="@string/login_skip"

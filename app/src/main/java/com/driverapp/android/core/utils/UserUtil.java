@@ -74,4 +74,13 @@ public class UserUtil {
     public static boolean isLogined() {
         return id!=0;
     }
+
+    public static void logout() {
+        app().getSharedPreferences("user", MODE_MULTI_PROCESS)
+                .edit()
+                .remove("id")
+                .remove("name")
+                .remove("photo")
+                .apply();
+    }
 }

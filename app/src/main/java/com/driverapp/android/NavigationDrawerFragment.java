@@ -336,27 +336,31 @@ public class NavigationDrawerFragment extends Fragment {
             TintImageView imageView = (TintImageView) view.findViewById(R.id.image);
             switch (position) {
                 case 2:
-                    textView.setText("Events feed");
+                    textView.setText((R.string.navigation_feed));
                     imageView.setImageResource(R.drawable.ic_cards);
                     break;
                 case 3:
-                    textView.setText("Events map");
+                    textView.setText(R.string.navigation_map);
                     imageView.setImageResource(R.drawable.ic_map);
                     break;
                 case 4:
-                    textView.setText("Add event");
+                    textView.setText(R.string.navigation_create);
                     imageView.setImageResource(R.drawable.ic_cards);
                     break;
                 case 5:
-                    textView.setText("My events");
+                    textView.setText(R.string.navigation_my);
                     imageView.setImageResource(R.drawable.ic_cards);
                     break;
+                /*case 7:
+                    textView.setText(R.string.navigation_settings);
+                    imageView.setImageResource(R.drawable.ic_cards);
+                    break;*/
                 case 7:
-                    textView.setText("Settings");
+                    textView.setText(R.string.navigation_about);
                     imageView.setImageResource(R.drawable.ic_cards);
                     break;
                 case 8:
-                    textView.setText("About");
+                    textView.setText(R.string.navigation_logout);
                     imageView.setImageResource(R.drawable.ic_cards);
                     break;
             }

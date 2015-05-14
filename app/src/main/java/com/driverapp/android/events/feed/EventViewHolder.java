@@ -30,6 +30,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import static com.driverapp.android.core.Core.categories;
+
 /**
  * Created by Jesus Christ. Amen.
  */
@@ -60,6 +62,7 @@ public class EventViewHolder extends BaseViewHolder {
         addressView = (TextView) itemView.findViewById(R.id.address);
         userNameView = (TextView) itemView.findViewById(R.id.user_name);
         categoryView = (TextView) itemView.findViewById(R.id.category);
+        categoryPictureView = (ImageView) itemView.findViewById(R.id.categoryPic);
         imageView = (ImageView) itemView.findViewById(R.id.image);
         likeView = itemView.findViewById(R.id.like_holder);
         likeIconView = (ImageView) itemView.findViewById(R.id.likeIcon);
@@ -72,7 +75,6 @@ public class EventViewHolder extends BaseViewHolder {
         dividerView = itemView.findViewById(R.id.divider);
         dateView = (TextView) itemView.findViewById(R.id.date);
         userPhotoView = (ImageView) itemView.findViewById(R.id.userPhoto);
-
 
         //ratingView = (TextView) itemView.findViewById(R.id.rating);
     }
@@ -239,7 +241,6 @@ public class EventViewHolder extends BaseViewHolder {
     }
 
     public void setCategoryName(String categoryName) {
-        categoryView.setText(categoryName);
     }
 
     public void setPhoto(String photoPath) {
@@ -250,9 +251,9 @@ public class EventViewHolder extends BaseViewHolder {
         }
         imageView.setVisibility(View.VISIBLE);
         if(dividerView!=null)
-        dividerView.setVisibility(View.GONE);
+            dividerView.setVisibility(View.GONE);
         int width = ScreenUtil.getWidth()/(ScreenUtil.isTablet()?3:1);
-        imageView.getLayoutParams().height = width;
+        imageView.getLayoutParams().height = width/2;
         imageView.requestLayout();
 
         imageView.setImageResource(R.drawable.event_item_placeholder);
@@ -309,6 +310,8 @@ public class EventViewHolder extends BaseViewHolder {
         likesCounterView.setText("" + event.count_likes);
         if(commentsCounterView!=null)
             commentsCounterView.setText("" + event.count_comments);
-
+        
+        categoryView.setText(item.categoryName);
+        categoryPictureView.setImageResource(categories().get(item.categoryId-1).imgResId);
     }
 }

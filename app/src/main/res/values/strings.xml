@@ -69,12 +69,28 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
-    <string name="client_id">910124595768-onqau0v51phh4io4v8gve9ccoed2udll.apps.googleusercontent.com</string>
+    <string name="google_client_id">910124595768-onqau0v51phh4io4v8gve9ccoed2udll.apps.googleusercontent.com</string>
     <string name="title_activity_auth_actiivty">AuthActiivty</string>
     <string name="login">Login</string>
     <string name="error_loginfirstly">Сначала нужно зайти</string>
     <string name="error">Ошибка</string>
     <string name="ok_login">Зайти</string>
     <string name="no_well">Ладно</string>
+    <string name="facebook_app_id">1655600708003374</string>
+    <string name="login_more">more</string>
 
+    <string name="navigation_feed">Events feed</string>
+    <string name="navigation_map">Events map</string>
+    <string name="navigation_create">Add event</string>
+    <string name="navigation_my">My events</string>
+    <string name="navigation_settings">Settings</string>
+    <string name="navigation_about">About</string>
+    <string name="navigation_logout">Logout</string>
+    <string name="menu_today">Today</string>
+    <string name="menu_week">Week</string>
+    <string name="menu_all">All the time</string>
+    <string name="menu_nearby">Nearby</string>
+    <string name="menu_category">Category</string>
+    <string name="profile_avatar_update_loading">Loading</string>
+    <string name="ok">OK</string>
 </resources>

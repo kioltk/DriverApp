@@ -1,12 +1,15 @@
 package com.driverapp.android.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Jesus Christ. Amen.
  */
 public class EventComment {
     public int id;
     public String comment;
-    public String date_create;
+    @SerializedName("date_create")
+    public int date;
 
     public int user_id;
     public String user_name;

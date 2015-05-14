@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.19.0'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 def outputPathName = "/Users/kioltk/Documents/Dropbox/DriverApp/Builds/FILE_NAME"
 android {
@@ -25,6 +40,9 @@ android {
         exclude 'META-INF/DEPENDENCIES'
     }
     buildTypes {
+        debug{
+            applicationIdSuffix ".debug"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -33,7 +51,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def path = output.outputFile.name
-            output.outputFile = file(outputPathName.replace("FILE_NAME", path.replace("release", "stable").replace("debug", "debug-v" + defaultConfig.versionCode)))
+            output.outputFile = file(outputPathName.replace("FILE_NAME", path.replace("release", "stable").replace("debug", "debug-v" + defaultConfig.versionCode + "auth")))
         }
     }
 }
@@ -47,4 +65,12 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.3.0'
     compile 'com.melnykov:floatingactionbutton:1.0.6'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    // auth
+    compile 'com.facebook.android:facebook-android-sdk:4.0.1'
+    compile('com.twitter.sdk.android:twitter:1.4.0@aar') {
+        transitive = true;
+    }
+
+    compile project(':vksdk')
+
 }
