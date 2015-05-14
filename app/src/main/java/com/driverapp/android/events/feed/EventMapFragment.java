@@ -1,5 +1,6 @@
 package com.driverapp.android.events.feed;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.driverapp.android.views.MaterialInterpolator;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -44,17 +46,20 @@ public class EventMapFragment extends Fragment {
     private TextView statsView;
     private ImageView imageView;
     private boolean showingItem = false;
+    private TextView addressView;
+    private TextView bodyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_feed_map, null);
+        rootView = inflater.inflate(R.layout.fragment_feed_map, container, false);
         setHasOptionsMenu(true);
         eventHolder = rootView.findViewById(R.id.event);
         imageView = (ImageView) eventHolder.findViewById(R.id.image);
         titleView = (TextView) rootView.findViewById(R.id.title);
-        //bodyView = (TextView) rootView.findViewById(R.id.body);
-        //addressView = (TextView) rootView.findViewById(R.id.address);
+        bodyView = (TextView) rootView.findViewById(R.id.body);
+        addressView = (TextView) rootView.findViewById(R.id.address);
         statsView = (TextView) rootView.findViewById(R.id.stats);
+
         setUpMapIfNeeded();
 
         return rootView;
@@ -108,6 +113,12 @@ public class EventMapFragment extends Fragment {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+
+        UiSettings settings = mMap.getUiSettings();
+        settings.setMyLocationButtonEnabled(true);
+        mMap.setMyLocationEnabled(true);
+
+
         new EventListTask() {
             @Override
             protected void onSuccess(ArrayList<Event> result) {
@@ -130,17 +141,18 @@ public class EventMapFragment extends Fragment {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 final Event event = eventMarkersHash.get(marker.getId());
-                if(!showingItem) {
+                if (!showingItem) {
                     eventHolder.animate()
                             .setInterpolator(new MaterialInterpolator())
                             .translationY(eventHolder.getHeight()).setDuration(0).start();
                     eventHolder.animate().translationY(0).setDuration(250).start();
                 }
                 titleView.setText(event.category_name);
-                //addressView.setText(event.address);
-                //bodyView.setText(event.desc);
+                addressView.setText(event.address);
+                bodyView.setText(event.desc);
                 statsView.setText(getString(R.string.stats, event.count_comments, event.count_likes));
-                ImageLoader.getInstance().displayImage(event.photo_path,imageView);
+                imageView.setImageResource(R.drawable.event_item_placeholder);
+                ImageLoader.getInstance().displayImage(event.photo_path, imageView);
                 // todo likes and comments count?
                 showingItem = true;
                 eventHolder.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +164,17 @@ public class EventMapFragment extends Fragment {
                 return true;
             }
         });
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(57, 43), 4));
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            public boolean focusedOnce;
+
+            @Override
+            public void onMyLocationChange(Location location) {
+                if(focusedOnce) return;
+                focusedOnce = true;
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+
+            }
+        });
     }
 
     public void update() {

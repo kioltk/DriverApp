@@ -67,7 +67,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/image_holder"
-                android:background="#f0f0f0"
+                android:background="@drawable/event_item_placeholder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView

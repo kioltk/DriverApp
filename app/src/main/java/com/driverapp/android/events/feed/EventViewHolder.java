@@ -214,7 +214,7 @@ public class EventViewHolder extends BaseViewHolder {
     }
 
     public void setUserPhoto(String userPhoto) {
-        userPhotoView.setImageResource(R.drawable.photo_placeholder);
+        userPhotoView.setImageResource(android.R.color.transparent);
         ImageLoader.getInstance().loadImage(userPhoto, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {

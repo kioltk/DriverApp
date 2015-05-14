@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import static com.driverapp.android.DriverApp.app;
 
 /**
- * Created by kioltk on 4/6/15.
+ * Created by Jesus Christ. Amen.
  */
 public class ScreenUtil {
     private static float density;
