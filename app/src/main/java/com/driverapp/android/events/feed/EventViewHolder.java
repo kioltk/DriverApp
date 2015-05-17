@@ -50,9 +50,11 @@ public class EventViewHolder extends BaseViewHolder {
     protected final TextView dateView;
     protected final TextView likesCounterView;
     protected final ImageView userPhotoView;
+    private final ImageView categoryPictureView;
     protected TextView userNameView;
     protected ImageView bigLikeView;
     protected TextView commentsCounterView;
+    protected int widthDivider = 2;
 //    private final TextView ratingView;
 
     public EventViewHolder(View itemView) {
@@ -253,7 +255,7 @@ public class EventViewHolder extends BaseViewHolder {
         if(dividerView!=null)
             dividerView.setVisibility(View.GONE);
         int width = ScreenUtil.getWidth()/(ScreenUtil.isTablet()?3:1);
-        imageView.getLayoutParams().height = width/2;
+        imageView.getLayoutParams().height = width/widthDivider;
         imageView.requestLayout();
 
         imageView.setImageResource(R.drawable.event_item_placeholder);
@@ -301,17 +303,17 @@ public class EventViewHolder extends BaseViewHolder {
         setBody(event.desc);
         setUserName(event.getUserFullName());
         setUserPhoto(event.user_avatar_path);
-        setCategoryName(event.category_name);
-        setColor(event.category_color);
+        setCategoryName(event.categoryName);
+        setColor(event.categoryColor);
         setPhoto(event.photo_path);
-        setDate(event.date_create);
+        setDate(event.date);
         setClicks(event);
 
         likesCounterView.setText("" + event.count_likes);
         if(commentsCounterView!=null)
             commentsCounterView.setText("" + event.count_comments);
         
-        categoryView.setText(item.categoryName);
-        categoryPictureView.setImageResource(categories().get(item.categoryId-1).imgResId);
+        categoryView.setText(event.categoryName);
+        categoryPictureView.setImageResource(categories().get(event.categoryId-1).imgResId);
     }
 }

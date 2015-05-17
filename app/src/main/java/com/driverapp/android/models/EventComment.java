@@ -11,13 +11,17 @@ public class EventComment {
     @SerializedName("date_create")
     public int date;
 
-    public int user_id;
-    public String user_name;
-    public String user_surname;
-    public String user_photo_path;
+    @SerializedName("user_id")
+    public int userId;
+    @SerializedName("user_name")
+    public String userName;
+    @SerializedName("user_surname")
+    public String userLastname;
+    @SerializedName("user_photo_path")
+    public String userPhoto;
 
     public String getUserName(){
-        return user_name + " " + user_surname;
+        return userName + " " + userLastname;
     }
 
     public int event_id;

@@ -164,9 +164,9 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
             @Override
             protected void onSuccess(RegisterResult result) {
                 UserUtil.setUserId(result.user_id);
-                UserUtil.setUserName(gLogin.loginedPersonName);
-                UserUtil.setUserSurname(gLogin.loginedPersonSurname);
-                UserUtil.setUserPhoto(gLogin.loginedPersonPhotoUrl);
+                UserUtil.setUserName(firstName);
+                UserUtil.setUserSurname(lastName);
+                UserUtil.setUserPhoto(photoUrl);
                 startMain();
             }
 

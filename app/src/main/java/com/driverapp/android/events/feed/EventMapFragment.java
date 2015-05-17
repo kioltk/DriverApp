@@ -1,57 +1,17 @@
 package com.driverapp.android.events.feed;
 
-import android.location.Location;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.driverapp.android.R;
-import com.driverapp.android.core.Core;
-import com.driverapp.android.events.EventActivity;
-import com.driverapp.android.models.Event;
-import com.driverapp.android.views.MaterialInterpolator;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Jesus Christ. Amen.
  */
 public class EventMapFragment extends Fragment {
 
-    private View rootView;
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private HashMap<String, Event> eventMarkersHash = new HashMap();
-    private View eventHolder;
-    private TextView titleView;
-    //private TextView bodyView;
-    //private TextView addressView;
-    private TextView statsView;
-    private ImageView imageView;
-    private boolean showingItem = false;
-    private TextView addressView;
-    private TextView bodyView;
+/*
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_feed_map, container, false);
+        rootView = inflater.inflate(R.layout.fragment_map_event_item, container, false);
         setHasOptionsMenu(true);
         eventHolder = rootView.findViewById(R.id.event);
         imageView = (ImageView) eventHolder.findViewById(R.id.image);
@@ -81,12 +41,12 @@ public class EventMapFragment extends Fragment {
         switch (id) {
             case R.id.action_settings:
                 return true;
-            /*case R.id.action_refresh:
+            *//*case R.id.action_refresh:
                 update();
-                return true;*/
-            /*case R.id.action_profile:
+                return true;*//*
+            *//*case R.id.action_profile:
                 startActivity(new Intent(getActivity(), ProfileActivity.class));
-                return true;*/
+                return true;*//*
         }
 
 
@@ -106,12 +66,12 @@ public class EventMapFragment extends Fragment {
         }
     }
 
-    /**
+    *//**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.
      * <p/>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
+     *//*
     private void setUpMap() {
 
         UiSettings settings = mMap.getUiSettings();
@@ -123,7 +83,7 @@ public class EventMapFragment extends Fragment {
             @Override
             protected void onSuccess(ArrayList<Event> result) {
                 for (Event event : result) {
-                    int iconRes = Core.getCategories().get(event.category_id-1).pinResId;
+                    int iconRes = Core.categories().get(event.categoryId-1).pinResId;
                     MarkerOptions option = new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(iconRes))
                             .position(event.getGeodata())
@@ -147,7 +107,7 @@ public class EventMapFragment extends Fragment {
                             .translationY(eventHolder.getHeight()).setDuration(0).start();
                     eventHolder.animate().translationY(0).setDuration(250).start();
                 }
-                titleView.setText(event.category_name);
+                titleView.setText(event.categoryName);
                 addressView.setText(event.address);
                 bodyView.setText(event.desc);
                 statsView.setText(getString(R.string.stats, event.count_comments, event.count_likes));
@@ -169,7 +129,7 @@ public class EventMapFragment extends Fragment {
 
             @Override
             public void onMyLocationChange(Location location) {
-                if(focusedOnce) return;
+                if (focusedOnce) return;
                 focusedOnce = true;
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
 
@@ -181,5 +141,5 @@ public class EventMapFragment extends Fragment {
         mMap.clear();
         eventMarkersHash.clear();
         setUpMap();
-    }
+    }*/
 }

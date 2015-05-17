@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseViewHolder;
 import com.driverapp.android.core.utils.ImageUtil;
+import com.driverapp.android.core.utils.TimeUtils;
 import com.driverapp.android.core.utils.UserUtil;
 import com.driverapp.android.events.feed.EventViewHolder;
 import com.driverapp.android.models.Event;
@@ -102,15 +103,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
 
         public EventFullViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.image);
-            bodyView = (TextView) itemView.findViewById(R.id.body);
-            dateView = (TextView) itemView.findViewById(R.id.date);
-            addressView = (TextView) itemView.findViewById(R.id.address);
-            userNameView = (TextView) itemView.findViewById(R.id.user_name);
-            userPhotoView = (ImageView) itemView.findViewById(R.id.user_photo);
-            categoryView = (TextView) itemView.findViewById(R.id.category);
-            likeButton = itemView.findViewById(R.id.like_holder);
-
+            widthDivider = 1;
         }
 
         public void bind(final Event event) {
@@ -205,8 +198,8 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
 
             userName.setText(comment.getUserName());
             bodyView.setText(comment.comment);
-            dateView.setText(comment.date_create);
-            ImageLoader.getInstance().loadImage(comment.user_photo_path, new ImageLoadingListener() {
+            dateView.setText(TimeUtils.getTime(comment.date));
+            ImageLoader.getInstance().loadImage(comment.userPhoto, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
 
@@ -262,10 +255,11 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
                             comments.add(new EventComment() {{
                                 id = result.id;
                                 comment = String.valueOf(editText.getText());
-                                user_photo_path = UserUtil.getPhoto();
-                                user_id = UserUtil.id;
-                                user_name = UserUtil.getName();
-                                user_surname = UserUtil.getSurname();
+                                userPhoto = UserUtil.getPhoto();
+                                userId = UserUtil.id;
+                                userName = UserUtil.getName();
+                                userLastname = UserUtil.getSurname();
+                                date = (int) (System.currentTimeMillis()/1000);
                             }});
                             editText.setText("");
                         }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/event"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical"
+    android:translationY="106dp"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_above="@+id/event_holder"
+        android:background="@drawable/bottombar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"/>
+    <RelativeLayout
+        android:id="@+id/event_holder"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <ImageView
+            android:id="@+id/image"
+            android:src="@drawable/event_item_placeholder"
+            android:scaleType="centerCrop"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <LinearLayout
+            android:padding="12dp"
+            android:layout_toRightOf="@+id/image"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/title"
+                android:text="title"
+                android:textColor="#222625"
+                android:layout_weight="1.5"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@+id/title"
+                android:drawableLeft="@drawable/ic_location_compat"
+                android:id="@+id/address"
+                android:text="title"
+                android:textSize="13sp"
+                android:textColor="#8F9595"
+                android:layout_toRightOf="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/body"
+                android:layout_toRightOf="@+id/image"
+                android:text="description"
+                android:textColor="#343434"
+                android:visibility="gone"
+                android:layout_below="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:lines="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/stats"
+                android:text="@string/stats"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

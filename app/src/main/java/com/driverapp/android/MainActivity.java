@@ -13,7 +13,7 @@ import com.driverapp.android.auth.AuthUtil;
 import com.driverapp.android.core.BaseActivity;
 import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.events.feed.EventListFragment;
-import com.driverapp.android.events.feed.EventMapFragment;
+import com.driverapp.android.map.MapFragment;
 import com.driverapp.android.profile.MyEventsFragment;
 import com.driverapp.android.profile.ProfileActivity;
 import com.driverapp.android.settings.AboutFragment;
@@ -72,7 +72,7 @@ public class MainActivity extends BaseActivity
             case 3:
                 currentView = VIEW_MAP;
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, new EventMapFragment())
+                        .replace(R.id.container, new MapFragment())
                         .commit();
                 break;
             case 4:
@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity
         } else {
             currentView = VIEW_MAP;
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new EventMapFragment())
+                    .replace(R.id.container, new MapFragment())
                     .commit();
         }
     }

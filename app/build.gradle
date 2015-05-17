@@ -50,8 +50,8 @@ android {
     }
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            def path = output.outputFile.name
-            output.outputFile = file(outputPathName.replace("FILE_NAME", path.replace("release", "stable").replace("debug", "debug-v" + defaultConfig.versionCode + "auth")))
+            def fileName = output.outputFile.name
+            output.outputFile = file(outputPathName.replace("FILE_NAME", fileName).replace("app","driver"))
         }
     }
 }
