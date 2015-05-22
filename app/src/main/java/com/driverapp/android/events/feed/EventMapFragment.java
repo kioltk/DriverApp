@@ -123,7 +123,7 @@ public class EventMapFragment extends Fragment {
             @Override
             protected void onSuccess(ArrayList<Event> result) {
                 for (Event event : result) {
-                    int iconRes = Core.getCategories().get(event.category_id-1).pinResId;
+                    int iconRes = Core.categories().get(event.categoryId-1).pinResId;
                     MarkerOptions option = new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(iconRes))
                             .position(event.getGeodata())
@@ -147,7 +147,7 @@ public class EventMapFragment extends Fragment {
                             .translationY(eventHolder.getHeight()).setDuration(0).start();
                     eventHolder.animate().translationY(0).setDuration(250).start();
                 }
-                titleView.setText(event.category_name);
+                titleView.setText(event.categoryName);
                 addressView.setText(event.address);
                 bodyView.setText(event.desc);
                 statsView.setText(getString(R.string.stats, event.count_comments, event.count_likes));

@@ -11,12 +11,13 @@ public class UserUtil {
     public static String name;
     public static String surname;
     public static String photo;
+    private static String email;
 
     public static void setUserId(int id) {
         UserUtil.id = id;
         app().getSharedPreferences("user", MODE_MULTI_PROCESS)
                 .edit()
-                .putInt("id",id)
+                .putInt("id", id)
                 .apply();
     }
 
@@ -28,6 +29,7 @@ public class UserUtil {
                 .putString("name", name)
                 .apply();
     }
+
     public static void setUserSurname(String name) {
 
         UserUtil.name = name;
@@ -46,33 +48,50 @@ public class UserUtil {
                 .apply();
     }
 
+    public static void setUserEmail(String email) {
+        UserUtil.email = email;
+        app().getSharedPreferences("user", MODE_MULTI_PROCESS)
+                .edit()
+                .putString("email", email)
+                .apply();
+    }
+
     public static String getPhoto() {
-        if(photo==null)
-            photo = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getString("photo",null);
+        if (photo == null)
+            photo = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getString("photo", null);
         return photo;
     }
+
     public static String getName() {
-        if(name==null)
+        if (name == null)
             name = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getString("name", null);
         return name;
     }
+
     public static String getSurname() {
-        if(surname==null)
+        if (surname == null)
             surname = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getString("surname", null);
         return surname;
     }
+
+    public static String getEmail() {
+        if (email == null)
+            email = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getString("email", null);
+        return email;
+    }
+
     public static String getFullName() {
         return getName() + " " + getSurname();
     }
 
     public static int getId() {
-        if(id==0)
+        if (id == 0)
             id = app().getSharedPreferences("user", MODE_MULTI_PROCESS).getInt("id", 0);
         return id;
     }
 
     public static boolean isLogined() {
-        return id!=0;
+        return id != 0;
     }
 
     public static void logout() {
@@ -83,4 +102,5 @@ public class UserUtil {
                 .remove("photo")
                 .apply();
     }
+
 }

@@ -102,14 +102,6 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
 
         public EventFullViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.image);
-            bodyView = (TextView) itemView.findViewById(R.id.body);
-            dateView = (TextView) itemView.findViewById(R.id.date);
-            addressView = (TextView) itemView.findViewById(R.id.address);
-            userNameView = (TextView) itemView.findViewById(R.id.user_name);
-            userPhotoView = (ImageView) itemView.findViewById(R.id.user_photo);
-            categoryView = (TextView) itemView.findViewById(R.id.category);
-            likeButton = itemView.findViewById(R.id.like_holder);
 
         }
 
@@ -205,7 +197,7 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
 
             userName.setText(comment.getUserName());
             bodyView.setText(comment.comment);
-            dateView.setText(comment.date_create);
+            dateView.setText(comment.date);
             ImageLoader.getInstance().loadImage(comment.user_photo_path, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {

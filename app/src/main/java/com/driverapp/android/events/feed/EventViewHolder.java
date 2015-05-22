@@ -40,6 +40,7 @@ public class EventViewHolder extends BaseViewHolder {
     protected final TextView titleView;
     protected final TextView addressView;
     protected final TextView categoryView;
+    protected final ImageView categoryPictureView;
     protected final ImageView imageView;
     protected final View likeView;
     protected final ImageView likeIconView;
@@ -50,9 +51,9 @@ public class EventViewHolder extends BaseViewHolder {
     protected final TextView dateView;
     protected final TextView likesCounterView;
     protected final ImageView userPhotoView;
-    protected TextView userNameView;
-    protected ImageView bigLikeView;
-    protected TextView commentsCounterView;
+    protected final TextView userNameView;
+    protected final ImageView bigLikeView;
+    protected final TextView commentsCounterView;
 //    private final TextView ratingView;
 
     public EventViewHolder(View itemView) {
@@ -301,17 +302,17 @@ public class EventViewHolder extends BaseViewHolder {
         setBody(event.desc);
         setUserName(event.getUserFullName());
         setUserPhoto(event.user_avatar_path);
-        setCategoryName(event.category_name);
-        setColor(event.category_color);
+        setCategoryName(event.categoryName);
+        setColor(event.categoryColor);
         setPhoto(event.photo_path);
-        setDate(event.date_create);
+        setDate(event.date);
         setClicks(event);
 
         likesCounterView.setText("" + event.count_likes);
         if(commentsCounterView!=null)
             commentsCounterView.setText("" + event.count_comments);
         
-        categoryView.setText(item.categoryName);
-        categoryPictureView.setImageResource(categories().get(item.categoryId-1).imgResId);
+        categoryView.setText(event.categoryName);
+        categoryPictureView.setImageResource(categories().get(event.categoryId-1).imgResId);
     }
 }

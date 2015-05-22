@@ -52,14 +52,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
         <TextView
             android:id="@+id/category"
             android:text="Брошенное авто"
-            android:layout_alignParentRight="true"
             android:textColor="#222625"
+            android:layout_toLeftOf="@+id/categoryPic"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/categoryPic"
+            android:layout_marginLeft="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
 
         <View
             android:layout_above="@+id/userPhoto"

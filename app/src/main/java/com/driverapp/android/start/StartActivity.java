@@ -159,14 +159,15 @@ public class StartActivity extends ActionBarActivity implements GoogleLoginUtil.
 
 
 
-    private void register(String token, final String firstName, final String lastName, String link, String email, String source, final String photoUrl) {
+    private void register(String token, final String firstName, final String lastName, String link, final String email, String source, final String photoUrl) {
         new RegisterTask(firstName, lastName, "android", link, email, source, token, photoUrl) {
             @Override
             protected void onSuccess(RegisterResult result) {
                 UserUtil.setUserId(result.user_id);
-                UserUtil.setUserName(gLogin.loginedPersonName);
-                UserUtil.setUserSurname(gLogin.loginedPersonSurname);
-                UserUtil.setUserPhoto(gLogin.loginedPersonPhotoUrl);
+                UserUtil.setUserName(firstName);
+                UserUtil.setUserSurname(lastName);
+                UserUtil.setUserPhoto(photoUrl);
+                UserUtil.setUserEmail(email);
                 startMain();
             }
 
