@@ -2,13 +2,15 @@ package com.driverapp.android.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 import com.driverapp.android.R;
 import com.driverapp.android.core.BaseActivity;
@@ -16,6 +18,7 @@ import com.driverapp.android.events.comments.EventCommentsAdapter;
 import com.driverapp.android.events.create.CreateActivity;
 import com.driverapp.android.models.Event;
 import com.driverapp.android.models.EventComment;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 
@@ -57,6 +60,10 @@ public class EventActivity extends BaseActivity {
             protected void onSuccess(Event result) {
                 progress.setVisibility(View.GONE);
                 adapter.setEvent(result);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    getWindow().setStatusBarColor(Color.parseColor("#"+ result.categoryColor));
+                }
                 fetchComments();
             }
 

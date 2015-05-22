@@ -255,7 +255,7 @@ public class EventViewHolder extends BaseViewHolder {
         if(dividerView!=null)
             dividerView.setVisibility(View.GONE);
         int width = ScreenUtil.getWidth()/(ScreenUtil.isTablet()?3:1);
-        imageView.getLayoutParams().height = width/widthDivider;
+        imageView.getLayoutParams().height = width/2;
         imageView.requestLayout();
 
         imageView.setImageResource(R.drawable.event_item_placeholder);
