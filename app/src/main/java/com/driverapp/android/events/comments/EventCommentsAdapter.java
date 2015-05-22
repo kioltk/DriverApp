@@ -193,11 +193,12 @@ public class EventCommentsAdapter extends RecyclerView.Adapter {
             bodyView = (TextView) findViewById(R.id.body);
             dateView = (TextView) findViewById(R.id.date);
         }
-        public void bind(EventComment comment){
+
+        public void bind(EventComment comment) {
 
             userName.setText(comment.getUserName());
             bodyView.setText(comment.comment);
-            dateView.setText(comment.date);
+            dateView.setText("" + comment.date);
             ImageLoader.getInstance().loadImage(comment.user_photo_path, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
