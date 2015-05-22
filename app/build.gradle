@@ -51,7 +51,9 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def fileName = output.outputFile.name
-            output.outputFile = file(outputPathName.replace("FILE_NAME", fileName).replace("app","driver"))
+
+            output.outputFile =  file(outputPathName.replace("FILE_NAME", fileName).replace("app","driver"))
+
         }
     }
 }
