@@ -84,10 +84,12 @@ public class EventViewHolder extends BaseViewHolder {
     public void setTitle(String title) {
         //titleView.setText(title);
     }
-    public void setBody(String body){
+
+    public void setBody(String body) {
         bodyView.setText(body);
     }
-    public void setOnItemClick(final Event event){
+
+    public void setOnItemClick(final Event event) {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +98,9 @@ public class EventViewHolder extends BaseViewHolder {
         });
 
     }
-    void like(final Event event){
-        if(!UserUtil.isLogined()){
+
+    void like(final Event event) {
+        if (!UserUtil.isLogined()) {
             new AlertDialog.Builder(getContext())
                     .setTitle(getContext().getString(R.string.error))
                     .setMessage(getContext().getString(R.string.error_loginfirstly))
@@ -122,7 +125,7 @@ public class EventViewHolder extends BaseViewHolder {
             @Override
             protected void onSuccess(LikeToggleResult result) {
                 event.count_likes = result.likes_count;
-                likesCounterView.setText(""+(event.count_likes));
+                likesCounterView.setText("" + (event.count_likes));
             }
 
             @Override
@@ -133,7 +136,8 @@ public class EventViewHolder extends BaseViewHolder {
         };
         likeTogglerTask.start();
     }
-    public void setClicks(final Event event){
+
+    public void setClicks(final Event event) {
         imageView.setOnClickListener(new View.OnClickListener() {
             public long lastTimeClick = 0;
             public boolean doubleClicked;
@@ -185,7 +189,7 @@ public class EventViewHolder extends BaseViewHolder {
 
             }
         });
-        if(commentView!=null)
+        if (commentView != null)
             commentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -246,16 +250,16 @@ public class EventViewHolder extends BaseViewHolder {
     }
 
     public void setPhoto(String photoPath) {
-        if(photoPath == null || photoPath.equals("")){
+        if (photoPath == null || photoPath.equals("")) {
             imageView.setVisibility(View.GONE);
             dividerView.setVisibility(View.VISIBLE);
             return;
         }
         imageView.setVisibility(View.VISIBLE);
-        if(dividerView!=null)
+        if (dividerView != null)
             dividerView.setVisibility(View.GONE);
-        int width = ScreenUtil.getWidth()/(ScreenUtil.isTablet()?3:1);
-        imageView.getLayoutParams().height = width/2;
+        int width = ScreenUtil.getWidth() / (ScreenUtil.isTablet() ? 3 : 1);
+        imageView.getLayoutParams().height = width / widthDivider;
         imageView.requestLayout();
 
         imageView.setImageResource(R.drawable.event_item_placeholder);
@@ -283,7 +287,7 @@ public class EventViewHolder extends BaseViewHolder {
     }
 
     public void setColor(String categoryColor) {
-        if(backgroundView!=null) {
+        if (backgroundView != null) {
             Drawable background = getResources().getDrawable(R.drawable.card_item_background);
             ColorFilter filter = new LightingColorFilter(0xFFFFFFFF, Color.parseColor("#" + categoryColor));
             background.setColorFilter(filter);
@@ -310,10 +314,10 @@ public class EventViewHolder extends BaseViewHolder {
         setClicks(event);
 
         likesCounterView.setText("" + event.count_likes);
-        if(commentsCounterView!=null)
+        if (commentsCounterView != null)
             commentsCounterView.setText("" + event.count_comments);
-        
+
         categoryView.setText(event.categoryName);
-        categoryPictureView.setImageResource(categories().get(event.categoryId-1).imgResId);
+        categoryPictureView.setImageResource(categories().get(event.categoryId - 1).imgResId);
     }
 }
